@@ -30,7 +30,7 @@ The design system that powers Hunar.ai
   </strong>
   &bull;
   <strong>
-    <a href="https://www.hunar.ai/blog">Blog</a>
+    <a href="https://www.hunar.ai/blog/blog-home">Blog</a>
   </strong>
 </p>
 
