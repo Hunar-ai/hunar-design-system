@@ -24,7 +24,7 @@
     "husky-install": "husky install",
     "start": "storybook dev -p 6006",
     "build:storybook": "storybook build -o dist-storybook",
-    "publish:storybook": "env-cmd -f .env.local yarn run chromatic -b build:storybook"
+    "publish:storybook": "env-cmd -f .env.local yarn run chromatic -b build:storybook --no-interactive"
   },
   "dependencies": {
     "@mui/icons-material": "^5.6.2",
