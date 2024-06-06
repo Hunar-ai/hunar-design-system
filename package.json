@@ -42,6 +42,7 @@
     "start": "storybook dev -p 6006",
     "build:lib": "rollup -c",
     "build:storybook": "storybook build -o dist-storybook",
+    "publish:lib": "yarn publish --access public",
     "publish:storybook": "env-cmd -f .env.local yarn run chromatic -b build:storybook --no-interactive"
   },
   "dependencies": {
@@ -118,7 +119,6 @@
     "Hunar",
     "react",
     "components",
-    "component",
-    "library"
+    "component library"
   ]
 }
