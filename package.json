@@ -3,8 +3,18 @@
   "version": "0.1.0",
   "description": "Hunar's Design System",
   "main": "src/index.js",
-  "repository": "https://github.com/Hunar-ai/hunar-design-system",
-  "author": "Hunar <tech@hunar.ai>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hunar-ai/hunar-design-system.git"
+  },
+  "author": {
+    "name": "Hunar",
+    "email": "tech@hunar.ai"
+  },
+  "bugs": {
+    "url": "https://github.com/Hunar-ai/hunar-design-system/issues"
+  },
+  "homepage": "https://github.com/Hunar-ai/hunar-design-system#readme",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -13,7 +23,8 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json,scss}' --config ./.prettierrc",
     "husky-install": "husky install",
     "start": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build:storybook": "storybook build -o dist-storybook",
+    "publish:storybook": "env-cmd -f .env.local yarn run chromatic -b build:storybook"
   },
   "dependencies": {
     "@mui/icons-material": "^5.6.2",
@@ -46,6 +57,8 @@
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "@vitejs/plugin-react": "^4.2.1",
+    "chromatic": "^11.5.1",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^3.2.5",
