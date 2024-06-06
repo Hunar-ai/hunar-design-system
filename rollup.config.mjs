@@ -1,7 +1,6 @@
+import deleteOutputDir from "rollup-plugin-delete";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import terser from "@rollup/plugin-terser";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import { babel } from "@rollup/plugin-babel";
 import typescript from "@rollup/plugin-typescript";
 
@@ -12,6 +11,7 @@ import { createRequire } from "node:module";
 const requireFile = createRequire(import.meta.url);
 const packageJson = requireFile("./package.json");
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
+const outputDir = "dist";
 const externalPkgs = [
   ...Object.keys(packageJson.dependencies || {}),
   ...Object.keys(packageJson.peerDependencies || {}),
@@ -23,7 +23,7 @@ export default [
     input: "src/index.ts",
     output: [
       {
-        dir: "dist",
+        dir: outputDir,
         entryFileNames: "[name].js",
         exports: "named",
         format: "cjs",
@@ -31,7 +31,7 @@ export default [
         preserveModulesRoot: "src",
       },
       {
-        dir: "dist",
+        dir: outputDir,
         entryFileNames: "[name].mjs",
         exports: "named",
         format: "es",
@@ -40,12 +40,11 @@ export default [
       },
     ],
     plugins: [
-      peerDepsExternal(),
+      deleteOutputDir({ targets: `${outputDir}/*` }),
       resolve({
         extensions,
       }),
       commonjs(),
-      terser({ compress: { directives: false } }),
       babel({
         babelHelpers: "runtime",
         extensions,
@@ -53,7 +52,7 @@ export default [
       }),
       typescript({
         tsconfig: "./tsconfig.build.json",
-        declarationDir: "dist",
+        declarationDir: outputDir,
       }),
     ],
   },
