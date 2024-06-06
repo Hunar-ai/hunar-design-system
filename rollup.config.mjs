@@ -12,9 +12,14 @@ import { createRequire } from "node:module";
 const requireFile = createRequire(import.meta.url);
 const packageJson = requireFile("./package.json");
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
+const externalPkgs = [
+  ...Object.keys(packageJson.dependencies || {}),
+  ...Object.keys(packageJson.peerDependencies || {}),
+];
 
 export default [
   {
+    external: (id) => externalPkgs.some((pkg) => id.includes(pkg)),
     input: "src/index.ts",
     output: [
       {
@@ -50,10 +55,6 @@ export default [
         tsconfig: "./tsconfig.build.json",
         declarationDir: "dist",
       }),
-    ],
-    external: [
-      ...Object.keys(packageJson.dependencies || {}),
-      ...Object.keys(packageJson.peerDependencies || {}),
     ],
   },
 ];
