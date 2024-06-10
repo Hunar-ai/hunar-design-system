@@ -1,13 +1,15 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
-interface HelperTextProps {
+type HelperTextMsgProps =
+    | { msg: string; errorMsg?: string }
+    | { msg?: string; errorMsg: string };
+
+type HelperTextProps = HelperTextMsgProps & {
     hasError?: boolean;
-    errorMsg?: string;
-    msg?: string;
-}
+};
 
 export const HelperText = ({
     hasError = false,
