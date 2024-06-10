@@ -89,14 +89,40 @@ export const Playground: Story = {
     }
 };
 
+const ControlledCustomSelect = ({
+    value,
+    onChange,
+    ...props
+}: CustomSelectProps) => {
+    const [selectedValue, setSelectedValue] =
+        React.useState<CustomSelectProps['value']>(value);
+
+    const onSelectChange: CustomSelectProps['onChange'] = modifiedValue => {
+        setSelectedValue(modifiedValue);
+        onChange(modifiedValue);
+    };
+
+    return (
+        <CustomSelect
+            {...props}
+            value={selectedValue}
+            onChange={onSelectChange}
+        />
+    );
+};
+
 const CustomSelectStates = (props: CustomSelectProps) => {
     return (
         <Grid container spacing={1}>
             <Grid item xs={12}>
-                <CustomSelect {...props} label="Default" name="default" />
+                <ControlledCustomSelect
+                    {...props}
+                    label="Default"
+                    name="default"
+                />
             </Grid>
             <Grid item xs={12}>
-                <CustomSelect
+                <ControlledCustomSelect
                     {...props}
                     label="Disabled"
                     name="disabled"
@@ -104,7 +130,7 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <CustomSelect
+                <ControlledCustomSelect
                     {...props}
                     label="Disabled Options"
                     name="disabledOptions"
@@ -112,7 +138,7 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <CustomSelect
+                <ControlledCustomSelect
                     {...props}
                     label="No Options"
                     name="noOptions"
@@ -120,7 +146,7 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <CustomSelect
+                <ControlledCustomSelect
                     {...props}
                     label="No Search Bar"
                     name="noSearchBar"
@@ -128,7 +154,7 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <CustomSelect
+                <ControlledCustomSelect
                     {...props}
                     label="Required"
                     name="required"
@@ -136,7 +162,7 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <CustomSelect
+                <ControlledCustomSelect
                     {...props}
                     label="Helper Text"
                     name="helper-text"
@@ -144,7 +170,7 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <CustomSelect
+                <ControlledCustomSelect
                     {...props}
                     label="Error"
                     name="error"
@@ -166,23 +192,7 @@ export const SingleSelect: Story = {
     args: {
         multiple: false
     },
-    render: function SingleSelect(props) {
-        const [value, setValue] =
-            React.useState<CustomSelectProps['value']>(null);
-
-        const onSelectChange: CustomSelectProps['onChange'] = modifiedValue => {
-            setValue(modifiedValue);
-            props.onChange(modifiedValue);
-        };
-
-        return (
-            <CustomSelectStates
-                {...props}
-                value={value}
-                onChange={onSelectChange}
-            />
-        );
-    }
+    render: props => <CustomSelectStates {...props} />
 };
 
 export const MultiSelect: Story = {
@@ -193,24 +203,8 @@ export const MultiSelect: Story = {
     },
     argTypes: { multiple: { control: 'select', options: [true] } },
     args: {
-        multiple: true
+        multiple: true,
+        value: []
     },
-    render: function MultiSelect(props) {
-        const [value, setValue] = React.useState<CustomSelectProps['value']>(
-            []
-        );
-
-        const onSelectChange: CustomSelectProps['onChange'] = modifiedValue => {
-            setValue(modifiedValue);
-            props.onChange(modifiedValue);
-        };
-
-        return (
-            <CustomSelectStates
-                {...props}
-                value={value}
-                onChange={onSelectChange}
-            />
-        );
-    }
+    render: props => <CustomSelectStates {...props} />
 };
