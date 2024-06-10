@@ -25,7 +25,6 @@ export default [
       {
         dir: outputDir,
         entryFileNames: "[name].js",
-        exports: "named",
         format: "cjs",
         preserveModules: true,
         preserveModulesRoot: "src",
@@ -33,7 +32,6 @@ export default [
       {
         dir: outputDir,
         entryFileNames: "[name].mjs",
-        exports: "named",
         format: "es",
         preserveModules: true,
         preserveModulesRoot: "src",

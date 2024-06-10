@@ -13,6 +13,7 @@
   "homepage": "https://github.com/Hunar-ai/hunar-design-system#readme",
   "license": "MIT",
   "private": false,
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
