@@ -2,10 +2,9 @@
   <img src="https://res.cloudinary.com/dczeev0fe/image/upload/v1661331831/logo_final-02_cquppy.png" />
 </p>
 
-<!-- TODO: update the npm version number -->
 <p align="center">
   <a title="npm version" href="https://www.npmjs.com/@amar-hunar/hunar-design-system">
-    <img src="https://img.shields.io/static/v1?label=npm&message=0.1.1&color=blue" />
+    <img src="https://img.shields.io/static/v1?label=npm&message=0.1.2&color=blue" />
   </a>
   <a title="build status" href="#">
     <img src="https://img.shields.io/static/v1?label=build&message=passing&color=GREEN" />
