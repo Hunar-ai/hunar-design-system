@@ -4,7 +4,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { useArgs } from '@storybook/preview-api';
 
-import Grid from '@mui/material/Grid';
+import { Grid, Typography } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 import { Options } from '@/interfaces';
 
@@ -16,16 +17,16 @@ import { FIELD_SIZE } from '@/Enum';
 const onChange = action('change');
 
 const options: Options = [
-    { label: 'Option 1', value: 'option-1' },
-    { label: 'Option 2', value: 'option-2' },
-    { label: 'Option 3', value: 'option-3' },
-    { label: 'Option 4', value: 'option-4' },
-    { label: 'Option 5', value: 'option-5' },
-    { label: 'Option 6', value: 'option-6' },
-    { label: 'Option 7', value: 'option-7' },
-    { label: 'Option 8', value: 'option-8' },
-    { label: 'Option 9', value: 'option-9' },
-    { label: 'Option 10', value: 'option-10' }
+    { label: 'The Shawshank Redemption', value: 'THE_SHAWSHANK_REDEMPTION' },
+    { label: 'The Godfather', value: 'THE_GODFATHER' },
+    { label: 'The Godfather: Part II', value: 'THE_GODFATHER_PART_II' },
+    { label: 'The Dark Knight', value: 'THE_DARK_KNIGHT' },
+    { label: '12 Angry Men', value: '12_ANGRY_MEN' },
+    { label: 'Pulp Fiction', value: 'PULP_FICTION' },
+    { label: 'Fight Club', value: 'FIGHT_CLUB' },
+    { label: 'Forrest Gump', value: 'FORREST_GUMP' },
+    { label: 'Inception', value: 'INCEPTION' },
+    { label: 'The Matrix', value: 'THE_MATRIX' }
 ];
 
 const disabledOptions: Options = [options[1], options[3], options[4]];
@@ -46,8 +47,8 @@ const meta = {
         }
     },
     args: {
-        label: 'Custom Select',
-        name: 'customSelect',
+        label: 'Movies',
+        name: 'movies',
         options,
         value: null,
         onChange
@@ -57,6 +58,29 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof CustomSelect>;
+
+interface PreviewWrapperProps {
+    title: string;
+    children: React.ReactNode;
+}
+
+const PreviewWrapper = ({ title, children }: PreviewWrapperProps) => {
+    return (
+        <Grid container p={1} rowGap={1} flexDirection="column">
+            <Typography fontWeight={700}>{title}</Typography>
+            <Grid
+                width="100%"
+                border={`1px solid ${grey[200]}`}
+                borderRadius={3}
+                p={2}
+            >
+                <Grid width={{ xs: '100%', sm: '40%' }} mx="auto">
+                    {children}
+                </Grid>
+            </Grid>
+        </Grid>
+    );
+};
 
 export const Playground: Story = {
     args: { disabledOptions: [] },
@@ -80,11 +104,13 @@ export const Playground: Story = {
         };
 
         return (
-            <CustomSelect
-                {...props}
-                value={multiple ? multiSelectValue : singleSelectValue}
-                onChange={onSelectChange}
-            />
+            <PreviewWrapper title="Playground">
+                <CustomSelect
+                    {...props}
+                    value={multiple ? multiSelectValue : singleSelectValue}
+                    onChange={onSelectChange}
+                />
+            </PreviewWrapper>
         );
     }
 };
@@ -111,73 +137,55 @@ const ControlledCustomSelect = ({
     );
 };
 
+interface PreviewProps extends CustomSelectProps {
+    title: string;
+}
+
+const Preview = ({ title, ...props }: PreviewProps) => {
+    return (
+        <PreviewWrapper title={title}>
+            <ControlledCustomSelect {...props} />
+        </PreviewWrapper>
+    );
+};
+
 const CustomSelectStates = (props: CustomSelectProps) => {
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Default"
-                    name="default"
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Disabled"
-                    name="disabled"
-                    disabled
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Disabled Options"
-                    name="disabledOptions"
-                    disabledOptions={disabledOptions}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="No Options"
-                    name="noOptions"
-                    options={[]}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="No Search Bar"
-                    name="noSearchBar"
-                    options={[options[0], options[1]]}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Required"
-                    name="required"
-                    required
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Helper Text"
-                    name="helper-text"
-                    helperText={<HelperText msg="I have helper text" />}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Error"
-                    name="error"
-                    error
-                    helperText={<HelperText hasError errorMsg="I have error" />}
-                />
-            </Grid>
+        <Grid container gap={2}>
+            <Preview {...props} title="Default" name="default" />
+            <Preview {...props} title="Disabled" name="disabled" disabled />
+            <Preview
+                {...props}
+                title="Disabled Options"
+                name="disabledOptions"
+                disabledOptions={disabledOptions}
+            />
+            <Preview
+                {...props}
+                title="No Options"
+                name="noOptions"
+                options={[]}
+            />
+            <Preview
+                {...props}
+                title="No Search Bar"
+                name="noSearchBar"
+                options={[options[0], options[1]]}
+            />
+            <Preview {...props} title="Required" name="required" required />
+            <Preview
+                {...props}
+                title="Helper Text"
+                name="helper-text"
+                helperText={<HelperText msg="I have helper text" />}
+            />
+            <Preview
+                {...props}
+                title="Error"
+                name="error"
+                error
+                helperText={<HelperText hasError errorMsg="I have error" />}
+            />
         </Grid>
     );
 };
