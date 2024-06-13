@@ -213,10 +213,12 @@ export const CustomSelect = ({
         let modifiedSelectedOptions;
 
         if (typeof selectedValue === 'string') {
-            modifiedSelectedOptions = {
-                value: selectedValue,
-                label: valueToLabelMap[selectedValue]
-            };
+            modifiedSelectedOptions = selectedValue
+                ? {
+                      value: selectedValue,
+                      label: valueToLabelMap[selectedValue]
+                  }
+                : null;
         } else {
             modifiedSelectedOptions = selectedValue.map(value => ({
                 value: value,
