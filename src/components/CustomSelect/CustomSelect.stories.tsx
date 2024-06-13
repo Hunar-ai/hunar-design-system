@@ -4,11 +4,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { useArgs } from '@storybook/preview-api';
 
-import { Grid, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
-
 import { Options } from '@/interfaces';
 
+import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
 import { CustomSelect, CustomSelectProps } from './CustomSelect';
 
@@ -30,6 +28,100 @@ const options: Options = [
 ];
 
 const disabledOptions: Options = [options[1], options[3], options[4]];
+
+const ControlledCustomSelect = ({
+    value,
+    onChange,
+    ...props
+}: CustomSelectProps) => {
+    const [selectedValue, setSelectedValue] =
+        React.useState<CustomSelectProps['value']>(value);
+
+    const onSelectChange: CustomSelectProps['onChange'] = modifiedValue => {
+        setSelectedValue(modifiedValue);
+        onChange(modifiedValue);
+    };
+
+    return (
+        <CustomSelect
+            {...props}
+            value={selectedValue}
+            onChange={onSelectChange}
+        />
+    );
+};
+
+interface CustomSelectStateSectionProps extends CustomSelectProps {
+    sectionTitle: string;
+    sectionDescription?: string;
+}
+
+const CustomSelectStateSection = ({
+    sectionTitle,
+    sectionDescription,
+    ...props
+}: CustomSelectStateSectionProps) => {
+    return (
+        <StorySection title={sectionTitle} description={sectionDescription}>
+            <ControlledCustomSelect {...props} />
+        </StorySection>
+    );
+};
+
+const CustomSelectStates = (props: CustomSelectProps) => {
+    return (
+        <>
+            <CustomSelectStateSection
+                sectionTitle="Default"
+                {...props}
+                name="default"
+            />
+            <CustomSelectStateSection
+                sectionTitle="Disabled"
+                {...props}
+                name="disabled"
+                disabled
+            />
+            <CustomSelectStateSection
+                sectionTitle="Disabled Options"
+                {...props}
+                name="disabledOptions "
+                disabledOptions={disabledOptions}
+            />
+            <CustomSelectStateSection
+                sectionTitle="No Options"
+                {...props}
+                name="noOptions"
+                options={[]}
+            />
+            <CustomSelectStateSection
+                sectionTitle="No Search Bar"
+                {...props}
+                name="noSearchBar"
+                options={[options[0], options[1]]}
+            />
+            <CustomSelectStateSection
+                sectionTitle="Required"
+                {...props}
+                name="required"
+                required
+            />
+            <CustomSelectStateSection
+                sectionTitle="Helper Text"
+                {...props}
+                name="helper-text"
+                helperText={<HelperText msg="I have helper text" />}
+            />
+            <CustomSelectStateSection
+                sectionTitle="Error"
+                {...props}
+                name="error"
+                error
+                helperText={<HelperText hasError errorMsg="I have error" />}
+            />
+        </>
+    );
+};
 
 const meta = {
     title: 'Components/CustomSelect',
@@ -59,29 +151,6 @@ export default meta;
 
 type Story = StoryObj<typeof CustomSelect>;
 
-interface PreviewWrapperProps {
-    title: string;
-    children: React.ReactNode;
-}
-
-const PreviewWrapper = ({ title, children }: PreviewWrapperProps) => {
-    return (
-        <Grid container p={1} rowGap={1} flexDirection="column">
-            <Typography fontWeight={700}>{title}</Typography>
-            <Grid
-                width="100%"
-                border={`1px solid ${grey[200]}`}
-                borderRadius={3}
-                p={2}
-            >
-                <Grid width={{ xs: '100%', sm: '40%' }} mx="auto">
-                    {children}
-                </Grid>
-            </Grid>
-        </Grid>
-    );
-};
-
 export const Playground: Story = {
     args: { disabledOptions: [] },
     render: function Playground(props) {
@@ -104,90 +173,19 @@ export const Playground: Story = {
         };
 
         return (
-            <PreviewWrapper title="Playground">
+            <StorySection
+                title=""
+                // eslint-disable-next-line max-len
+                description={`Change various props in the "Controls" panel to see how they change behavior of the component`}
+            >
                 <CustomSelect
                     {...props}
                     value={multiple ? multiSelectValue : singleSelectValue}
                     onChange={onSelectChange}
                 />
-            </PreviewWrapper>
+            </StorySection>
         );
     }
-};
-
-const ControlledCustomSelect = ({
-    value,
-    onChange,
-    ...props
-}: CustomSelectProps) => {
-    const [selectedValue, setSelectedValue] =
-        React.useState<CustomSelectProps['value']>(value);
-
-    const onSelectChange: CustomSelectProps['onChange'] = modifiedValue => {
-        setSelectedValue(modifiedValue);
-        onChange(modifiedValue);
-    };
-
-    return (
-        <CustomSelect
-            {...props}
-            value={selectedValue}
-            onChange={onSelectChange}
-        />
-    );
-};
-
-interface PreviewProps extends CustomSelectProps {
-    title: string;
-}
-
-const Preview = ({ title, ...props }: PreviewProps) => {
-    return (
-        <PreviewWrapper title={title}>
-            <ControlledCustomSelect {...props} />
-        </PreviewWrapper>
-    );
-};
-
-const CustomSelectStates = (props: CustomSelectProps) => {
-    return (
-        <Grid container gap={2}>
-            <Preview {...props} title="Default" name="default" />
-            <Preview {...props} title="Disabled" name="disabled" disabled />
-            <Preview
-                {...props}
-                title="Disabled Options"
-                name="disabledOptions"
-                disabledOptions={disabledOptions}
-            />
-            <Preview
-                {...props}
-                title="No Options"
-                name="noOptions"
-                options={[]}
-            />
-            <Preview
-                {...props}
-                title="No Search Bar"
-                name="noSearchBar"
-                options={[options[0], options[1]]}
-            />
-            <Preview {...props} title="Required" name="required" required />
-            <Preview
-                {...props}
-                title="Helper Text"
-                name="helper-text"
-                helperText={<HelperText msg="I have helper text" />}
-            />
-            <Preview
-                {...props}
-                title="Error"
-                name="error"
-                error
-                helperText={<HelperText hasError errorMsg="I have error" />}
-            />
-        </Grid>
-    );
 };
 
 export const SingleSelect: Story = {
