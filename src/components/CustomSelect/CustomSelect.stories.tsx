@@ -4,10 +4,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { useArgs } from '@storybook/preview-api';
 
-import Grid from '@mui/material/Grid';
-
 import { Options } from '@/interfaces';
 
+import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
 import { CustomSelect, CustomSelectProps } from './CustomSelect';
 
@@ -16,19 +15,113 @@ import { FIELD_SIZE } from '@/Enum';
 const onChange = action('change');
 
 const options: Options = [
-    { label: 'Option 1', value: 'option-1' },
-    { label: 'Option 2', value: 'option-2' },
-    { label: 'Option 3', value: 'option-3' },
-    { label: 'Option 4', value: 'option-4' },
-    { label: 'Option 5', value: 'option-5' },
-    { label: 'Option 6', value: 'option-6' },
-    { label: 'Option 7', value: 'option-7' },
-    { label: 'Option 8', value: 'option-8' },
-    { label: 'Option 9', value: 'option-9' },
-    { label: 'Option 10', value: 'option-10' }
+    { label: 'The Shawshank Redemption', value: 'THE_SHAWSHANK_REDEMPTION' },
+    { label: 'The Godfather', value: 'THE_GODFATHER' },
+    { label: 'The Godfather: Part II', value: 'THE_GODFATHER_PART_II' },
+    { label: 'The Dark Knight', value: 'THE_DARK_KNIGHT' },
+    { label: '12 Angry Men', value: '12_ANGRY_MEN' },
+    { label: 'Pulp Fiction', value: 'PULP_FICTION' },
+    { label: 'Fight Club', value: 'FIGHT_CLUB' },
+    { label: 'Forrest Gump', value: 'FORREST_GUMP' },
+    { label: 'Inception', value: 'INCEPTION' },
+    { label: 'The Matrix', value: 'THE_MATRIX' }
 ];
 
 const disabledOptions: Options = [options[1], options[3], options[4]];
+
+const ControlledCustomSelect = ({
+    value,
+    onChange,
+    ...props
+}: CustomSelectProps) => {
+    const [selectedValue, setSelectedValue] =
+        React.useState<CustomSelectProps['value']>(value);
+
+    const onSelectChange: CustomSelectProps['onChange'] = modifiedValue => {
+        setSelectedValue(modifiedValue);
+        onChange(modifiedValue);
+    };
+
+    return (
+        <CustomSelect
+            {...props}
+            value={selectedValue}
+            onChange={onSelectChange}
+        />
+    );
+};
+
+interface CustomSelectSectionProps extends CustomSelectProps {
+    sectionTitle: string;
+    sectionDescription?: string;
+}
+
+const CustomSelectSection = ({
+    sectionTitle,
+    sectionDescription,
+    ...props
+}: CustomSelectSectionProps) => {
+    return (
+        <StorySection title={sectionTitle} description={sectionDescription}>
+            <ControlledCustomSelect {...props} />
+        </StorySection>
+    );
+};
+
+const CustomSelectStates = (props: CustomSelectProps) => {
+    return (
+        <>
+            <CustomSelectSection
+                sectionTitle="Default"
+                {...props}
+                name="default"
+            />
+            <CustomSelectSection
+                sectionTitle="Disabled"
+                {...props}
+                name="disabled"
+                disabled
+            />
+            <CustomSelectSection
+                sectionTitle="Disabled Options"
+                {...props}
+                name="disabledOptions "
+                disabledOptions={disabledOptions}
+            />
+            <CustomSelectSection
+                sectionTitle="No Options"
+                {...props}
+                name="noOptions"
+                options={[]}
+            />
+            <CustomSelectSection
+                sectionTitle="No Search Bar"
+                {...props}
+                name="noSearchBar"
+                options={[options[0], options[1]]}
+            />
+            <CustomSelectSection
+                sectionTitle="Required"
+                {...props}
+                name="required"
+                required
+            />
+            <CustomSelectSection
+                sectionTitle="Helper Text"
+                {...props}
+                name="helper-text"
+                helperText={<HelperText msg="I have helper text" />}
+            />
+            <CustomSelectSection
+                sectionTitle="Error"
+                {...props}
+                name="error"
+                error
+                helperText={<HelperText hasError errorMsg="I have error" />}
+            />
+        </>
+    );
+};
 
 const meta = {
     title: 'Components/CustomSelect',
@@ -46,8 +139,8 @@ const meta = {
         }
     },
     args: {
-        label: 'Custom Select',
-        name: 'customSelect',
+        label: 'Movies',
+        name: 'movies',
         options,
         value: null,
         onChange
@@ -80,106 +173,19 @@ export const Playground: Story = {
         };
 
         return (
-            <CustomSelect
-                {...props}
-                value={multiple ? multiSelectValue : singleSelectValue}
-                onChange={onSelectChange}
-            />
+            <StorySection
+                title=""
+                // eslint-disable-next-line max-len
+                description={`Change various props in the "Controls" panel to see how they change behavior of the component`}
+            >
+                <CustomSelect
+                    {...props}
+                    value={multiple ? multiSelectValue : singleSelectValue}
+                    onChange={onSelectChange}
+                />
+            </StorySection>
         );
     }
-};
-
-const ControlledCustomSelect = ({
-    value,
-    onChange,
-    ...props
-}: CustomSelectProps) => {
-    const [selectedValue, setSelectedValue] =
-        React.useState<CustomSelectProps['value']>(value);
-
-    const onSelectChange: CustomSelectProps['onChange'] = modifiedValue => {
-        setSelectedValue(modifiedValue);
-        onChange(modifiedValue);
-    };
-
-    return (
-        <CustomSelect
-            {...props}
-            value={selectedValue}
-            onChange={onSelectChange}
-        />
-    );
-};
-
-const CustomSelectStates = (props: CustomSelectProps) => {
-    return (
-        <Grid container spacing={1}>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Default"
-                    name="default"
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Disabled"
-                    name="disabled"
-                    disabled
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Disabled Options"
-                    name="disabledOptions"
-                    disabledOptions={disabledOptions}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="No Options"
-                    name="noOptions"
-                    options={[]}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="No Search Bar"
-                    name="noSearchBar"
-                    options={[options[0], options[1]]}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Required"
-                    name="required"
-                    required
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Helper Text"
-                    name="helper-text"
-                    helperText={<HelperText msg="I have helper text" />}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <ControlledCustomSelect
-                    {...props}
-                    label="Error"
-                    name="error"
-                    error
-                    helperText={<HelperText hasError errorMsg="I have error" />}
-                />
-            </Grid>
-        </Grid>
-    );
 };
 
 export const SingleSelect: Story = {
