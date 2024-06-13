@@ -51,16 +51,16 @@ const ControlledCustomSelect = ({
     );
 };
 
-interface CustomSelectStateSectionProps extends CustomSelectProps {
+interface CustomSelectSectionProps extends CustomSelectProps {
     sectionTitle: string;
     sectionDescription?: string;
 }
 
-const CustomSelectStateSection = ({
+const CustomSelectSection = ({
     sectionTitle,
     sectionDescription,
     ...props
-}: CustomSelectStateSectionProps) => {
+}: CustomSelectSectionProps) => {
     return (
         <StorySection title={sectionTitle} description={sectionDescription}>
             <ControlledCustomSelect {...props} />
@@ -71,48 +71,48 @@ const CustomSelectStateSection = ({
 const CustomSelectStates = (props: CustomSelectProps) => {
     return (
         <>
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="Default"
                 {...props}
                 name="default"
             />
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="Disabled"
                 {...props}
                 name="disabled"
                 disabled
             />
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="Disabled Options"
                 {...props}
                 name="disabledOptions "
                 disabledOptions={disabledOptions}
             />
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="No Options"
                 {...props}
                 name="noOptions"
                 options={[]}
             />
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="No Search Bar"
                 {...props}
                 name="noSearchBar"
                 options={[options[0], options[1]]}
             />
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="Required"
                 {...props}
                 name="required"
                 required
             />
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="Helper Text"
                 {...props}
                 name="helper-text"
                 helperText={<HelperText msg="I have helper text" />}
             />
-            <CustomSelectStateSection
+            <CustomSelectSection
                 sectionTitle="Error"
                 {...props}
                 name="error"

@@ -7,7 +7,7 @@ type HelperTextMsgProps =
     | { msg: string; errorMsg?: string }
     | { msg?: string; errorMsg: string };
 
-type HelperTextProps = HelperTextMsgProps & {
+export type HelperTextProps = HelperTextMsgProps & {
     hasError?: boolean;
 };
 
