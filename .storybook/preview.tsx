@@ -40,7 +40,7 @@ const preview: Preview = {
         }),
         (Story, { name, parameters }) => (
             <StoryLayout title={name} description={parameters.description}>
-                <Story />
+                {Story()}
             </StoryLayout>
         )
     ]
