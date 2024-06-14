@@ -3,10 +3,10 @@ import { addons } from '@storybook/manager-api';
 import { create } from '@storybook/theming/create';
 
 const customTheme = create({
-    base: 'dark',
+    base: 'light',
     brandTitle: 'Hunar',
     brandUrl: './',
-    brandImage: '/logo-dark.svg',
+    brandImage: '/logo-light.svg',
     brandTarget: '_self'
 });
 

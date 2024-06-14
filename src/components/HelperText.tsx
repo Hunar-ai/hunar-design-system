@@ -1,5 +1,4 @@
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { ErrorOutline as ErrorOutlineIcon } from '@mui/icons-material';
 

@@ -4,13 +4,12 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { useArgs } from '@storybook/preview-api';
 
-import { Options } from '@/interfaces';
-
 import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
 import { CustomSelect, CustomSelectProps } from './CustomSelect';
 
 import { FIELD_SIZE } from '@/Enum';
+import { Options } from '@/interfaces';
 
 const onChange = action('change');
 
@@ -149,12 +148,13 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof CustomSelect>;
+type StoryProps = StoryObj<typeof CustomSelect>;
 
-export const Playground: Story = {
+export const Playground: StoryProps = {
     args: { disabledOptions: [] },
     render: function Playground(props) {
-        const [{ multiple }, updateArg] = useArgs<NonNullable<Story['args']>>();
+        const [{ multiple }, updateArg] =
+            useArgs<NonNullable<StoryProps['args']>>();
 
         const [singleSelectValue, setSingleSelectValue] =
             React.useState<CustomSelectProps['value']>(null);
@@ -188,7 +188,7 @@ export const Playground: Story = {
     }
 };
 
-export const SingleSelect: Story = {
+export const SingleSelect: StoryProps = {
     parameters: {
         controls: {
             include: ['multiple', 'size', 'primaryColor', 'optionsHeaderTitle']
@@ -201,7 +201,7 @@ export const SingleSelect: Story = {
     render: props => <CustomSelectStates {...props} />
 };
 
-export const MultiSelect: Story = {
+export const MultiSelect: StoryProps = {
     parameters: {
         controls: {
             include: ['multiple', 'size', 'primaryColor', 'optionsHeaderTitle']
