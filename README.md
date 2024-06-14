@@ -86,6 +86,20 @@ yarn start
 
 ## Publish
 
+### Publishing on npm
+
+Build the package using the following command
+
+```sh
+yarn run build:lib
+```
+
+Publish a new version of the package using the following command
+
+```sh
+yarn run publish:lib
+```
+
 ### Publishing storybook
 
 Build storybook using the following command

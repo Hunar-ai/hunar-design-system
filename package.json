@@ -1,6 +1,6 @@
 {
-  "name": "@amar-hunar/hunar-design-system",
-  "version": "0.1.2",
+  "name": "@hunar.ai/hunar-design-system",
+  "version": "0.1.0",
   "description": "Hunar's Design System",
   "repository": {
     "type": "git",
@@ -43,7 +43,7 @@
     "start": "storybook dev -p 6006",
     "build:lib": "rollup -c",
     "build:storybook": "storybook build -o dist-storybook",
-    "publish:lib": "yarn publish --access public",
+    "publish:lib": "yarn run build:lib && yarn publish --access public",
     "publish:storybook": "env-cmd -f .env.local yarn run chromatic -b build:storybook --no-interactive"
   },
   "dependencies": {
