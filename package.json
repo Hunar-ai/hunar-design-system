@@ -7,10 +7,7 @@
     "type": "git",
     "url": "https://github.com/Hunar-ai/hunar-design-system.git"
   },
-  "author": {
-    "name": "Hunar",
-    "email": "tech@hunar.ai"
-  },
+  "author": "Hunar <tech@hunar.ai>",
   "bugs": {
     "url": "https://github.com/Hunar-ai/hunar-design-system/issues"
   },
