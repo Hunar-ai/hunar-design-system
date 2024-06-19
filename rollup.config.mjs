@@ -3,11 +3,8 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import { babel } from "@rollup/plugin-babel";
 import typescript from "@rollup/plugin-typescript";
-
-// This is required to read package.json file when
-// using Native ES modules in Node.js
-// https://rollupjs.org/command-line-interface/#importing-package-json
 import { createRequire } from "node:module";
+
 const requireFile = createRequire(import.meta.url);
 const packageJson = requireFile("./package.json");
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
