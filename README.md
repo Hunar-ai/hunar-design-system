@@ -65,8 +65,6 @@ yarn add @hunar.ai/hunar-design-system@latest @mui/material @emotion/react @emot
    };
    ```
 
-<!-- Explain about how MUI needs to be setup -->
-
 ## Development
 
 ### Setup
