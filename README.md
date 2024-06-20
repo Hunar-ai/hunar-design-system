@@ -1,16 +1,13 @@
-# [Hunar Design System](https://storybook--666ac08efe69dd9c59a1e4c6.chromatic.com)
+<p align='center'>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".storybook/public/logo-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset=".storybook/public/logo-light.svg" />
 
-Hunar Design System is a React component library used to build accessible and consistent experiences at [Hunar.ai](https://www.hunar.ai).
-
-<p align="center">
-  <strong>
-    <a href="https://storybook--666ac08efe69dd9c59a1e4c6.chromatic.com">Docs</a>
-  </strong>
-  &bull;
-  <strong>
-    <a href="https://www.hunar.ai/blog/blog-home">Blog</a>
-  </strong>
+  <img align="center" width="200px" height="70px" src=".storybook/public/logo-light.svg"/>
+</picture>
 </p>
+
+<h1 align='center'>Hunar Design System</h1>
 
 <p align="center">
   <a title="package-version" href="https://www.npmjs.com/package/@hunar.ai/hunar-design-system">
@@ -27,6 +24,10 @@ Hunar Design System is a React component library used to build accessible and co
   </a>
 </p>
 
+[Docs](https://storybook--666ac08efe69dd9c59a1e4c6.chromatic.com) • [Installation](#installation) • [Usage](#usage)
+
+Hunar Design System is a React component library used to build accessible and consistent experiences at [Hunar.ai](https://www.hunar.ai)
+
 ## Using the components
 
 ### Installation
@@ -36,6 +37,8 @@ The components library is built on top of [Material UI](https://mui.com/material
 ```sh
 yarn add @hunar.ai/hunar-design-system@latest @mui/material @emotion/react @emotion/styled
 ```
+
+**Note**: ESM and commonJS module pattern are supported out of box
 
 ### Usage
 
@@ -114,3 +117,17 @@ yarn run publish:storybook
 
 <!--
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fhshoff%2Fvx.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fhshoff%2Fvx?ref=badge_large) -->
+
+## Browser Support
+
+This library works best on latest versions of Google Chrome and Chrome mobile. The browsers which satisfy the following browserlist conditions are supported
+
+```json
+"browserslist": [
+  ">0.2%",
+  "not dead",
+  "not op_mini all"
+],
+```
+
+For all non-supported browsers, the library will graceful degradate without any explicit error handling.
