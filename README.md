@@ -131,3 +131,7 @@ This library works best on latest versions of Google Chrome and Chrome mobile. T
 ```
 
 For all non-supported browsers, the library will graceful degradate without any explicit error handling.
+
+## License
+
+Copyright (c) 2022 Bluejay Worktech Pvt. Ltd. This work is licensed under [MIT LICENSE](https://github.com/Hunar-ai/hunar-design-system/blob/main/LICENSE.md).
