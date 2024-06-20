@@ -81,5 +81,10 @@
     "*.{js,jsx,ts,tsx}": [
       "eslint"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
