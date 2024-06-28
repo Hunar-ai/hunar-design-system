@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { ErrorOutline as ErrorOutlineIcon } from '@mui/icons-material';
 
 type HelperTextMsgProps =
     | { msg: string; errorMsg?: string }

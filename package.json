@@ -1,11 +1,10 @@
 {
-  "name": "hunar-design-system",
-  "version": "0.1.0",
+  "name": "@hunar.ai/hunar-design-system",
+  "version": "0.1.1",
   "description": "Hunar's Design System",
-  "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Hunar-ai/hunar-design-system.git"
+    "url": "git+https://github.com/Hunar-ai/hunar-design-system.git"
   },
   "author": "Hunar <tech@hunar.ai>",
   "bugs": {
@@ -14,31 +13,66 @@
   "homepage": "https://github.com/Hunar-ai/hunar-design-system#readme",
   "license": "MIT",
   "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "module": "./dist/index.mjs",
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint src/**/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json,scss}' --config ./.prettierrc",
     "husky-install": "husky install",
     "start": "storybook dev -p 6006",
+    "build:lib": "rollup -c",
     "build:storybook": "storybook build -o dist-storybook",
+    "publish:lib": "yarn run build:lib && yarn publish --access public",
     "publish:storybook": "env-cmd -f .env.local yarn run chromatic -b build:storybook --no-interactive"
   },
   "dependencies": {
+    "@babel/runtime": "^7.24.7",
     "@mui/icons-material": "^5.6.2",
     "tinycolor2": "^1.6.0"
   },
   "peerDependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.8.7",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-transform-runtime": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@chromatic-com/storybook": "^1.5.0",
     "@emotion/babel-plugin": "^11.11.0",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
-    "@mui/material": "^5.15.19",
+    "@mui/material": "^5.8.7",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-actions": "^8.1.6",
     "@storybook/addon-essentials": "^8.1.6",
     "@storybook/addon-interactions": "^8.1.6",
@@ -71,6 +105,8 @@
     "prettier": "^2.7.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "rollup": "^4.18.0",
+    "rollup-plugin-delete": "^2.0.0",
     "storybook": "^8.1.6",
     "typescript": "^4.4.2",
     "vite": "^5.1.7",
@@ -86,5 +122,11 @@
     ">0.2%",
     "not dead",
     "not op_mini all"
+  ],
+  "keywords": [
+    "Hunar",
+    "react",
+    "components",
+    "component library"
   ]
 }

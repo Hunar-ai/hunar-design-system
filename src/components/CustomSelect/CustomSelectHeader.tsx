@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import ClearIcon from '@mui/icons-material/Clear';
+import { Clear as ClearIcon } from '@mui/icons-material';
 
 import { CustomSelectSearchBar } from './CustomSelectSearchBar';
 

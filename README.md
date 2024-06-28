@@ -24,7 +24,7 @@
   </a>
 </p>
 
-[Docs](https://storybook--666ac08efe69dd9c59a1e4c6.chromatic.com) • [Installation](#installation) • [Usage](#usage)
+[Docs](https://main--666ac08efe69dd9c59a1e4c6.chromatic.com) • [Installation](#installation) • [Usage](#usage)
 
 Hunar Design System is a React component library used to build accessible and consistent experiences at [Hunar.ai](https://www.hunar.ai)
 
@@ -66,7 +66,7 @@ yarn add @hunar.ai/hunar-design-system@latest @mui/material @emotion/react @emot
    };
    ```
 
-3. Explore the [docs](https://storybook--666ac08efe69dd9c59a1e4c6.chromatic.com) for the list of available components and how to use them
+3. Explore the [docs](https://main--666ac08efe69dd9c59a1e4c6.chromatic.com) for the list of available components and how to use them
 
 ## Development
 
@@ -86,6 +86,20 @@ yarn start
 ```
 
 ## Publish
+
+### Publishing on npm
+
+Build the package using the following command
+
+```sh
+yarn run build:lib
+```
+
+Publish a new version of the package using the following command
+
+```sh
+yarn run publish:lib
+```
 
 ### Publishing storybook
 
