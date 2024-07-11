@@ -1,6 +1,6 @@
 {
   "name": "@hunar.ai/hunar-design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Hunar's Design System",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json,scss}' --config ./.prettierrc",
     "husky-install": "husky install",
     "start": "storybook dev -p 6006",
-    "build:lib": "rollup -c",
+    "build:lib": "rollup -c && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "build:storybook": "storybook build -o dist-storybook",
     "publish:lib": "yarn run build:lib && yarn publish --access public",
     "publish:storybook": "env-cmd -f .env.local yarn run chromatic -b build:storybook --no-interactive"
@@ -108,6 +108,7 @@
     "rollup": "^4.18.0",
     "rollup-plugin-delete": "^2.0.0",
     "storybook": "^8.1.6",
+    "tsc-alias": "^1.8.10",
     "typescript": "^4.4.2",
     "vite": "^5.1.7",
     "vite-plugin-svgr": "^4.2.0",

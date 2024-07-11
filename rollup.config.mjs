@@ -47,7 +47,7 @@ export default [
       }),
       typescript({
         tsconfig: "./tsconfig.build.json",
-        declarationDir: outputDir,
+        declaration: false,
       }),
     ],
   },
