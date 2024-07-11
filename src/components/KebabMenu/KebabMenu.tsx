@@ -22,6 +22,7 @@ export interface KebabMenuOptionProps {
 
 export interface KebabMenuProps {
     options: KebabMenuOptionProps[];
+    isMenuDense?: boolean;
     isDisabled?: boolean;
     isOutlined?: boolean;
     iconSx?: SxProps;
@@ -35,6 +36,7 @@ export interface KebabMenuProps {
 
 export const KebabMenu = ({
     options,
+    isMenuDense = true,
     isDisabled = false,
     isOutlined = false,
     iconSx = {},
@@ -97,7 +99,7 @@ export const KebabMenu = ({
             >
                 {options.map((option: KebabMenuOptionProps, index: number) => (
                     <MenuItem
-                        dense
+                        dense={isMenuDense}
                         key={index}
                         onClick={e => {
                             option.onClick(e);

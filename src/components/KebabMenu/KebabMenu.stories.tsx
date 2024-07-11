@@ -28,6 +28,9 @@ const KebabMenuStates = (props: KebabMenuProps) => {
             <StorySection title="Disabled">
                 <KebabMenu {...props} isDisabled />
             </StorySection>
+            <StorySection title="Dense Menu: False">
+                <KebabMenu {...props} isMenuDense={false} />
+            </StorySection>
             <StorySection title="Size: Small">
                 <KebabMenu {...props} size={BUTTON_SIZE.small} />
             </StorySection>
@@ -36,6 +39,9 @@ const KebabMenuStates = (props: KebabMenuProps) => {
             </StorySection>
             <StorySection title="Color: Default">
                 <KebabMenu {...props} color={THEME_COLOR.default} />
+            </StorySection>
+            <StorySection title="Color: Secondary">
+                <KebabMenu {...props} color={THEME_COLOR.secondary} />
             </StorySection>
         </>
     );
