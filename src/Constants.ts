@@ -1,6 +1,6 @@
 import { type PopoverOrigin as PopoverOriginProps } from '@mui/material';
 
-import { POPOVER_ORIGIN } from './Enum';
+import { POPOVER_ORIGIN } from '@/Enum';
 
 export const BACKDROP_BG_COLOR = 'rgba(0, 0, 0, 0.2)';
 

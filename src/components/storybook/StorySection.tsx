@@ -1,11 +1,10 @@
-import { Grid, type SxProps, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 interface StorySectionProps {
     title: string;
     children: React.ReactNode;
     description?: string;
-    sx?: SxProps;
 }
 
 export const StorySection = ({

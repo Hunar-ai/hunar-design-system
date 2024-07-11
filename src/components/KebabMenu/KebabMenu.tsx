@@ -35,11 +35,11 @@ export interface KebabMenuProps {
 
 export const KebabMenu = ({
     options,
-    size = BUTTON_SIZE.medium,
-    color = THEME_COLOR.primary,
     isDisabled = false,
     isOutlined = false,
     iconSx = {},
+    size = BUTTON_SIZE.medium,
+    color = THEME_COLOR.primary,
     anchorOrigin = POPOVER_ORIGIN.BOTTOM_LEFT,
     transformOrigin = POPOVER_ORIGIN.TOP_LEFT,
     onBtnClick = () => undefined,
