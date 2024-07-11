@@ -1,10 +1,11 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, type SxProps, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 interface StorySectionProps {
     title: string;
     children: React.ReactNode;
     description?: string;
+    sx?: SxProps;
 }
 
 export const StorySection = ({
@@ -31,7 +32,7 @@ export const StorySection = ({
                     </Typography>
                 )}
             </Grid>
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12} sm={5} display="flex" justifyContent="center">
                 {children}
             </Grid>
         </Grid>
