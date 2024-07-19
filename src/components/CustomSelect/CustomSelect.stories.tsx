@@ -27,6 +27,7 @@ const options: Options = [
 ];
 
 const disabledOptions: Options = [options[1], options[3], options[4]];
+const noClearAllOptions = options.slice(0, 4);
 
 const ControlledCustomSelect = ({
     value,
@@ -97,7 +98,15 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 sectionTitle="No Search Bar"
                 {...props}
                 name="noSearchBar"
+                sectionDescription="Search Bar is only shown when there are more than 2 options"
                 options={[options[0], options[1]]}
+            />
+            <CustomSelectSection
+                sectionTitle="No Clear All Button"
+                sectionDescription="Clear All button is not shown when there are less than 5 options"
+                {...props}
+                name="noClearAll"
+                options={noClearAllOptions}
             />
             <CustomSelectSection
                 sectionTitle="Required"

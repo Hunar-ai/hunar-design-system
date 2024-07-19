@@ -286,7 +286,9 @@ export const CustomSelect = ({
                 })}
                 {!filteredOptions.length && <CustomSelectNoOptionsText />}
                 <CustomSelectFooter
-                    hasOptions={!!options.length}
+                    optionsLength={options.length}
+                    isMultiple={multiple}
+                    isRequired={required}
                     primaryColor={selectedPrimaryColor}
                     onClearClick={onClearClick}
                     onConfirmClick={onConfirmClick}
