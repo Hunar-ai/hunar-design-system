@@ -5,6 +5,8 @@ import tinycolor from 'tinycolor2';
 import { Button, Grid, useTheme } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
+const CLEAR_ALL_VISIBLE_LIMIT = 5;
+
 interface CustomSelectFooterProps {
     optionsLength: number;
     isMultiple: boolean;
@@ -50,7 +52,7 @@ export const CustomSelectFooter = ({
     const hasOptions = React.useMemo(() => optionsLength > 0, [optionsLength]);
 
     const isClearAllVisible = React.useMemo(() => {
-        if (optionsLength < 5) {
+        if (optionsLength < CLEAR_ALL_VISIBLE_LIMIT) {
             return false;
         }
 

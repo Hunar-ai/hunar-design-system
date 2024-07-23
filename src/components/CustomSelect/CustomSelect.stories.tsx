@@ -9,11 +9,11 @@ import { HelperText } from '@/components/HelperText';
 import { CustomSelect, CustomSelectProps } from './CustomSelect';
 
 import { FIELD_SIZE } from '@/Enum';
-import { Options } from '@/interfaces';
+import { OptionsProps } from '@/interfaces';
 
 const onChange = action('change');
 
-const options: Options = [
+const options: OptionsProps = [
     { label: 'The Shawshank Redemption', value: 'THE_SHAWSHANK_REDEMPTION' },
     { label: 'The Godfather', value: 'THE_GODFATHER' },
     { label: 'The Godfather: Part II', value: 'THE_GODFATHER_PART_II' },
@@ -26,7 +26,7 @@ const options: Options = [
     { label: 'The Matrix', value: 'THE_MATRIX' }
 ];
 
-const disabledOptions: Options = [options[1], options[3], options[4]];
+const disabledOptions: OptionsProps = [options[1], options[3], options[4]];
 const noClearAllOptions = options.slice(0, 4);
 
 const ControlledCustomSelect = ({
@@ -138,7 +138,7 @@ const meta = {
     argTypes: {
         value: {
             table: {
-                type: { summary: `Option | Options | null` }
+                type: { summary: `OptionProps | OptionsProps | null` }
             }
         },
         size: {

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import type { Option, Options } from '@/interfaces';
+import type { OptionProps, OptionsProps } from '@/interfaces';
 
 export const useHelper = () => {
     const getValueToLabelMap = React.useCallback(
-        (options: Options): { [key: string]: string } => {
+        (options: OptionsProps): { [key: string]: string } => {
             const optionsMap = options.reduce(
-                (acc: { [key: string]: string }, key: Option) => {
+                (acc: { [key: string]: string }, key: OptionProps) => {
                     acc = {
                         ...acc,
                         [key.value]: key.label
