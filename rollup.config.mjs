@@ -28,7 +28,7 @@ export default [
       },
       {
         dir: outputDir,
-        entryFileNames: "[name].mjs",
+        entryFileNames: "[name].esm.js",
         format: "es",
         preserveModules: true,
         preserveModulesRoot: "src",
