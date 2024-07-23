@@ -1,6 +1,6 @@
 {
   "name": "@hunar.ai/hunar-design-system",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Hunar's Design System",
   "repository": {
     "type": "git",
@@ -13,22 +13,21 @@
   "homepage": "https://github.com/Hunar-ai/hunar-design-system#readme",
   "license": "MIT",
   "private": false,
-  "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "module": "./dist/index.mjs",
+      "module": "./dist/index.esm.js",
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
+        "default": "./dist/index.esm.js"
       },
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       },
-      "default": "./dist/index.mjs"
+      "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
