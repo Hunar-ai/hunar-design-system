@@ -108,7 +108,7 @@ export const CustomSelect = ({
             sx: {
                 '.MuiMenu-paper': isMobile ? { width: '100%' } : {},
                 '.MuiMenu-list': { py: 0 },
-                '.MuiModal-backdrop': {
+                '.MuiBackdrop-root': {
                     bgcolor: isMobile ? BACKDROP_BG_COLOR : undefined
                 }
             }
