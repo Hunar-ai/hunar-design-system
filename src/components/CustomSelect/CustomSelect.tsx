@@ -76,6 +76,10 @@ export const CustomSelect = ({
         React.useState(initialSelectedValue);
     const [search, setSearch] = React.useState('');
 
+    React.useEffect(() => {
+        setSelectedValue(initialSelectedValue);
+    }, [initialSelectedValue]);
+
     const valueToLabelMap = React.useMemo(() => {
         return getValueToLabelMap(options);
     }, [options, getValueToLabelMap]);
