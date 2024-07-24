@@ -5,15 +5,21 @@ import tinycolor from 'tinycolor2';
 import { Button, Grid, useTheme } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
+const CLEAR_ALL_VISIBLE_LIMIT = 5;
+
 interface CustomSelectFooterProps {
-    hasOptions: boolean;
+    optionsLength: number;
+    isMultiple: boolean;
+    isRequired: boolean;
     primaryColor: string;
     onClearClick: VoidFunction;
     onConfirmClick: VoidFunction;
 }
 
 export const CustomSelectFooter = ({
-    hasOptions,
+    optionsLength,
+    isMultiple,
+    isRequired,
     primaryColor,
     onClearClick,
     onConfirmClick
@@ -43,10 +49,20 @@ export const CustomSelectFooter = ({
         };
     }, [primaryColor, theme.palette]);
 
+    const hasOptions = React.useMemo(() => optionsLength > 0, [optionsLength]);
+
+    const isClearAllVisible = React.useMemo(() => {
+        if (optionsLength < CLEAR_ALL_VISIBLE_LIMIT) {
+            return false;
+        }
+
+        return isMultiple || !isRequired;
+    }, [isMultiple, optionsLength, isRequired]);
+
     return (
         <Grid
             container
-            justifyContent="space-between"
+            justifyContent={isClearAllVisible ? 'space-between' : 'end'}
             alignItems="center"
             position="sticky"
             bottom={0}
@@ -56,24 +72,20 @@ export const CustomSelectFooter = ({
             py={1.5}
             borderTop={hasOptions ? `1px solid ${grey[200]}` : undefined}
         >
+            {isClearAllVisible && (
+                <Button size="large" sx={textButtonSx} onClick={onClearClick}>
+                    CLEAR ALL
+                </Button>
+            )}
             {hasOptions && (
-                <>
-                    <Button
-                        size="large"
-                        sx={textButtonSx}
-                        onClick={onClearClick}
-                    >
-                        CLEAR ALL
-                    </Button>
-                    <Button
-                        size="large"
-                        variant="contained"
-                        sx={containedButtonSx}
-                        onClick={onConfirmClick}
-                    >
-                        CONFIRM
-                    </Button>
-                </>
+                <Button
+                    size="large"
+                    variant="contained"
+                    sx={containedButtonSx}
+                    onClick={onConfirmClick}
+                >
+                    CONFIRM
+                </Button>
             )}
         </Grid>
     );

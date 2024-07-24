@@ -1,1 +1,1 @@
-export type { Option, Options } from './option.interface';
+export type { OptionProps, OptionsProps } from './option.interface';

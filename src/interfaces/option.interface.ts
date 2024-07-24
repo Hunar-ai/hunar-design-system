@@ -1,8 +1,8 @@
-export interface Option {
+export interface OptionProps {
     value: string;
     label: string;
     labelHelperText?: string;
     state?: string;
 }
 
-export type Options = Option[];
+export type OptionsProps = OptionProps[];

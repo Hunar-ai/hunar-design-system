@@ -4,10 +4,10 @@ import tinycolor from 'tinycolor2';
 
 import { Checkbox, Grid, Radio, type SxProps, Typography } from '@mui/material';
 
-import type { Option } from '@/interfaces';
+import type { OptionProps } from '@/interfaces';
 
 interface CustomSelectOptionProps {
-    option: Option;
+    option: OptionProps;
     multiple: boolean;
     isSelected: boolean;
     primaryColor: string;

@@ -9,11 +9,11 @@ import { HelperText } from '@/components/HelperText';
 import { CustomSelect, CustomSelectProps } from './CustomSelect';
 
 import { FIELD_SIZE } from '@/Enum';
-import { Options } from '@/interfaces';
+import { OptionsProps } from '@/interfaces';
 
 const onChange = action('change');
 
-const options: Options = [
+const options: OptionsProps = [
     { label: 'The Shawshank Redemption', value: 'THE_SHAWSHANK_REDEMPTION' },
     { label: 'The Godfather', value: 'THE_GODFATHER' },
     { label: 'The Godfather: Part II', value: 'THE_GODFATHER_PART_II' },
@@ -26,7 +26,8 @@ const options: Options = [
     { label: 'The Matrix', value: 'THE_MATRIX' }
 ];
 
-const disabledOptions: Options = [options[1], options[3], options[4]];
+const disabledOptions: OptionsProps = [options[1], options[3], options[4]];
+const noClearAllOptions = options.slice(0, 4);
 
 const ControlledCustomSelect = ({
     value,
@@ -97,7 +98,15 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 sectionTitle="No Search Bar"
                 {...props}
                 name="noSearchBar"
+                sectionDescription="Search Bar is only shown when there are more than 2 options"
                 options={[options[0], options[1]]}
+            />
+            <CustomSelectSection
+                sectionTitle="No Clear All Button"
+                sectionDescription="Clear All button is not shown when there are less than 5 options"
+                {...props}
+                name="noClearAll"
+                options={noClearAllOptions}
             />
             <CustomSelectSection
                 sectionTitle="Required"
@@ -129,7 +138,7 @@ const meta = {
     argTypes: {
         value: {
             table: {
-                type: { summary: `Option | Options | null` }
+                type: { summary: `OptionProps | OptionsProps | null` }
             }
         },
         size: {

@@ -22,15 +22,15 @@ import { CustomSelectNoOptionsText } from './CustomSelectNoOptionsText';
 import { useHelper } from '@/hooks/useHelper';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-import type { Option, Options } from '@/interfaces';
+import type { OptionProps, OptionsProps } from '@/interfaces';
 import { FIELD_SIZE } from '@/Enum';
 import { BACKDROP_BG_COLOR } from '@/Constants';
 
 export interface CustomSelectProps {
     label: string;
     name: string;
-    options: Options;
-    value: Option | Options | null;
+    options: OptionsProps;
+    value: OptionProps | OptionsProps | null;
     id?: string;
     size?: FIELD_SIZE;
     multiple?: boolean;
@@ -39,9 +39,9 @@ export interface CustomSelectProps {
     error?: boolean;
     helperText?: React.ReactNode;
     optionsHeaderTitle?: string;
-    disabledOptions?: Options;
+    disabledOptions?: OptionsProps;
     primaryColor?: string;
-    onChange: (_: Option | Options | null) => void;
+    onChange: (_: OptionProps | OptionsProps | null) => void;
 }
 
 export const CustomSelect = ({
@@ -76,6 +76,10 @@ export const CustomSelect = ({
         React.useState(initialSelectedValue);
     const [search, setSearch] = React.useState('');
 
+    React.useEffect(() => {
+        setSelectedValue(initialSelectedValue);
+    }, [initialSelectedValue]);
+
     const valueToLabelMap = React.useMemo(() => {
         return getValueToLabelMap(options);
     }, [options, getValueToLabelMap]);
@@ -108,7 +112,7 @@ export const CustomSelect = ({
             sx: {
                 '.MuiMenu-paper': isMobile ? { width: '100%' } : {},
                 '.MuiMenu-list': { py: 0 },
-                '.MuiModal-backdrop': {
+                '.MuiBackdrop-root': {
                     bgcolor: isMobile ? BACKDROP_BG_COLOR : undefined
                 }
             }
@@ -176,7 +180,7 @@ export const CustomSelect = ({
     );
 
     const isOptionDisabled = React.useCallback(
-        (option: Option) => {
+        (option: OptionProps) => {
             return !!disabledOptions.find(
                 element => element.value === option.value
             );
@@ -185,7 +189,7 @@ export const CustomSelect = ({
     );
 
     const onOptionClick = React.useCallback(
-        (option: Option) => {
+        (option: OptionProps) => {
             setSelectedValue(prevSelectedValue => {
                 if (multiple) {
                     const optionIndex = prevSelectedValue.indexOf(option.value);
@@ -286,7 +290,9 @@ export const CustomSelect = ({
                 })}
                 {!filteredOptions.length && <CustomSelectNoOptionsText />}
                 <CustomSelectFooter
-                    hasOptions={!!options.length}
+                    optionsLength={options.length}
+                    isMultiple={multiple}
+                    isRequired={required}
                     primaryColor={selectedPrimaryColor}
                     onClearClick={onClearClick}
                     onConfirmClick={onConfirmClick}
