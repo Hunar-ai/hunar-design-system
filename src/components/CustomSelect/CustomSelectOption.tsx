@@ -42,7 +42,7 @@ export const CustomSelectOption = ({
                     <Radio checked={isSelected} sx={sx} size="small" />
                 )}
             </Grid>
-            <Grid item xs sx={{ textWrap: 'wrap' }}>
+            <Grid item xs sx={{ textWrap: 'wrap', wordBreak: 'break-all' }}>
                 <Typography>{option.label}</Typography>
             </Grid>
         </Grid>

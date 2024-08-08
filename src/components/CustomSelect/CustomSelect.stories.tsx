@@ -14,6 +14,10 @@ import { OptionsProps } from '@/interfaces';
 const onChange = action('change');
 
 const options: OptionsProps = [
+    {
+        label: 'VeryLongOptionWithoutAnySpaceVeryLongOptionWithoutAnySpace',
+        value: 'VERY_LONG_OPTION_WITHOUT_ANY_SPACE'
+    },
     { label: 'The Shawshank Redemption', value: 'THE_SHAWSHANK_REDEMPTION' },
     { label: 'The Godfather', value: 'THE_GODFATHER' },
     { label: 'The Godfather: Part II', value: 'THE_GODFATHER_PART_II' },
