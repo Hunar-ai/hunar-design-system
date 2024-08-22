@@ -7,3 +7,4 @@ export {
     type KebabMenuOptionProps,
     type KebabMenuProps
 } from './KebabMenu';
+export { ChatTextInput, type ChatTextInputProps } from './ChatTextInput';
