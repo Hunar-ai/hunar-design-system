@@ -104,7 +104,7 @@ export const TextArea = ({
                     px: '13px',
                     py: size === FIELD_SIZE.medium ? '17px' : '9px',
                     mb: '-6px',
-                    borderRadius: 4,
+                    borderRadius: 1,
                     fontSize: 16,
                     fontFamily: 'Lato',
                     letterSpacing: 'inherit',
