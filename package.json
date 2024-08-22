@@ -56,7 +56,8 @@
     "@mui/base": "^5.0.0-beta.40",
     "@mui/material": "^5.8.7",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-number-format": "^5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
