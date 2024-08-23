@@ -150,7 +150,7 @@ export const TextArea = ({
                         color={
                             error || maxLength - value.length < 0
                                 ? theme.palette.error.main
-                                : ''
+                                : grey[700]
                         }
                     >
                         {helperText}
