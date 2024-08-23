@@ -111,6 +111,7 @@ export const ChatTextInput = ({
                 <ChatTextInputPreview
                     value={value}
                     fieldSize={fieldSize}
+                    variant={variant}
                     sx={previewSx}
                     onEditClick={() => setIsEditing(true)}
                 />

@@ -1,12 +1,16 @@
+import React from 'react';
+
 import { Grid, IconButton, SxProps, Typography } from '@mui/material';
 import { EditOutlined as EditOutlinedIcon } from '@mui/icons-material';
 import { grey } from '@mui/material/colors';
 
-import { FIELD_SIZE } from '@/Enum';
+import { FIELD_SIZE, TEXT_INPUT_VARIANT } from '@/Enum';
+import { NumberUtils } from '@/utils/NumberUtils';
 
 interface ChatTextInputPreviewProps {
     value: string;
     fieldSize: FIELD_SIZE;
+    variant: TEXT_INPUT_VARIANT;
     sx?: SxProps;
     onEditClick: VoidFunction;
 }
@@ -14,9 +18,16 @@ interface ChatTextInputPreviewProps {
 export const ChatTextInputPreview = ({
     value,
     fieldSize,
+    variant,
     sx = {},
     onEditClick
 }: ChatTextInputPreviewProps) => {
+    const formattedPreviewText = React.useMemo(() => {
+        return variant === TEXT_INPUT_VARIANT.CURRENCY
+            ? NumberUtils.toINR(parseInt(value))
+            : value;
+    }, [value, variant]);
+
     return (
         <Grid
             item
@@ -34,7 +45,7 @@ export const ChatTextInputPreview = ({
                 overflow="hidden"
                 textOverflow="ellipsis"
             >
-                {value}
+                {formattedPreviewText}
             </Typography>
             <IconButton sx={{ p: 1.25, mr: -1.25 }} onClick={onEditClick}>
                 <EditOutlinedIcon fontSize="small" />
