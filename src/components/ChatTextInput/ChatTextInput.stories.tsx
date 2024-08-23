@@ -152,6 +152,7 @@ export const Playground: StoryProps = {
 
 const variantAllowedControls = [
     'name',
+    'variant',
     'id',
     'label',
     'primaryColor',
@@ -167,6 +168,7 @@ export const TextField: StoryProps = {
             include: variantAllowedControls
         }
     },
+    argTypes: { variant: { options: [TEXT_INPUT_VARIANT.TEXT_FIELD] } },
     args: { variant: TEXT_INPUT_VARIANT.TEXT_FIELD, label: 'TextField' },
     render: props => <ChatTextInputStates {...props} />
 };
@@ -177,6 +179,7 @@ export const TextArea: StoryProps = {
             include: variantAllowedControls
         }
     },
+    argTypes: { variant: { options: [TEXT_INPUT_VARIANT.TEXT_AREA] } },
     args: { variant: TEXT_INPUT_VARIANT.TEXT_AREA, label: 'TextArea' },
     render: props => <ChatTextInputStates {...props} />
 };
@@ -187,6 +190,7 @@ export const CurrencyField: StoryProps = {
             include: variantAllowedControls
         }
     },
+    argTypes: { variant: { options: [TEXT_INPUT_VARIANT.CURRENCY] } },
     args: { variant: TEXT_INPUT_VARIANT.CURRENCY, label: 'Currency' },
     render: props => <ChatTextInputStates {...props} />
 };
