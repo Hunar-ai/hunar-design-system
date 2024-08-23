@@ -9,16 +9,16 @@ import {
     type SxProps
 } from '@mui/material';
 
-interface BrandedButtonProps extends ButtonProps {
+interface CustomButtonProps extends ButtonProps {
     primaryColor: string;
 }
 
-export const BrandedButton = ({
+export const CustomButton = ({
     primaryColor,
     variant,
     sx = {},
     ...restProps
-}: BrandedButtonProps) => {
+}: CustomButtonProps) => {
     const theme = useTheme();
 
     const textButtonSx: SxProps = React.useMemo(() => {

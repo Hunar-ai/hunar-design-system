@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 
-import { BrandedButton } from '@/components/BrandedButton';
+import { CustomButton } from '@/components/CustomButton';
 
 import { BUTTON_SIZE } from '@/Enum';
 
@@ -23,7 +23,7 @@ export const ChatTextInputCtaList = ({
 }: ChatTextInputCtaListProps) => {
     return (
         <Grid item xs={12} display="flex" justifyContent="end" columnGap={1.5}>
-            <BrandedButton
+            <CustomButton
                 variant="outlined"
                 size={buttonSize}
                 primaryColor={primaryColor}
@@ -31,8 +31,8 @@ export const ChatTextInputCtaList = ({
                 disabled={isCancelDisabled}
             >
                 CANCEL
-            </BrandedButton>
-            <BrandedButton
+            </CustomButton>
+            <CustomButton
                 variant="contained"
                 size={buttonSize}
                 primaryColor={primaryColor}
@@ -40,7 +40,7 @@ export const ChatTextInputCtaList = ({
                 disabled={isSaveDisabled}
             >
                 SAVE
-            </BrandedButton>
+            </CustomButton>
         </Grid>
     );
 };
