@@ -1,6 +1,8 @@
 import React from 'react';
 
-import DatePicker from 'react-mobile-datepicker-ts';
+import DatePicker, {
+    type DateConfig as DateConfigProps
+} from 'react-mobile-datepicker-ts';
 import 'react-mobile-datepicker-ts/dist/main.css';
 
 import {
@@ -25,6 +27,16 @@ import { BACKDROP_BG_COLOR } from '@/Constants';
 
 const DATE_OPTION_HEIGHT = 56;
 const SCROLL_TRANSFORM_FACTOR = DATE_OPTION_HEIGHT / 40;
+const DEFAULT_DATE_CONFIG: DateConfigProps[] = [
+    { type: 'date', format: 'DD', caption: 'Day', step: 1 },
+    {
+        type: 'month',
+        format: value => value.toLocaleString(undefined, { month: 'short' }),
+        caption: 'Month',
+        step: 1
+    },
+    { type: 'year', format: 'YYYY', caption: 'Year', step: 1 }
+];
 
 export interface MobileDatePickerProps {
     label: string;
@@ -38,7 +50,9 @@ export interface MobileDatePickerProps {
     helperText?: React.ReactNode;
     optionsHeaderTitle?: string;
     primaryColor?: string;
+    dateConfig?: DateConfigProps[];
     onChange: (_: Date) => void;
+    getFormattedPreview?: (_: Date) => string;
 }
 
 export const MobileDatePicker = ({
@@ -53,7 +67,9 @@ export const MobileDatePicker = ({
     helperText = '',
     optionsHeaderTitle = undefined,
     primaryColor = undefined,
-    onChange
+    dateConfig = undefined,
+    onChange,
+    getFormattedPreview
 }: MobileDatePickerProps) => {
     const isMobile = useIsMobile();
     const theme = useTheme();
@@ -90,28 +106,68 @@ export const MobileDatePicker = ({
         return primaryColor || theme.palette.primary.main;
     }, [primaryColor, theme.palette.primary.main]);
 
-    const selectSx: SxProps = React.useMemo(() => {
+    const inputSx: SxProps = React.useMemo(() => {
         return {
             '& label.Mui-focused': {
                 color: error ? undefined : selectedPrimaryColor
             },
-            '& .MuiOutlinedInput-root': {
-                '&.Mui-focused fieldset': {
-                    borderColor: error ? undefined : selectedPrimaryColor
-                }
+            '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+                borderColor: error ? undefined : selectedPrimaryColor
             }
         };
     }, [selectedPrimaryColor, error]);
 
-    const getValuePreview = React.useCallback(() => {
-        return value.toLocaleDateString();
-    }, [value]);
+    const datePickerSx: SxProps = React.useMemo(() => {
+        return {
+            '.datepicker.default': {
+                position: 'static',
+                bgcolor: 'white',
+                '.datepicker-scroll': {
+                    transform: `translateY(calc(var(--translate-y) * ${SCROLL_TRANSFORM_FACTOR}px))`,
+                    mt: `calc(var(--margin-top) * ${SCROLL_TRANSFORM_FACTOR}px)`
+                },
+                '.datepicker-scroll li': {
+                    fontSize: '20px',
+                    fontFamily: 'Lato',
+                    py: 1
+                },
+                '.datepicker-col-1': { mt: -1, mx: 0.75 },
+                '.datepicker-wheel': {
+                    height: DATE_OPTION_HEIGHT,
+                    mt: `-${DATE_OPTION_HEIGHT / 2}px`,
+                    borderTop: `1px solid ${grey[400]}`,
+                    borderBottom: `1px solid ${grey[400]}`
+                },
+                '.datepicker-content': {
+                    py: 2,
+                    px: '22.5px'
+                },
+                '.datepicker-viewport': {
+                    height: DATE_OPTION_HEIGHT * 5,
+                    '&::after': {
+                        backgroundImage: `linear-gradient(
+        rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 2}px,
+        rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 2}px,
+        rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 3 + 2}px,
+        rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 3 + 2}px)`
+                    }
+                }
+            }
+        };
+    }, []);
+
+    const getValuePreview = React.useCallback((modifiedValue: Date) => {
+        return modifiedValue.toLocaleDateString(undefined, {
+            dateStyle: 'long'
+        });
+    }, []);
 
     const onConfirmClick = React.useCallback(() => {
         onChange(selectedValue);
         setIsOpen(false);
     }, [onChange, selectedValue]);
 
+    // TODO: Give `id`s to each element
     return (
         <FormControl
             fullWidth
@@ -119,7 +175,7 @@ export const MobileDatePicker = ({
             required={required}
             disabled={disabled}
             error={error}
-            sx={selectSx}
+            sx={inputSx}
         >
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
             <Select
@@ -129,7 +185,7 @@ export const MobileDatePicker = ({
                 labelId={`${name}-label`}
                 label={label}
                 value={value}
-                renderValue={getValuePreview}
+                renderValue={getFormattedPreview ?? getValuePreview}
                 MenuProps={menuProps}
                 onOpen={() => setIsOpen(true)}
             >
@@ -137,44 +193,7 @@ export const MobileDatePicker = ({
                     title={optionsHeaderTitle || label}
                     onCloseClick={onCloseClick}
                 />
-                <Box
-                    sx={{
-                        '.datepicker.default': {
-                            position: 'static',
-                            bgcolor: 'white',
-                            '.datepicker-scroll': {
-                                transform: `translateY(calc(var(--translate-y) * ${SCROLL_TRANSFORM_FACTOR}px))`,
-                                mt: `calc(var(--margin-top) * ${SCROLL_TRANSFORM_FACTOR}px)`
-                            },
-                            '.datepicker-scroll li': {
-                                fontSize: '20px',
-                                fontFamily: 'Lato',
-                                py: 1
-                            },
-                            '.datepicker-col-1': { mt: -1, mx: 0.75 },
-                            '.datepicker-wheel': {
-                                height: DATE_OPTION_HEIGHT,
-                                mt: `-${DATE_OPTION_HEIGHT / 2}px`,
-                                borderTop: `1px solid ${grey[400]}`,
-                                borderBottom: `1px solid ${grey[400]}`
-                            },
-                            '.datepicker-content': {
-                                py: 2,
-                                px: '22.5px'
-                            },
-                            '.datepicker-viewport': {
-                                height: DATE_OPTION_HEIGHT * 5,
-                                '&::after': {
-                                    backgroundImage: `linear-gradient(
-                    rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 2}px,
-                    rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 2}px,
-                    rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 3 + 2}px,
-                    rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 3 + 2}px)`
-                                }
-                            }
-                        }
-                    }}
-                >
+                <Box sx={datePickerSx}>
                     <DatePicker
                         isPopup={false}
                         showHeader={false}
@@ -183,6 +202,7 @@ export const MobileDatePicker = ({
                         onChange={(modifiedValue: Date) =>
                             setSelectedValue(modifiedValue)
                         }
+                        dateConfig={dateConfig ?? DEFAULT_DATE_CONFIG}
                     />
                 </Box>
                 <MobileDatePickerFooter
