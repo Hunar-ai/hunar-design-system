@@ -13,6 +13,7 @@ import {
     useTheme,
     Box
 } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 import { MobileDatePickerHeader } from './MobileDatePickerHeader';
 import { MobileDatePickerFooter } from './MobileDatePickerFooter';
@@ -21,7 +22,9 @@ import { useIsMobile } from '@/hooks/useIsMobile';
 
 import { FIELD_SIZE } from '@/Enum';
 import { BACKDROP_BG_COLOR } from '@/Constants';
-import { grey } from '@mui/material/colors';
+
+const DATE_OPTION_HEIGHT = 56;
+const SCROLL_TRANSFORM_FACTOR = DATE_OPTION_HEIGHT / 40;
 
 export interface MobileDatePickerProps {
     label: string;
@@ -138,16 +141,36 @@ export const MobileDatePicker = ({
                     sx={{
                         '.datepicker.default': {
                             position: 'static',
-                            bgcolor: 'unset',
+                            bgcolor: 'white',
+                            '.datepicker-scroll': {
+                                transform: `translateY(calc(var(--translate-y) * ${SCROLL_TRANSFORM_FACTOR}px))`,
+                                mt: `calc(var(--margin-top) * ${SCROLL_TRANSFORM_FACTOR}px)`
+                            },
                             '.datepicker-scroll li': {
                                 fontSize: '20px',
                                 fontFamily: 'Lato',
-                                color: grey[500]
-                                // height: 48
+                                py: 1
                             },
+                            '.datepicker-col-1': { mt: -1, mx: 0.75 },
                             '.datepicker-wheel': {
+                                height: DATE_OPTION_HEIGHT,
+                                mt: `-${DATE_OPTION_HEIGHT / 2}px`,
                                 borderTop: `1px solid ${grey[400]}`,
                                 borderBottom: `1px solid ${grey[400]}`
+                            },
+                            '.datepicker-content': {
+                                py: 2,
+                                px: '22.5px'
+                            },
+                            '.datepicker-viewport': {
+                                height: DATE_OPTION_HEIGHT * 5,
+                                '&::after': {
+                                    backgroundImage: `linear-gradient(
+                    rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 2}px,
+                    rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 2}px,
+                    rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 3 + 2}px,
+                    rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 3 + 2}px)`
+                                }
                             }
                         }
                     }}
