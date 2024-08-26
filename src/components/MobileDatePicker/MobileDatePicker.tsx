@@ -41,18 +41,20 @@ const DEFAULT_DATE_CONFIG: DateConfigProps[] = [
 export interface MobileDatePickerProps {
     label: string;
     name: string;
-    value: Date;
+    value: Date | null;
     id?: string;
     size?: FIELD_SIZE;
     required?: boolean;
     disabled?: boolean;
     error?: boolean;
     helperText?: React.ReactNode;
-    optionsHeaderTitle?: string;
+    pickerHeaderTitle?: string;
     primaryColor?: string;
     dateConfig?: DateConfigProps[];
+    minDate?: Date;
+    maxDate?: Date;
     onChange: (_: Date) => void;
-    getFormattedPreview?: (_: Date) => string;
+    getFormattedPreview?: (_: Date | string) => string;
 }
 
 export const MobileDatePicker = ({
@@ -65,25 +67,29 @@ export const MobileDatePicker = ({
     disabled = false,
     error = false,
     helperText = '',
-    optionsHeaderTitle = undefined,
+    pickerHeaderTitle = undefined,
     primaryColor = undefined,
     dateConfig = undefined,
+    minDate = undefined,
+    maxDate = undefined,
     onChange,
-    getFormattedPreview
+    getFormattedPreview = undefined
 }: MobileDatePickerProps) => {
     const isMobile = useIsMobile();
     const theme = useTheme();
 
     const [isOpen, setIsOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState(value);
+    const [selectedValue, setSelectedValue] = React.useState(
+        value || new Date()
+    );
 
     React.useEffect(() => {
-        setSelectedValue(value);
+        setSelectedValue(value || new Date());
     }, [value]);
 
     const onCloseClick = React.useCallback(() => {
         setIsOpen(false);
-        setSelectedValue(value);
+        setSelectedValue(value || new Date());
     }, [value]);
 
     const menuProps: Partial<MenuProps> = React.useMemo(
@@ -156,11 +162,16 @@ export const MobileDatePicker = ({
         };
     }, []);
 
-    const getValuePreview = React.useCallback((modifiedValue: Date) => {
-        return modifiedValue.toLocaleDateString(undefined, {
-            dateStyle: 'long'
-        });
-    }, []);
+    const getValuePreview = React.useCallback(
+        (modifiedValue: Date | string) => {
+            return typeof modifiedValue === 'string'
+                ? ''
+                : modifiedValue.toLocaleDateString(undefined, {
+                      dateStyle: 'long'
+                  });
+        },
+        []
+    );
 
     const onConfirmClick = React.useCallback(() => {
         onChange(selectedValue);
@@ -184,13 +195,13 @@ export const MobileDatePicker = ({
                 id={id}
                 labelId={`${name}-label`}
                 label={label}
-                value={value}
+                value={value || ''}
                 renderValue={getFormattedPreview ?? getValuePreview}
                 MenuProps={menuProps}
                 onOpen={() => setIsOpen(true)}
             >
                 <MobileDatePickerHeader
-                    title={optionsHeaderTitle || label}
+                    title={pickerHeaderTitle || label}
                     onCloseClick={onCloseClick}
                 />
                 <Box sx={datePickerSx}>
@@ -203,6 +214,8 @@ export const MobileDatePicker = ({
                             setSelectedValue(modifiedValue)
                         }
                         dateConfig={dateConfig ?? DEFAULT_DATE_CONFIG}
+                        min={minDate}
+                        max={maxDate}
                     />
                 </Box>
                 <MobileDatePickerFooter

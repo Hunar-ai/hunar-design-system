@@ -41,7 +41,7 @@ const meta = {
     args: {
         label: 'Dates',
         name: 'dates',
-        value: new Date(),
+        value: null,
         onChange
     }
 } satisfies Meta<typeof MobileDatePicker>;
