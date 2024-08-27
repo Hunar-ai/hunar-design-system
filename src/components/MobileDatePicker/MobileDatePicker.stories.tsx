@@ -15,6 +15,17 @@ import { FIELD_SIZE } from '@/Enum';
 
 const onChange = action('change');
 
+const customDateConfig: DatePickerConfigProps[] = [
+    { type: 'year', format: 'YYYY', caption: 'Year', step: 1 },
+    {
+        type: 'month',
+        format: 'MM',
+        caption: 'Month',
+        step: 1
+    },
+    { type: 'date', format: 'DD', caption: 'Day', step: 1 }
+];
+
 const ControlledMobileDatePicker = ({
     value,
     ...props
@@ -59,17 +70,6 @@ const MobileDatePickerStates = (props: MobileDatePickerProps) => {
               });
     };
 
-    const dateConfig: DatePickerConfigProps[] = [
-        { type: 'year', format: 'YYYY', caption: 'Year', step: 1 },
-        {
-            type: 'month',
-            format: 'MM',
-            caption: 'Month',
-            step: 1
-        },
-        { type: 'date', format: 'DD', caption: 'Day', step: 1 }
-    ];
-
     return (
         <>
             <MobileDatePickerSection
@@ -97,7 +97,7 @@ const MobileDatePickerStates = (props: MobileDatePickerProps) => {
                 sectionDescription="The date picker is shown in YYYY MM DD format. Click on the input to see the behavior"
                 {...props}
                 name="custom-date-picker"
-                dateConfig={dateConfig}
+                dateConfig={customDateConfig}
             />
             <MobileDatePickerSection
                 sectionTitle="Disabled"

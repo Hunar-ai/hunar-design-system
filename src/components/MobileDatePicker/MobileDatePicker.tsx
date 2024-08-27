@@ -178,7 +178,6 @@ export const MobileDatePicker = ({
         setIsOpen(false);
     }, [onChange, selectedValue]);
 
-    // TODO: Give `id`s to each element
     return (
         <FormControl
             id="mobile-date-picker-input"
