@@ -8,3 +8,8 @@ export {
     type KebabMenuProps
 } from './KebabMenu';
 export { ChatTextInput, type ChatTextInputProps } from './ChatTextInput';
+export {
+    MobileDatePicker,
+    type MobileDatePickerProps,
+    type DatePickerConfigProps
+} from './MobileDatePicker';

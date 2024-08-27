@@ -25,7 +25,7 @@ import { BACKDROP_BG_COLOR } from '@/Constants';
 
 const DATE_OPTION_HEIGHT = 56;
 const SCROLL_TRANSFORM_FACTOR = DATE_OPTION_HEIGHT / 40;
-const DEFAULT_DATE_CONFIG: DateConfigProps[] = [
+const DEFAULT_DATE_CONFIG: DatePickerConfigProps[] = [
     { type: 'date', format: 'DD', caption: 'Day', step: 1 },
     {
         type: 'month',
@@ -36,7 +36,7 @@ const DEFAULT_DATE_CONFIG: DateConfigProps[] = [
     { type: 'year', format: 'YYYY', caption: 'Year', step: 1 }
 ];
 
-export type DateConfigProps = DateConfig;
+export type DatePickerConfigProps = DateConfig;
 
 export interface MobileDatePickerProps {
     label: string;
@@ -50,7 +50,7 @@ export interface MobileDatePickerProps {
     helperText?: React.ReactNode;
     pickerHeaderTitle?: string;
     primaryColor?: string;
-    dateConfig?: DateConfigProps[];
+    dateConfig?: DatePickerConfigProps[];
     minDate?: Date;
     maxDate?: Date;
     onChange: (_: Date) => void;

@@ -6,7 +6,7 @@ import { action } from '@storybook/addon-actions';
 import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
 import {
-    type DateConfigProps,
+    type DatePickerConfigProps,
     MobileDatePicker,
     type MobileDatePickerProps
 } from './MobileDatePicker';
@@ -59,7 +59,7 @@ const MobileDatePickerStates = (props: MobileDatePickerProps) => {
               });
     };
 
-    const dateConfig: DateConfigProps[] = [
+    const dateConfig: DatePickerConfigProps[] = [
         { type: 'year', format: 'YYYY', caption: 'Year', step: 1 },
         {
             type: 'month',
