@@ -13,6 +13,7 @@ export const MobileDatePickerFooter = ({
 }: MobileDatePickerFooterProps) => {
     return (
         <Grid
+            id="mobile-date-picker-footer"
             container
             justifyContent="end"
             alignItems="center"

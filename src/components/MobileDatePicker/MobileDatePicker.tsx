@@ -1,8 +1,6 @@
 import React from 'react';
 
-import DatePicker, {
-    type DateConfig as DateConfigProps
-} from 'react-mobile-datepicker-ts';
+import DatePicker, { type DateConfig } from 'react-mobile-datepicker-ts';
 import 'react-mobile-datepicker-ts/dist/main.css';
 
 import {
@@ -38,6 +36,8 @@ const DEFAULT_DATE_CONFIG: DateConfigProps[] = [
     { type: 'year', format: 'YYYY', caption: 'Year', step: 1 }
 ];
 
+export type DateConfigProps = DateConfig;
+
 export interface MobileDatePickerProps {
     label: string;
     name: string;
@@ -54,7 +54,7 @@ export interface MobileDatePickerProps {
     minDate?: Date;
     maxDate?: Date;
     onChange: (_: Date) => void;
-    getFormattedPreview?: (_: Date | string) => string;
+    getValuePreview?: (_: Date | string) => string;
 }
 
 export const MobileDatePicker = ({
@@ -73,7 +73,7 @@ export const MobileDatePicker = ({
     minDate = undefined,
     maxDate = undefined,
     onChange,
-    getFormattedPreview = undefined
+    getValuePreview = undefined
 }: MobileDatePickerProps) => {
     const isMobile = useIsMobile();
     const theme = useTheme();
@@ -152,17 +152,17 @@ export const MobileDatePicker = ({
                     height: DATE_OPTION_HEIGHT * 5,
                     '&::after': {
                         backgroundImage: `linear-gradient(
-        rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 2}px,
-        rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 2}px,
-        rgba(255, 255, 255, 0) ${DATE_OPTION_HEIGHT * 3 + 2}px,
-        rgba(255, 255, 255, 0.45) ${DATE_OPTION_HEIGHT * 3 + 2}px)`
+                                        rgba(255, 255, 255, 0.45) 39.5%,
+                                        rgba(255, 255, 255, 0) 39.5%,
+                                        rgba(255, 255, 255, 0) 61%,
+                                        rgba(255, 255, 255, 0.45) 61%)`
                     }
                 }
             }
         };
     }, []);
 
-    const getValuePreview = React.useCallback(
+    const getDefaultValuePreview = React.useCallback(
         (modifiedValue: Date | string) => {
             return typeof modifiedValue === 'string'
                 ? ''
@@ -181,6 +181,7 @@ export const MobileDatePicker = ({
     // TODO: Give `id`s to each element
     return (
         <FormControl
+            id="mobile-date-picker-input"
             fullWidth
             size={size}
             required={required}
@@ -196,7 +197,7 @@ export const MobileDatePicker = ({
                 labelId={`${name}-label`}
                 label={label}
                 value={value || ''}
-                renderValue={getFormattedPreview ?? getValuePreview}
+                renderValue={getValuePreview ?? getDefaultValuePreview}
                 MenuProps={menuProps}
                 onOpen={() => setIsOpen(true)}
             >
@@ -204,7 +205,7 @@ export const MobileDatePicker = ({
                     title={pickerHeaderTitle || label}
                     onCloseClick={onCloseClick}
                 />
-                <Box sx={datePickerSx}>
+                <Box id="mobile-date-picker" sx={datePickerSx}>
                     <DatePicker
                         isPopup={false}
                         showHeader={false}

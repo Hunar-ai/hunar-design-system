@@ -19,7 +19,14 @@ export const MobileDatePickerHeader = ({
     };
 
     return (
-        <Box position="sticky" top={0} left={0} width="100%" bgcolor="white">
+        <Box
+            id="mobile-date-picker-header"
+            position="sticky"
+            top={0}
+            left={0}
+            width="100%"
+            bgcolor="white"
+        >
             <Grid container alignItems="center" px={2} py={1.5}>
                 <Grid item xs>
                     <Typography
