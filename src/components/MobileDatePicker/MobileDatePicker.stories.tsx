@@ -64,8 +64,8 @@ const MobileDatePickerSection = ({
 const MobileDatePickerStates = (props: MobileDatePickerProps) => {
     const getValuePreview = (modifiedValue: Date | string) => {
         return typeof modifiedValue === 'string'
-            ? ''
-            : modifiedValue.toLocaleDateString(undefined, {
+            ? modifiedValue
+            : modifiedValue.toLocaleDateString('en-IN', {
                   dateStyle: 'short'
               });
     };
@@ -112,18 +112,27 @@ const MobileDatePickerStates = (props: MobileDatePickerProps) => {
                 required
             />
             <MobileDatePickerSection
+                sectionTitle="Placeholder"
+                sectionDescription='Here, the placeholder is "Choose Date". Try changing the placeholder from controls'
+                {...props}
+                name="placeholder"
+                placeholder="Choose Date"
+            />
+            <MobileDatePickerSection
                 sectionTitle="Field Size: small"
                 {...props}
                 size={FIELD_SIZE.small}
             />
             <MobileDatePickerSection
                 sectionTitle="Min Date"
+                sectionDescription="Min Date is set to 1 Jan 2023"
                 {...props}
                 name="min-date"
                 minDate={new Date('1 Jan 2023')}
             />
             <MobileDatePickerSection
                 sectionTitle="Max Date"
+                sectionDescription="Max Date is set to Today"
                 {...props}
                 name="max-date"
                 maxDate={new Date()}
@@ -186,7 +195,13 @@ export const Playground: StoryProps = {
 export const States: StoryProps = {
     parameters: {
         controls: {
-            include: ['label', 'id', 'pickerHeaderTitle', 'primaryColor']
+            include: [
+                'label',
+                'id',
+                'pickerHeaderTitle',
+                'primaryColor',
+                'placeholder'
+            ]
         }
     },
     render: props => <MobileDatePickerStates {...props} />

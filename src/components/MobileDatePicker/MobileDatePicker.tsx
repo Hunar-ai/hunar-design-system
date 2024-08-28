@@ -29,12 +29,14 @@ const DEFAULT_DATE_CONFIG: DatePickerConfigProps[] = [
     { type: 'date', format: 'DD', caption: 'Day', step: 1 },
     {
         type: 'month',
-        format: value => value.toLocaleString(undefined, { month: 'short' }),
+        format: value => value.toLocaleString('en-IN', { month: 'short' }),
         caption: 'Month',
         step: 1
     },
     { type: 'year', format: 'YYYY', caption: 'Year', step: 1 }
 ];
+const DEFAULT_MIN_DATE = new Date('1900 Jan 01');
+const DEFAULT_MAX_DATE = new Date('2100 Dec 31');
 
 export type DatePickerConfigProps = DateConfig;
 
@@ -47,6 +49,7 @@ export interface MobileDatePickerProps {
     required?: boolean;
     disabled?: boolean;
     error?: boolean;
+    placeholder?: string;
     helperText?: React.ReactNode;
     pickerHeaderTitle?: string;
     primaryColor?: string;
@@ -66,6 +69,7 @@ export const MobileDatePicker = ({
     required = false,
     disabled = false,
     error = false,
+    placeholder = '',
     helperText = '',
     pickerHeaderTitle = undefined,
     primaryColor = undefined,
@@ -165,8 +169,8 @@ export const MobileDatePicker = ({
     const getDefaultValuePreview = React.useCallback(
         (modifiedValue: Date | string) => {
             return typeof modifiedValue === 'string'
-                ? ''
-                : modifiedValue.toLocaleDateString(undefined, {
+                ? modifiedValue
+                : modifiedValue.toLocaleDateString('en-IN', {
                       dateStyle: 'long'
                   });
         },
@@ -195,7 +199,7 @@ export const MobileDatePicker = ({
                 id={id}
                 labelId={`${name}-label`}
                 label={label}
-                value={value || ''}
+                value={value || placeholder}
                 renderValue={getValuePreview ?? getDefaultValuePreview}
                 MenuProps={menuProps}
                 onOpen={() => setIsOpen(true)}
@@ -214,8 +218,8 @@ export const MobileDatePicker = ({
                             setSelectedValue(modifiedValue)
                         }
                         dateConfig={dateConfig ?? DEFAULT_DATE_CONFIG}
-                        min={minDate}
-                        max={maxDate}
+                        min={minDate ?? DEFAULT_MIN_DATE}
+                        max={maxDate ?? DEFAULT_MAX_DATE}
                     />
                 </Box>
                 <MobileDatePickerFooter
