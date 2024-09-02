@@ -138,6 +138,7 @@ export const MobileDatePicker = ({
 
     const datePickerSx: SxProps = React.useMemo(() => {
         return {
+            minWidth: 250,
             '.datepicker.default': {
                 position: 'static',
                 bgcolor: 'white',
