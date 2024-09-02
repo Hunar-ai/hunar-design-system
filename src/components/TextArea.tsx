@@ -7,7 +7,7 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { asteriskStyle } from '@/theme';
 import { FIELD_SIZE } from '@/Enum';
 
-interface TextAreaProps {
+export interface TextAreaProps {
     name: string;
     value: string;
     placeholder: string;

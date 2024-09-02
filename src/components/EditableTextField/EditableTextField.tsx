@@ -2,13 +2,14 @@ import React from 'react';
 
 import { Grid, type SxProps, useTheme } from '@mui/material';
 
-import { ChatTextInputPreview } from './ChatTextInputPreview';
-import { ChatTextInputCtaList } from './ChatTextInputCtaList';
-import { ChatTextInputField } from './ChatTextInputField';
+import { EditableTextFieldPreview } from './EditableTextFieldPreview';
+import { EditableTextFieldCtaList } from './EditableTextFieldCtaList';
+import { EditableTextInput } from './EditableTextInput';
 
 import { BUTTON_SIZE, TEXT_INPUT_VARIANT, FIELD_SIZE } from '@/Enum';
+import { NumberUtils } from '@/utils/NumberUtils';
 
-export interface ChatTextInputProps {
+export interface EditableTextFieldProps {
     name: string;
     value: string;
     id?: string;
@@ -29,7 +30,7 @@ export interface ChatTextInputProps {
     handleIsValidCheck?: (_: string) => boolean;
 }
 
-export const ChatTextInput = ({
+export const EditableTextField = ({
     name,
     value,
     id = '',
@@ -48,7 +49,7 @@ export const ChatTextInput = ({
     previewSx = {},
     onSave,
     handleIsValidCheck = undefined
-}: ChatTextInputProps) => {
+}: EditableTextFieldProps) => {
     const theme = useTheme();
     const [editedValue, setEditedValue] = React.useState(value);
     const [isEditing, setIsEditing] = React.useState(false);
@@ -61,6 +62,12 @@ export const ChatTextInput = ({
         () => primaryColor || theme.palette.primary.main,
         [primaryColor, theme.palette.primary.main]
     );
+
+    const formattedPreviewText = React.useMemo(() => {
+        return variant === TEXT_INPUT_VARIANT.CURRENCY
+            ? NumberUtils.toINR(parseInt(value))
+            : value;
+    }, [value, variant]);
 
     const onFieldChange = (e: React.BaseSyntheticEvent) => {
         setEditedValue(e.target.value);
@@ -87,7 +94,7 @@ export const ChatTextInput = ({
     return (
         <Grid container rowGap={0.5} justifyContent="end">
             {!value || isEditing ? (
-                <ChatTextInputField
+                <EditableTextInput
                     id={id}
                     name={name}
                     label={label}
@@ -108,16 +115,15 @@ export const ChatTextInput = ({
                     onBlur={onBlur}
                 />
             ) : (
-                <ChatTextInputPreview
-                    value={value}
+                <EditableTextFieldPreview
+                    previewText={formattedPreviewText}
                     fieldSize={fieldSize}
-                    variant={variant}
                     sx={previewSx}
                     onEditClick={() => setIsEditing(true)}
                 />
             )}
             {isEditing && (
-                <ChatTextInputCtaList
+                <EditableTextFieldCtaList
                     buttonSize={buttonSize}
                     primaryColor={selectedPrimaryColor}
                     isCancelDisabled={!editedValue || hasErrors}
