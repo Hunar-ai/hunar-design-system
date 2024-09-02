@@ -11,7 +11,7 @@ import {
     type MobileDatePickerProps
 } from './MobileDatePicker';
 
-import { FIELD_SIZE } from '@/Enum';
+import { FIELD_SIZE, POPOVER_ORIGIN } from '@/Enum';
 
 const onChange = action('change');
 
@@ -165,6 +165,14 @@ const meta = {
         size: {
             control: 'select',
             options: [FIELD_SIZE.small, FIELD_SIZE.medium]
+        },
+        anchorOrigin: {
+            control: 'select',
+            options: Object.values(POPOVER_ORIGIN)
+        },
+        transformOrigin: {
+            control: 'select',
+            options: Object.values(POPOVER_ORIGIN)
         }
     },
     args: {
@@ -198,6 +206,7 @@ export const States: StoryProps = {
             include: [
                 'label',
                 'id',
+                'sx',
                 'pickerHeaderTitle',
                 'primaryColor',
                 'placeholder'

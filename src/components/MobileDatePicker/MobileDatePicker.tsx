@@ -17,11 +17,12 @@ import { grey } from '@mui/material/colors';
 
 import { MobileDatePickerHeader } from './MobileDatePickerHeader';
 import { MobileDatePickerFooter } from './MobileDatePickerFooter';
+import { PlaceholderPreview } from './PlaceholderPreview';
 
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-import { FIELD_SIZE } from '@/Enum';
-import { BACKDROP_BG_COLOR } from '@/Constants';
+import { FIELD_SIZE, POPOVER_ORIGIN } from '@/Enum';
+import { BACKDROP_BG_COLOR, POPOVER_ORIGIN_MAP } from '@/Constants';
 
 const DATE_OPTION_HEIGHT = 56;
 const SCROLL_TRANSFORM_FACTOR = DATE_OPTION_HEIGHT / 40;
@@ -56,6 +57,9 @@ export interface MobileDatePickerProps {
     dateConfig?: DatePickerConfigProps[];
     minDate?: Date;
     maxDate?: Date;
+    sx?: SxProps;
+    anchorOrigin?: POPOVER_ORIGIN;
+    transformOrigin?: POPOVER_ORIGIN;
     onChange: (_: Date) => void;
     getValuePreview?: (_: Date | string) => string;
 }
@@ -76,6 +80,9 @@ export const MobileDatePicker = ({
     dateConfig = undefined,
     minDate = undefined,
     maxDate = undefined,
+    sx = {},
+    anchorOrigin = POPOVER_ORIGIN.BOTTOM_CENTER,
+    transformOrigin = POPOVER_ORIGIN.TOP_CENTER,
     onChange,
     getValuePreview = undefined
 }: MobileDatePickerProps) => {
@@ -101,6 +108,8 @@ export const MobileDatePicker = ({
             onClose: onCloseClick,
             anchorReference: isMobile ? 'anchorPosition' : 'anchorEl',
             anchorPosition: isMobile ? { top: 0, left: 0 } : undefined,
+            anchorOrigin: POPOVER_ORIGIN_MAP[anchorOrigin],
+            transformOrigin: POPOVER_ORIGIN_MAP[transformOrigin],
             sx: {
                 '.MuiMenu-paper': isMobile ? { width: '100%' } : {},
                 '.MuiMenu-list': { py: 0 },
@@ -109,7 +118,7 @@ export const MobileDatePicker = ({
                 }
             }
         }),
-        [isMobile, onCloseClick]
+        [anchorOrigin, isMobile, onCloseClick, transformOrigin]
     );
 
     const selectedPrimaryColor = React.useMemo(() => {
@@ -168,11 +177,13 @@ export const MobileDatePicker = ({
 
     const getDefaultValuePreview = React.useCallback(
         (modifiedValue: Date | string) => {
-            return typeof modifiedValue === 'string'
-                ? modifiedValue
-                : modifiedValue.toLocaleDateString('en-IN', {
-                      dateStyle: 'long'
-                  });
+            return typeof modifiedValue === 'string' ? (
+                <PlaceholderPreview placeholderText={modifiedValue} />
+            ) : (
+                modifiedValue.toLocaleDateString('en-IN', {
+                    dateStyle: 'long'
+                })
+            );
         },
         []
     );
@@ -200,6 +211,7 @@ export const MobileDatePicker = ({
                 labelId={`${name}-label`}
                 label={label}
                 value={value || placeholder}
+                sx={sx}
                 renderValue={getValuePreview ?? getDefaultValuePreview}
                 MenuProps={menuProps}
                 onOpen={() => setIsOpen(true)}
