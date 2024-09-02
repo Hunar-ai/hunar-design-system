@@ -4,17 +4,20 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { StorySection } from '@/components/storybook';
-import { ChatTextInput, ChatTextInputProps } from './ChatTextInput';
+import { EditableTextArea, EditableTextAreaProps } from './EditableTextArea';
 
-import { BUTTON_SIZE, TEXT_INPUT_VARIANT, FIELD_SIZE } from '@/Enum';
+import { BUTTON_SIZE, FIELD_SIZE } from '@/Enum';
 
 const onSave = action('save');
 
-const ControlledChatTextInput = ({ value, ...props }: ChatTextInputProps) => {
+const ControlledEditableTextArea = ({
+    value,
+    ...props
+}: EditableTextAreaProps) => {
     const [valueState, setValueState] = React.useState(value);
 
     return (
-        <ChatTextInput
+        <EditableTextArea
             {...props}
             value={valueState}
             onSave={modifiedValue => {
@@ -25,73 +28,80 @@ const ControlledChatTextInput = ({ value, ...props }: ChatTextInputProps) => {
     );
 };
 
-interface ChatTextInputSectionProps extends ChatTextInputProps {
+interface EditableTextAreaSectionProps extends EditableTextAreaProps {
     sectionTitle: string;
     sectionDescription?: string;
 }
 
-const ChatTextInputSection = ({
+const EditableTextAreaSection = ({
     sectionTitle,
     sectionDescription,
     ...props
-}: ChatTextInputSectionProps) => {
+}: EditableTextAreaSectionProps) => {
     return (
         <StorySection title={sectionTitle} description={sectionDescription}>
-            <ControlledChatTextInput {...props} />
+            <ControlledEditableTextArea {...props} />
         </StorySection>
     );
 };
 
-const ChatTextInputStates = (props: ChatTextInputProps) => {
+const EditableTextAreaStates = (props: EditableTextAreaProps) => {
     return (
         <>
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="Default"
                 {...props}
                 name="default"
             />
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="Filled value"
                 sectionDescription="Click on edit icon to change the filled value"
                 {...props}
                 value="1234"
             />
-            <ChatTextInputSection sectionTitle="Disabled" {...props} disabled />
-            <ChatTextInputSection sectionTitle="Required" {...props} required />
-            <ChatTextInputSection
+            <EditableTextAreaSection
+                sectionTitle="Disabled"
+                {...props}
+                disabled
+            />
+            <EditableTextAreaSection
+                sectionTitle="Required"
+                {...props}
+                required
+            />
+            <EditableTextAreaSection
                 sectionTitle="Placeholder"
                 sectionDescription="Try different value of `placeholder` from controls"
                 {...props}
-                label=""
             />
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="Field Size: Medium"
                 {...props}
                 fieldSize={FIELD_SIZE.medium}
             />
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="Button Size: Medium"
                 {...props}
                 buttonSize={BUTTON_SIZE.medium}
             />
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="Button Size: Small"
                 {...props}
                 buttonSize={BUTTON_SIZE.small}
             />
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="HelperText"
                 {...props}
                 helperMsg="This is helper text"
             />
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="With validation"
                 sectionDescription="Enter text longer than 4 characters to see error"
                 {...props}
                 handleIsValidCheck={inputValue => inputValue.length > 4}
                 errorMsg="Must be smaller than 5 characters"
             />
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle="With validation"
                 sectionDescription="Enter text longer than 5 characters to remove error"
                 {...props}
@@ -103,8 +113,8 @@ const ChatTextInputStates = (props: ChatTextInputProps) => {
 };
 
 const meta = {
-    title: 'Components/ChatTextInput',
-    component: ChatTextInput,
+    title: 'Components/EditableTextArea',
+    component: EditableTextArea,
     parameters: { controls: { expanded: true } },
     argTypes: {
         fieldSize: {
@@ -114,33 +124,19 @@ const meta = {
         buttonSize: {
             control: 'select',
             options: [BUTTON_SIZE.small, BUTTON_SIZE.medium, BUTTON_SIZE.large]
-        },
-        variant: {
-            control: 'select',
-            options: [
-                TEXT_INPUT_VARIANT.TEXT_FIELD,
-                TEXT_INPUT_VARIANT.TEXT_AREA,
-                TEXT_INPUT_VARIANT.CURRENCY
-            ]
-        },
-        textFieldType: {
-            table: {
-                type: { summary: `React.HTMLInputTypeAttribute` }
-            },
-            control: 'text'
         }
     },
     args: { value: '', onSave }
-} satisfies Meta<typeof ChatTextInput>;
+} satisfies Meta<typeof EditableTextArea>;
 
 export default meta;
 
-type StoryProps = StoryObj<typeof ChatTextInput>;
+type StoryProps = StoryObj<typeof EditableTextArea>;
 
 export const Playground: StoryProps = {
     render: function Playground(props) {
         return (
-            <ChatTextInputSection
+            <EditableTextAreaSection
                 sectionTitle=""
                 // eslint-disable-next-line max-len
                 sectionDescription={`Change various props in the "Controls" panel to see how they change behavior of the component`}
@@ -162,35 +158,11 @@ const variantAllowedControls = [
     'previewSx'
 ];
 
-export const TextField: StoryProps = {
+export const States: StoryProps = {
     parameters: {
         controls: {
             include: variantAllowedControls
         }
     },
-    argTypes: { variant: { options: [TEXT_INPUT_VARIANT.TEXT_FIELD] } },
-    args: { variant: TEXT_INPUT_VARIANT.TEXT_FIELD, label: 'TextField' },
-    render: props => <ChatTextInputStates {...props} />
-};
-
-export const TextArea: StoryProps = {
-    parameters: {
-        controls: {
-            include: variantAllowedControls
-        }
-    },
-    argTypes: { variant: { options: [TEXT_INPUT_VARIANT.TEXT_AREA] } },
-    args: { variant: TEXT_INPUT_VARIANT.TEXT_AREA, label: 'TextArea' },
-    render: props => <ChatTextInputStates {...props} />
-};
-
-export const CurrencyField: StoryProps = {
-    parameters: {
-        controls: {
-            include: variantAllowedControls
-        }
-    },
-    argTypes: { variant: { options: [TEXT_INPUT_VARIANT.CURRENCY] } },
-    args: { variant: TEXT_INPUT_VARIANT.CURRENCY, label: 'Currency' },
-    render: props => <ChatTextInputStates {...props} />
+    render: props => <EditableTextAreaStates {...props} />
 };

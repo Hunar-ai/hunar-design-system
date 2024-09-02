@@ -7,7 +7,10 @@ export {
     type KebabMenuOptionProps,
     type KebabMenuProps
 } from './KebabMenu';
-export { ChatTextInput, type ChatTextInputProps } from './ChatTextInput';
+export {
+    EditableTextField,
+    type EditableTextFieldProps
+} from './EditableTextField';
 export {
     MobileDatePicker,
     type MobileDatePickerProps,

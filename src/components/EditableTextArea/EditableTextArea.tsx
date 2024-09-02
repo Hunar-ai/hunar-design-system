@@ -2,53 +2,48 @@ import React from 'react';
 
 import { Grid, type SxProps, useTheme } from '@mui/material';
 
-import { ChatTextInputPreview } from './ChatTextInputPreview';
-import { ChatTextInputCtaList } from './ChatTextInputCtaList';
-import { ChatTextInputField } from './ChatTextInputField';
+import { EditableTextFieldPreview } from '@/components/EditableTextField/EditableTextFieldPreview';
+import { EditableTextFieldCtaList } from '@/components/EditableTextField/EditableTextFieldCtaList';
+import { HelperText } from '@/components/HelperText';
+import { TextArea } from '@/components/TextArea';
 
-import { BUTTON_SIZE, TEXT_INPUT_VARIANT, FIELD_SIZE } from '@/Enum';
+import { BUTTON_SIZE, FIELD_SIZE } from '@/Enum';
 
-export interface ChatTextInputProps {
+export interface EditableTextAreaProps {
     name: string;
     value: string;
-    id?: string;
-    label?: string;
+    id: string;
     required?: boolean;
     disabled?: boolean;
     primaryColor?: string;
-    variant?: TEXT_INPUT_VARIANT;
     placeholder?: string;
     fieldSize?: FIELD_SIZE;
     buttonSize?: BUTTON_SIZE;
     errorMsg?: string;
     helperMsg?: string;
-    textFieldType?: React.HTMLInputTypeAttribute;
     inputFieldSx?: SxProps;
     previewSx?: SxProps;
     onSave: (_: string) => void;
     handleIsValidCheck?: (_: string) => boolean;
 }
 
-export const ChatTextInput = ({
+export const EditableTextArea = ({
     name,
     value,
-    id = '',
-    label = '',
+    id,
     required = false,
     disabled = false,
     primaryColor = undefined,
-    variant = TEXT_INPUT_VARIANT.TEXT_FIELD,
     placeholder = 'Type here...',
     fieldSize = FIELD_SIZE.small,
     buttonSize = BUTTON_SIZE.large,
     errorMsg = '',
     helperMsg = '',
-    textFieldType = 'text',
     inputFieldSx = {},
     previewSx = {},
     onSave,
     handleIsValidCheck = undefined
-}: ChatTextInputProps) => {
+}: EditableTextAreaProps) => {
     const theme = useTheme();
     const [editedValue, setEditedValue] = React.useState(value);
     const [isEditing, setIsEditing] = React.useState(false);
@@ -87,37 +82,38 @@ export const ChatTextInput = ({
     return (
         <Grid container rowGap={0.5} justifyContent="end">
             {!value || isEditing ? (
-                <ChatTextInputField
+                <TextArea
+                    fullWidth
                     id={id}
                     name={name}
-                    label={label}
-                    variant={variant}
                     required={required}
                     disabled={disabled}
                     primaryColor={selectedPrimaryColor}
                     value={editedValue}
-                    fieldSize={fieldSize}
                     placeholder={placeholder}
                     error={hasErrors}
-                    errorMsg={errorMsg}
-                    helperMsg={helperMsg}
-                    textFieldType={textFieldType}
-                    inputFieldSx={inputFieldSx}
-                    onFieldChange={onFieldChange}
+                    sx={inputFieldSx}
+                    onChange={onFieldChange}
                     onFocus={onFocus}
                     onBlur={onBlur}
+                    helperText={
+                        <HelperText
+                            hasError={hasErrors}
+                            errorMsg={errorMsg}
+                            msg={helperMsg}
+                        />
+                    }
                 />
             ) : (
-                <ChatTextInputPreview
-                    value={value}
+                <EditableTextFieldPreview
+                    previewText={value}
                     fieldSize={fieldSize}
-                    variant={variant}
                     sx={previewSx}
                     onEditClick={() => setIsEditing(true)}
                 />
             )}
             {isEditing && (
-                <ChatTextInputCtaList
+                <EditableTextFieldCtaList
                     buttonSize={buttonSize}
                     primaryColor={selectedPrimaryColor}
                     isCancelDisabled={!editedValue || hasErrors}
