@@ -1,5 +1,6 @@
 import {
     NumericFormat,
+    type NumericFormatProps,
     type NumberFormatValues as NumberFormatValuesProps,
     type SourceInfo as SourceInfoProps
 } from 'react-number-format';
@@ -23,6 +24,7 @@ interface CurrencyFieldProps {
     helperText?: React.ReactNode;
     decimalScale?: number;
     allowNegative?: boolean;
+    thousandsGroupStyle?: NumericFormatProps['thousandsGroupStyle'];
     onChange?: (_: React.BaseSyntheticEvent) => void;
     onFocus?: (_: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (_: React.FocusEvent<HTMLInputElement>) => void;
@@ -45,6 +47,7 @@ export const CurrencyField = ({
     helperText = '',
     decimalScale = 0,
     allowNegative = false,
+    thousandsGroupStyle = 'lakh',
     onChange = () => undefined,
     onFocus = () => undefined,
     onBlur = () => undefined,
@@ -94,7 +97,7 @@ export const CurrencyField = ({
             decimalScale={decimalScale}
             allowNegative={allowNegative}
             thousandSeparator=","
-            thousandsGroupStyle="lakh"
+            thousandsGroupStyle={thousandsGroupStyle}
         />
     );
 };

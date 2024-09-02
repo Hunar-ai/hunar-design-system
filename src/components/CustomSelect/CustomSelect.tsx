@@ -32,7 +32,7 @@ export interface CustomSelectProps {
     name: string;
     options: OptionsProps;
     value: OptionProps | OptionsProps | null;
-    id?: string;
+    id: string;
     size?: FIELD_SIZE;
     multiple?: boolean;
     required?: boolean;
@@ -54,7 +54,7 @@ export const CustomSelect = ({
     name,
     options,
     value,
-    id = '',
+    id,
     size = FIELD_SIZE.medium,
     multiple = false,
     required = false,

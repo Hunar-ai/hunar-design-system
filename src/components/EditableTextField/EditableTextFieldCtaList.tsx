@@ -4,7 +4,7 @@ import { CustomButton } from '@/components/CustomButton';
 
 import { BUTTON_SIZE } from '@/Enum';
 
-interface ChatTextInputCtaListProps {
+interface EditableTextFieldCtaListProps {
     buttonSize: BUTTON_SIZE;
     primaryColor: string;
     isCancelDisabled: boolean;
@@ -13,14 +13,14 @@ interface ChatTextInputCtaListProps {
     onSaveClick: VoidFunction;
 }
 
-export const ChatTextInputCtaList = ({
+export const EditableTextFieldCtaList = ({
     buttonSize,
     primaryColor,
     isCancelDisabled,
     isSaveDisabled,
     onCancelClick,
     onSaveClick
-}: ChatTextInputCtaListProps) => {
+}: EditableTextFieldCtaListProps) => {
     return (
         <Grid item xs={12} display="flex" justifyContent="end" columnGap={1.5}>
             <CustomButton

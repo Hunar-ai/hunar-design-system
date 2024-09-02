@@ -34,6 +34,5 @@ export enum POPOVER_ORIGIN {
 
 export enum TEXT_INPUT_VARIANT {
     TEXT_FIELD = 'TEXT_FIELD',
-    TEXT_AREA = 'TEXT_AREA',
     CURRENCY = 'CURRENCY'
 }

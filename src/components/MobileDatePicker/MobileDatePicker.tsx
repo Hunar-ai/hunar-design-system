@@ -45,7 +45,7 @@ export interface MobileDatePickerProps {
     label: string;
     name: string;
     value: Date | null;
-    id?: string;
+    id: string;
     size?: FIELD_SIZE;
     required?: boolean;
     disabled?: boolean;
@@ -68,7 +68,7 @@ export const MobileDatePicker = ({
     label,
     name,
     value,
-    id = '',
+    id,
     size = FIELD_SIZE.medium,
     required = false,
     disabled = false,

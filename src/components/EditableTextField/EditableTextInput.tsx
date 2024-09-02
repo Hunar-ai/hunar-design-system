@@ -4,11 +4,10 @@ import { type SxProps, TextField } from '@mui/material';
 
 import { CurrencyField } from '@/components/CurrencyField';
 import { HelperText } from '@/components/HelperText';
-import { TextArea } from '@/components/TextArea';
 
 import { FIELD_SIZE, TEXT_INPUT_VARIANT } from '@/Enum';
 
-interface ChatTextInputFieldProps {
+interface EditableTextInputProps {
     name: string;
     value: string;
     variant: TEXT_INPUT_VARIANT;
@@ -29,7 +28,7 @@ interface ChatTextInputFieldProps {
     onBlur: VoidFunction;
 }
 
-export const ChatTextInputField = ({
+export const EditableTextInput = ({
     name,
     value,
     variant,
@@ -48,7 +47,7 @@ export const ChatTextInputField = ({
     onFieldChange,
     onFocus,
     onBlur
-}: ChatTextInputFieldProps) => {
+}: EditableTextInputProps) => {
     const borderColorSx = React.useMemo(() => {
         return {
             '& .MuiInputBase-root.Mui-focused fieldset': {
@@ -58,32 +57,6 @@ export const ChatTextInputField = ({
     }, [error, primaryColor]);
 
     switch (variant) {
-        case TEXT_INPUT_VARIANT.TEXT_AREA:
-            return (
-                <TextArea
-                    fullWidth
-                    name={name}
-                    id={id}
-                    required={required}
-                    disabled={disabled}
-                    primaryColor={primaryColor}
-                    value={value}
-                    size={fieldSize}
-                    placeholder={placeholder}
-                    sx={inputFieldSx}
-                    onChange={onFieldChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    error={error}
-                    helperText={
-                        <HelperText
-                            hasError={error}
-                            errorMsg={errorMsg}
-                            msg={helperMsg}
-                        />
-                    }
-                />
-            );
         case TEXT_INPUT_VARIANT.CURRENCY:
             return (
                 <CurrencyField
@@ -116,7 +89,6 @@ export const ChatTextInputField = ({
                 <TextField
                     type={textFieldType}
                     fullWidth
-                    autoComplete="off"
                     name={name}
                     id={id}
                     label={label}
