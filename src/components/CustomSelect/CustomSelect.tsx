@@ -18,13 +18,14 @@ import { CustomSelectFooter } from './CustomSelectFooter';
 import { CustomSelectHeader } from './CustomSelectHeader';
 import { CustomSelectOption } from './CustomSelectOption';
 import { CustomSelectNoOptionsText } from './CustomSelectNoOptionsText';
+import { PlaceholderPreview } from '@/components/MobileDatePicker/PlaceholderPreview';
 
 import { useHelper } from '@/hooks/useHelper';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
 import type { OptionProps, OptionsProps } from '@/interfaces';
-import { FIELD_SIZE } from '@/Enum';
-import { BACKDROP_BG_COLOR } from '@/Constants';
+import { FIELD_SIZE, POPOVER_ORIGIN } from '@/Enum';
+import { BACKDROP_BG_COLOR, POPOVER_ORIGIN_MAP } from '@/Constants';
 
 export interface CustomSelectProps {
     label: string;
@@ -37,10 +38,14 @@ export interface CustomSelectProps {
     required?: boolean;
     disabled?: boolean;
     error?: boolean;
+    placeholder?: string;
     helperText?: React.ReactNode;
     optionsHeaderTitle?: string;
     disabledOptions?: OptionsProps;
     primaryColor?: string;
+    sx?: SxProps;
+    anchorOrigin?: POPOVER_ORIGIN;
+    transformOrigin?: POPOVER_ORIGIN;
     onChange: (_: OptionProps | OptionsProps | null) => void;
 }
 
@@ -55,10 +60,14 @@ export const CustomSelect = ({
     required = false,
     disabled = false,
     error = false,
+    placeholder = '',
     helperText = '',
     optionsHeaderTitle = undefined,
     disabledOptions = [],
     primaryColor = undefined,
+    sx = {},
+    anchorOrigin = POPOVER_ORIGIN.BOTTOM_CENTER,
+    transformOrigin = POPOVER_ORIGIN.TOP_CENTER,
     onChange
 }: CustomSelectProps) => {
     const isMobile = useIsMobile();
@@ -109,6 +118,8 @@ export const CustomSelect = ({
             onClose: onCloseClick,
             anchorReference: isMobile ? 'anchorPosition' : 'anchorEl',
             anchorPosition: isMobile ? { top: 0, left: 0 } : undefined,
+            anchorOrigin: POPOVER_ORIGIN_MAP[anchorOrigin],
+            transformOrigin: POPOVER_ORIGIN_MAP[transformOrigin],
             sx: {
                 '.MuiMenu-paper': isMobile ? { width: '100%' } : {},
                 '.MuiMenu-list': { py: 0 },
@@ -117,7 +128,7 @@ export const CustomSelect = ({
                 }
             }
         }),
-        [isMobile, onCloseClick]
+        [anchorOrigin, isMobile, onCloseClick, transformOrigin]
     );
 
     const selectedPrimaryColor = React.useMemo(() => {
@@ -169,14 +180,22 @@ export const CustomSelect = ({
     const getSelectValuePreview = React.useCallback(
         (selectValue: string | string[]) => {
             if (typeof selectValue === 'string') {
-                return valueToLabelMap[selectValue];
+                return (
+                    valueToLabelMap[selectValue] || (
+                        <PlaceholderPreview placeholderText={placeholder} />
+                    )
+                );
             } else {
-                return selectValue
-                    .map(value => valueToLabelMap[value])
-                    .join(', ');
+                return (
+                    selectValue
+                        .map(value => valueToLabelMap[value])
+                        .join(', ') || (
+                        <PlaceholderPreview placeholderText={placeholder} />
+                    )
+                );
             }
         },
-        [valueToLabelMap]
+        [valueToLabelMap, placeholder]
     );
 
     const isOptionDisabled = React.useCallback(
@@ -235,6 +254,16 @@ export const CustomSelect = ({
         setSearch('');
     }, [onChange, selectedValue, valueToLabelMap]);
 
+    const valueWithPlaceholder = React.useMemo(() => {
+        if (Array.isArray(initialSelectedValue)) {
+            return initialSelectedValue.length === 0 && placeholder
+                ? [placeholder]
+                : initialSelectedValue;
+        } else {
+            return initialSelectedValue || placeholder;
+        }
+    }, [initialSelectedValue, placeholder]);
+
     return (
         <FormControl
             fullWidth
@@ -251,8 +280,9 @@ export const CustomSelect = ({
                 id={id}
                 labelId={`${name}-label`}
                 label={label}
+                sx={sx}
                 multiple={multiple}
-                value={initialSelectedValue}
+                value={valueWithPlaceholder}
                 renderValue={getSelectValuePreview}
                 MenuProps={menuProps}
                 onOpen={() => setIsOpen(true)}

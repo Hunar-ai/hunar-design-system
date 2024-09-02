@@ -8,7 +8,7 @@ import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
 import { CustomSelect, CustomSelectProps } from './CustomSelect';
 
-import { FIELD_SIZE } from '@/Enum';
+import { FIELD_SIZE, POPOVER_ORIGIN } from '@/Enum';
 import { OptionsProps } from '@/interfaces';
 
 const onChange = action('change');
@@ -87,6 +87,14 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 disabled
             />
             <CustomSelectSection
+                sectionTitle="Placeholder"
+                // eslint-disable-next-line max-len
+                sectionDescription='Here, the placeholder is "Choose Option". Try changing the placeholder from controls'
+                {...props}
+                name="placeholder"
+                placeholder="Choose Option"
+            />
+            <CustomSelectSection
                 sectionTitle="Disabled Options"
                 {...props}
                 name="disabledOptions "
@@ -148,6 +156,14 @@ const meta = {
         size: {
             control: 'select',
             options: [FIELD_SIZE.small, FIELD_SIZE.medium]
+        },
+        anchorOrigin: {
+            control: 'select',
+            options: Object.values(POPOVER_ORIGIN)
+        },
+        transformOrigin: {
+            control: 'select',
+            options: Object.values(POPOVER_ORIGIN)
         }
     },
     args: {
@@ -201,10 +217,19 @@ export const Playground: StoryProps = {
     }
 };
 
+const allowedControls = [
+    'multiple',
+    'size',
+    'sx',
+    'primaryColor',
+    'optionsHeaderTitle',
+    'placeholder'
+];
+
 export const SingleSelect: StoryProps = {
     parameters: {
         controls: {
-            include: ['multiple', 'size', 'primaryColor', 'optionsHeaderTitle']
+            include: allowedControls
         }
     },
     argTypes: { multiple: { control: 'select', options: [false] } },
@@ -217,7 +242,7 @@ export const SingleSelect: StoryProps = {
 export const MultiSelect: StoryProps = {
     parameters: {
         controls: {
-            include: ['multiple', 'size', 'primaryColor', 'optionsHeaderTitle']
+            include: allowedControls
         }
     },
     argTypes: { multiple: { control: 'select', options: [true] } },
