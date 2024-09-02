@@ -30,7 +30,7 @@ export const MobileDatePickerHeader = ({
             <Grid container alignItems="center" px={2} py={1.5}>
                 <Grid item xs>
                     <Typography
-                        variant="caption"
+                        variant="overline"
                         textTransform="uppercase"
                         color={grey[700]}
                     >
