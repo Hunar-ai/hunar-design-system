@@ -12,7 +12,7 @@ import { NumberUtils } from '@/utils/NumberUtils';
 export interface EditableTextFieldProps {
     name: string;
     value: string;
-    id?: string;
+    id: string;
     label?: string;
     required?: boolean;
     disabled?: boolean;
@@ -33,7 +33,7 @@ export interface EditableTextFieldProps {
 export const EditableTextField = ({
     name,
     value,
-    id = '',
+    id,
     label = '',
     required = false,
     disabled = false,

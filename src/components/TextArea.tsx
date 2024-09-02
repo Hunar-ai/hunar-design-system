@@ -11,7 +11,7 @@ export interface TextAreaProps {
     name: string;
     value: string;
     placeholder: string;
-    id?: string;
+    id: string;
     size?: FIELD_SIZE;
     fullWidth?: boolean;
     required?: boolean;
@@ -36,7 +36,7 @@ export const TextArea = ({
     name,
     value,
     placeholder,
-    id = '',
+    id,
     size = FIELD_SIZE.medium,
     fullWidth = false,
     required = false,

@@ -12,7 +12,7 @@ import { BUTTON_SIZE, FIELD_SIZE } from '@/Enum';
 export interface EditableTextAreaProps {
     name: string;
     value: string;
-    id?: string;
+    id: string;
     required?: boolean;
     disabled?: boolean;
     primaryColor?: string;
@@ -30,7 +30,7 @@ export interface EditableTextAreaProps {
 export const EditableTextArea = ({
     name,
     value,
-    id = '',
+    id,
     required = false,
     disabled = false,
     primaryColor = undefined,
