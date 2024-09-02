@@ -7,3 +7,7 @@ export {
     type KebabMenuOptionProps,
     type KebabMenuProps
 } from './KebabMenu';
+export {
+    EditableTextField,
+    type EditableTextFieldProps
+} from './EditableTextField';

@@ -31,3 +31,8 @@ export enum POPOVER_ORIGIN {
     BOTTOM_CENTER = 'bottom_center',
     BOTTOM_RIGHT = 'bottom_right'
 }
+
+export enum TEXT_INPUT_VARIANT {
+    TEXT_FIELD = 'TEXT_FIELD',
+    CURRENCY = 'CURRENCY'
+}

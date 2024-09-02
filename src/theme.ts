@@ -20,34 +20,9 @@ export const theme = createTheme({
         }
     },
     components: {
-        MuiInputBase: {
-            styleOverrides: {
-                sizeSmall: {
-                    fontSize: '0.85rem',
-                    minHeight: '2.2rem !important'
-                },
-                inputSizeSmall: {
-                    height: '0.9rem !important'
-                }
-            }
-        },
-
         MuiInputLabel: {
             styleOverrides: {
-                sizeSmall: {
-                    fontSize: '0.85rem'
-                },
                 asterisk: asteriskStyle
-            }
-        },
-        MuiButton: {
-            styleOverrides: {
-                sizeMedium: {
-                    height: '2.0.85rem'
-                },
-                sizeSmall: {
-                    height: '1.8rem'
-                }
             }
         },
         MuiSelect: {
