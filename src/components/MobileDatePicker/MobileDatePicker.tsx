@@ -196,7 +196,7 @@ export const MobileDatePicker = ({
 
     return (
         <FormControl
-            id="mobile-date-picker-input"
+            id={id}
             fullWidth
             size={size}
             required={required}
@@ -208,7 +208,7 @@ export const MobileDatePicker = ({
             <Select
                 open={isOpen}
                 name={name}
-                id={id}
+                id="mobile-date-picker-input"
                 labelId={`${name}-label`}
                 label={label}
                 value={value || placeholder}
