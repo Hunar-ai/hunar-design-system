@@ -58,8 +58,10 @@ export interface MobileDatePickerProps {
     minDate?: Date;
     maxDate?: Date;
     sx?: SxProps;
+    menuSx?: SxProps;
     anchorOrigin?: POPOVER_ORIGIN;
     transformOrigin?: POPOVER_ORIGIN;
+    menuMarginThreshold?: number;
     onChange: (_: Date) => void;
     getValuePreview?: (_: Date | string) => string;
 }
@@ -81,8 +83,10 @@ export const MobileDatePicker = ({
     minDate = undefined,
     maxDate = undefined,
     sx = {},
+    menuSx = {},
     anchorOrigin = POPOVER_ORIGIN.BOTTOM_CENTER,
     transformOrigin = POPOVER_ORIGIN.TOP_CENTER,
+    menuMarginThreshold = undefined,
     onChange,
     getValuePreview = undefined
 }: MobileDatePickerProps) => {
@@ -110,15 +114,24 @@ export const MobileDatePicker = ({
             anchorPosition: isMobile ? { top: 0, left: 0 } : undefined,
             anchorOrigin: POPOVER_ORIGIN_MAP[anchorOrigin],
             transformOrigin: POPOVER_ORIGIN_MAP[transformOrigin],
+            marginThreshold: menuMarginThreshold,
             sx: {
                 '.MuiMenu-paper': isMobile ? { width: '100%' } : {},
                 '.MuiMenu-list': { py: 0 },
                 '.MuiBackdrop-root': {
                     bgcolor: isMobile ? BACKDROP_BG_COLOR : undefined
-                }
+                },
+                ...menuSx
             }
         }),
-        [anchorOrigin, isMobile, onCloseClick, transformOrigin]
+        [
+            anchorOrigin,
+            isMobile,
+            menuMarginThreshold,
+            menuSx,
+            onCloseClick,
+            transformOrigin
+        ]
     );
 
     const selectedPrimaryColor = React.useMemo(() => {
