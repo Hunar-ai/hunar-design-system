@@ -32,6 +32,8 @@ const options: OptionsProps = [
 
 const disabledOptions: OptionsProps = [options[1], options[3], options[4]];
 const noClearAllOptions = options.slice(0, 4);
+const customAnchorOrigin = POPOVER_ORIGIN.TOP_RIGHT;
+const customTransformOrigin = POPOVER_ORIGIN.BOTTOM_RIGHT;
 
 const ControlledCustomSelect = ({
     value,
@@ -139,6 +141,15 @@ const CustomSelectStates = (props: CustomSelectProps) => {
                 error
                 helperText={<HelperText hasError errorMsg="I have error" />}
             />
+            <CustomSelectSection
+                sectionTitle="Custom Menu Placement (Desktop Only)"
+                // eslint-disable-next-line max-len
+                sectionDescription="Use `anchorOrigin`, `transformOrigin` and `menuMarginThreshold` to customize how the menu is placed"
+                {...props}
+                name="menu-placement"
+                anchorOrigin={customAnchorOrigin}
+                transformOrigin={customTransformOrigin}
+            />
         </>
     );
 };
@@ -221,9 +232,13 @@ const allowedControls = [
     'multiple',
     'size',
     'sx',
+    'menuSx',
     'primaryColor',
     'optionsHeaderTitle',
-    'placeholder'
+    'placeholder',
+    'anchorOrigin',
+    'transformOrigin',
+    'menuMarginThreshold'
 ];
 
 export const SingleSelect: StoryProps = {

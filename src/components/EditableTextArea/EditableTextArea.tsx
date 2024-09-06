@@ -67,6 +67,11 @@ export const EditableTextArea = ({
         if (!value && !editedValue) {
             setIsEditing(false);
         }
+
+        if (value && hasErrors) {
+            setEditedValue(value);
+            setIsEditing(false);
+        }
     };
 
     const handleCancelClick = () => {

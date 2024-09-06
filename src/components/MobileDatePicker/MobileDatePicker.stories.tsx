@@ -25,6 +25,8 @@ const customDateConfig: DatePickerConfigProps[] = [
     },
     { type: 'date', format: 'DD', caption: 'Day', step: 1 }
 ];
+const customAnchorOrigin = POPOVER_ORIGIN.TOP_RIGHT;
+const customTransformOrigin = POPOVER_ORIGIN.BOTTOM_RIGHT;
 
 const ControlledMobileDatePicker = ({
     value,
@@ -150,6 +152,15 @@ const MobileDatePickerStates = (props: MobileDatePickerProps) => {
                 error
                 helperText={<HelperText hasError errorMsg="I have error" />}
             />
+            <MobileDatePickerSection
+                sectionTitle="Custom Menu Placement (Desktop Only)"
+                // eslint-disable-next-line max-len
+                sectionDescription="Use `anchorOrigin`, `transformOrigin` and `menuMarginThreshold` to customize how the menu is placed"
+                {...props}
+                name="menu-placement"
+                anchorOrigin={customAnchorOrigin}
+                transformOrigin={customTransformOrigin}
+            />
         </>
     );
 };
@@ -207,9 +218,13 @@ export const States: StoryProps = {
                 'label',
                 'id',
                 'sx',
+                'menuSx',
                 'pickerHeaderTitle',
                 'primaryColor',
-                'placeholder'
+                'placeholder',
+                'anchorOrigin',
+                'transformOrigin',
+                'menuMarginThreshold'
             ]
         }
     },

@@ -44,8 +44,10 @@ export interface CustomSelectProps {
     disabledOptions?: OptionsProps;
     primaryColor?: string;
     sx?: SxProps;
+    menuSx?: SxProps;
     anchorOrigin?: POPOVER_ORIGIN;
     transformOrigin?: POPOVER_ORIGIN;
+    menuMarginThreshold?: number;
     onChange: (_: OptionProps | OptionsProps | null) => void;
 }
 
@@ -66,8 +68,10 @@ export const CustomSelect = ({
     disabledOptions = [],
     primaryColor = undefined,
     sx = {},
+    menuSx = {},
     anchorOrigin = POPOVER_ORIGIN.BOTTOM_CENTER,
     transformOrigin = POPOVER_ORIGIN.TOP_CENTER,
+    menuMarginThreshold = undefined,
     onChange
 }: CustomSelectProps) => {
     const isMobile = useIsMobile();
@@ -86,8 +90,12 @@ export const CustomSelect = ({
     const [search, setSearch] = React.useState('');
 
     React.useEffect(() => {
-        setSelectedValue(initialSelectedValue);
-    }, [initialSelectedValue]);
+        if (isOpen || selectedValue !== initialSelectedValue) {
+            setSelectedValue(initialSelectedValue);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialSelectedValue, isOpen]);
 
     const valueToLabelMap = React.useMemo(() => {
         return getValueToLabelMap(options);
@@ -120,15 +128,24 @@ export const CustomSelect = ({
             anchorPosition: isMobile ? { top: 0, left: 0 } : undefined,
             anchorOrigin: POPOVER_ORIGIN_MAP[anchorOrigin],
             transformOrigin: POPOVER_ORIGIN_MAP[transformOrigin],
+            marginThreshold: menuMarginThreshold,
             sx: {
                 '.MuiMenu-paper': isMobile ? { width: '100%' } : {},
                 '.MuiMenu-list': { py: 0 },
                 '.MuiBackdrop-root': {
                     bgcolor: isMobile ? BACKDROP_BG_COLOR : undefined
-                }
+                },
+                ...menuSx
             }
         }),
-        [anchorOrigin, isMobile, onCloseClick, transformOrigin]
+        [
+            anchorOrigin,
+            isMobile,
+            menuMarginThreshold,
+            menuSx,
+            onCloseClick,
+            transformOrigin
+        ]
     );
 
     const selectedPrimaryColor = React.useMemo(() => {
