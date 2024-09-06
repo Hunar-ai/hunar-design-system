@@ -86,8 +86,12 @@ export const CustomSelect = ({
     const [search, setSearch] = React.useState('');
 
     React.useEffect(() => {
-        setSelectedValue(initialSelectedValue);
-    }, [initialSelectedValue]);
+        if (isOpen || selectedValue !== initialSelectedValue) {
+            setSelectedValue(initialSelectedValue);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialSelectedValue, isOpen]);
 
     const valueToLabelMap = React.useMemo(() => {
         return getValueToLabelMap(options);
