@@ -79,6 +79,11 @@ export const EditableTextField = ({
         if (!value && !editedValue) {
             setIsEditing(false);
         }
+
+        if (value && hasErrors) {
+            setEditedValue(value);
+            setIsEditing(false);
+        }
     };
 
     const handleCancelClick = () => {
