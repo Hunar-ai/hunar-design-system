@@ -45,8 +45,12 @@ export const EditableTextArea = ({
     handleIsValidCheck = undefined
 }: EditableTextAreaProps) => {
     const theme = useTheme();
+
     const [editedValue, setEditedValue] = React.useState(value);
     const [isEditing, setIsEditing] = React.useState(false);
+    const [blurTimer, setBlurTimer] = React.useState<
+        NodeJS.Timeout | undefined
+    >(undefined);
 
     const hasErrors = React.useMemo(() => {
         return handleIsValidCheck ? handleIsValidCheck(editedValue) : false;
@@ -68,9 +72,12 @@ export const EditableTextArea = ({
             setIsEditing(false);
         }
 
-        if (value && hasErrors) {
-            setEditedValue(value);
-            setIsEditing(false);
+        if (value) {
+            const timer = setTimeout(() => {
+                setEditedValue(value);
+                setIsEditing(false);
+            });
+            setBlurTimer(timer);
         }
     };
 
@@ -82,6 +89,7 @@ export const EditableTextArea = ({
     const handleSaveClick = () => {
         onSave(editedValue);
         setIsEditing(false);
+        clearTimeout(blurTimer);
     };
 
     return (
