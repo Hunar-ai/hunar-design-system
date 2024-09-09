@@ -51,8 +51,12 @@ export const EditableTextField = ({
     handleIsValidCheck = undefined
 }: EditableTextFieldProps) => {
     const theme = useTheme();
+
     const [editedValue, setEditedValue] = React.useState(value);
     const [isEditing, setIsEditing] = React.useState(false);
+    const [blurTimer, setBlurTimer] = React.useState<
+        NodeJS.Timeout | undefined
+    >(undefined);
 
     const hasErrors = React.useMemo(() => {
         return handleIsValidCheck ? handleIsValidCheck(editedValue) : false;
@@ -80,9 +84,12 @@ export const EditableTextField = ({
             setIsEditing(false);
         }
 
-        if (value && hasErrors) {
-            setEditedValue(value);
-            setIsEditing(false);
+        if (value) {
+            const timer = setTimeout(() => {
+                setEditedValue(value);
+                setIsEditing(false);
+            });
+            setBlurTimer(timer);
         }
     };
 
@@ -94,6 +101,7 @@ export const EditableTextField = ({
     const handleSaveClick = () => {
         onSave(editedValue);
         setIsEditing(false);
+        clearTimeout(blurTimer);
     };
 
     return (
