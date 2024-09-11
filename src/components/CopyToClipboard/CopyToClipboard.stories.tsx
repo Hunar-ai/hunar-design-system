@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { Grid } from '@mui/material';
 
@@ -6,13 +7,16 @@ import { StorySection } from '@/components/storybook';
 import { CopyToClipboard } from './CopyToClipboard';
 import { BUTTON_SIZE } from '@/Enum';
 
+const onClick = action('click');
+
 const meta = {
     title: 'Components/CopyToClipboard',
     component: CopyToClipboard,
     parameters: { controls: { expanded: true } },
     args: {
         textToCopy: 'Text copied by clicking on button',
-        iconFontSize: 24
+        iconFontSize: 24,
+        onClick
     },
     argTypes: {
         buttonSize: { control: 'select', options: Object.values(BUTTON_SIZE) }
@@ -40,7 +44,7 @@ export const Playground: StoryProps = {
 export const States: StoryProps = {
     parameters: {
         controls: {
-            include: ['textToCopy', 'iconSx', 'onClick']
+            include: ['textToCopy', 'iconSx']
         }
     },
     render: function States(props) {

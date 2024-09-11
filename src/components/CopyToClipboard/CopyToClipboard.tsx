@@ -31,6 +31,8 @@ export interface CopyToClipboardProps {
     iconFontSize?: number;
     iconSx?: SxProps;
     onClick?: (_: React.MouseEvent) => void;
+    onCopySuccess?: VoidFunction;
+    onCopyFail?: VoidFunction;
 }
 
 export const CopyToClipboard = ({
@@ -40,7 +42,9 @@ export const CopyToClipboard = ({
     buttonSize = BUTTON_SIZE.medium,
     iconFontSize = 24,
     iconSx = {},
-    onClick = () => undefined
+    onClick = () => undefined,
+    onCopySuccess = () => undefined,
+    onCopyFail = () => undefined
 }: CopyToClipboardProps) => {
     const theme = useTheme();
 
@@ -49,6 +53,7 @@ export const CopyToClipboard = ({
 
     const alertSx: SxProps = React.useMemo(() => {
         return {
+            display: 'inline-flex',
             width: 'min-content',
             height: 'fit-content',
             '& .MuiAlert-message': { py: 0, lineHeight: 1.2 },
@@ -85,9 +90,11 @@ export const CopyToClipboard = ({
             await navigator.clipboard.writeText(text);
             setHasError(false);
             setCopyMessage('Copied');
+            onCopySuccess();
         } catch (err) {
             setHasError(true);
             setCopyMessage('Retry');
+            onCopyFail();
         } finally {
             setTimeout(() => {
                 setCopyMessage('');
