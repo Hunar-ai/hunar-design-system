@@ -1,48 +1,97 @@
 import React from 'react';
 
-import IconButton from '@mui/material/IconButton';
-import { type SxProps } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import {
+    Alert,
+    alpha,
+    IconButton,
+    useTheme,
+    type SxProps
+} from '@mui/material';
+import {
+    ContentCopy as ContentCopyIcon,
+    Check as CheckIcon
+} from '@mui/icons-material';
+import { blue, grey } from '@mui/material/colors';
 
-import Alert from '@mui/material/Alert';
 import { AppTooltip } from '@/components/AppTooltip';
+
+import { BUTTON_SIZE } from '@/Enum';
+
+const alertPaddingMap = {
+    [BUTTON_SIZE.small]: '5px',
+    [BUTTON_SIZE.medium]: '8px',
+    [BUTTON_SIZE.large]: '12px'
+};
 
 export interface CopyToClipboardProps {
     textToCopy: string;
-    padding?: number;
-    showCopiedText?: boolean;
-    size?: 'medium' | 'small';
-    fontSize?: 'medium' | 'small';
-    buttonSx?: SxProps;
+    showCopiedMsg?: boolean;
+    isOutlined?: boolean;
+    buttonSize?: BUTTON_SIZE;
+    iconFontSize?: number;
     iconSx?: SxProps;
     onClick?: (_: React.MouseEvent) => void;
 }
 
 export const CopyToClipboard = ({
     textToCopy,
-    padding = 4,
-    showCopiedText = true,
-    size = 'medium',
-    fontSize = 'medium',
-    buttonSx = {},
+    showCopiedMsg = true,
+    isOutlined = false,
+    buttonSize = BUTTON_SIZE.medium,
+    iconFontSize = 24,
     iconSx = {},
     onClick = () => undefined
 }: CopyToClipboardProps) => {
-    const [copyMessage, setCopyMessage] = React.useState('');
-    const [isError, setIsError] = React.useState(false);
+    const theme = useTheme();
 
-    const copyToClipBoard = async (copyMe: string) => {
+    const [copyMessage, setCopyMessage] = React.useState('');
+    const [hasError, setHasError] = React.useState(false);
+
+    const alertSx: SxProps = React.useMemo(() => {
+        return {
+            width: 'min-content',
+            height: 'fit-content',
+            '& .MuiAlert-message': { py: 0, lineHeight: 1.2 },
+            '& .MuiAlert-icon': {
+                mr: showCopiedMsg ? undefined : 0,
+                py: 0
+            },
+            p: alertPaddingMap[buttonSize],
+            alignItems: 'center',
+            border: isOutlined ? `1px solid ${grey[200]}` : undefined
+        };
+    }, [isOutlined, showCopiedMsg, buttonSize]);
+
+    const buttonSx: SxProps = React.useMemo(() => {
+        return {
+            ':hover': {
+                backgroundColor: alpha(
+                    theme.palette.primary.main,
+                    theme.palette.action.hoverOpacity
+                ),
+                border: isOutlined ? `1px solid ${blue[50]}` : undefined
+            },
+            borderRadius: 1,
+            border: isOutlined ? `1px solid ${grey[200]}` : undefined
+        };
+    }, [
+        isOutlined,
+        theme.palette.action.hoverOpacity,
+        theme.palette.primary.main
+    ]);
+
+    const copyToClipBoard = async (text: string) => {
         try {
-            await navigator.clipboard.writeText(copyMe);
-            setIsError(false);
+            await navigator.clipboard.writeText(text);
+            setHasError(false);
             setCopyMessage('Copied');
         } catch (err) {
-            setIsError(true);
+            setHasError(true);
             setCopyMessage('Retry');
         } finally {
             setTimeout(() => {
                 setCopyMessage('');
-                setIsError(false);
+                setHasError(false);
             }, 1500);
         }
     };
@@ -52,37 +101,31 @@ export const CopyToClipboard = ({
         copyToClipBoard(textToCopy);
     };
 
-    const sx = showCopiedText
-        ? {
-              width: '100%',
-              py: 0
-          }
-        : {
-              py: padding,
-              '& .MuiAlert-icon': {
-                  mr: 0,
-                  fontSize: size === 'small' ? 14 : 16
-              },
-              '& .MuiAlert-message': {
-                  py: { padding }
-              },
-              alignItems: 'center',
-              width: 32,
-              justifyContent: 'center',
-              height: 32
-          };
-
     return (
         <>
             {copyMessage ? (
                 <AppTooltip title={copyMessage}>
-                    <Alert sx={sx} severity={isError ? 'error' : 'success'}>
-                        {showCopiedText && copyMessage}
+                    <Alert
+                        sx={alertSx}
+                        severity={hasError ? 'error' : 'success'}
+                        icon={
+                            hasError ? undefined : (
+                                <CheckIcon sx={{ fontSize: iconFontSize }} />
+                            )
+                        }
+                    >
+                        {showCopiedMsg && copyMessage}
                     </Alert>
                 </AppTooltip>
             ) : (
-                <IconButton onClick={handleOnClick} size={size} sx={buttonSx}>
-                    <ContentCopyIcon fontSize={fontSize} sx={iconSx} />
+                <IconButton
+                    onClick={handleOnClick}
+                    size={buttonSize}
+                    sx={buttonSx}
+                >
+                    <ContentCopyIcon
+                        sx={{ ...iconSx, fontSize: iconFontSize }}
+                    />
                 </IconButton>
             )}
         </>
