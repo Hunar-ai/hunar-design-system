@@ -7,11 +7,12 @@ import {
     useTheme,
     type SxProps
 } from '@mui/material';
-import {
-    ContentCopy as ContentCopyIcon,
-    Check as CheckIcon
-} from '@mui/icons-material';
 import { blue, grey } from '@mui/material/colors';
+import {
+    Check as CheckIcon,
+    Copy as CopyIcon,
+    WarningCircle as WarningCircleIcon
+} from '@phosphor-icons/react';
 
 import { AppTooltip } from '@/components/AppTooltip';
 
@@ -28,8 +29,8 @@ export interface CopyToClipboardProps {
     showCopiedMsg?: boolean;
     isOutlined?: boolean;
     buttonSize?: BUTTON_SIZE;
-    iconFontSize?: number;
-    iconSx?: SxProps;
+    iconSize?: number;
+    iconColor?: string;
     onClick?: (_: React.MouseEvent) => void;
     onCopySuccess?: VoidFunction;
     onCopyFail?: VoidFunction;
@@ -37,11 +38,11 @@ export interface CopyToClipboardProps {
 
 export const CopyToClipboard = ({
     textToCopy,
-    showCopiedMsg = true,
+    showCopiedMsg = false,
     isOutlined = false,
     buttonSize = BUTTON_SIZE.medium,
-    iconFontSize = 24,
-    iconSx = {},
+    iconSize = 24,
+    iconColor = undefined,
     onClick = () => undefined,
     onCopySuccess = () => undefined,
     onCopyFail = () => undefined
@@ -115,11 +116,10 @@ export const CopyToClipboard = ({
                     <Alert
                         sx={alertSx}
                         severity={hasError ? 'error' : 'success'}
-                        icon={
-                            hasError ? undefined : (
-                                <CheckIcon sx={{ fontSize: iconFontSize }} />
-                            )
-                        }
+                        iconMapping={{
+                            error: <WarningCircleIcon size={iconSize} />,
+                            success: <CheckIcon size={iconSize} />
+                        }}
                     >
                         {showCopiedMsg && copyMessage}
                     </Alert>
@@ -130,9 +130,7 @@ export const CopyToClipboard = ({
                     size={buttonSize}
                     sx={buttonSx}
                 >
-                    <ContentCopyIcon
-                        sx={{ ...iconSx, fontSize: iconFontSize }}
-                    />
+                    <CopyIcon size={iconSize} color={iconColor} />
                 </IconButton>
             )}
         </>

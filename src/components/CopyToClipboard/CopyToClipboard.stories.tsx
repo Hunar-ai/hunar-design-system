@@ -9,13 +9,39 @@ import { BUTTON_SIZE } from '@/Enum';
 
 const onClick = action('click');
 
+interface CopyToClipboardSectionProps {
+    children: React.ReactNode;
+    sectionTitle: string;
+    sectionDescription?: string;
+}
+
+const CopyToClipboardSection = ({
+    sectionTitle,
+    sectionDescription,
+    children
+}: CopyToClipboardSectionProps) => {
+    return (
+        <StorySection title={sectionTitle} description={sectionDescription}>
+            <Grid
+                container
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+                gap={1}
+            >
+                {children}
+            </Grid>
+        </StorySection>
+    );
+};
+
 const meta = {
     title: 'Components/CopyToClipboard',
     component: CopyToClipboard,
     parameters: { controls: { expanded: true } },
     args: {
         textToCopy: 'Text copied by clicking on button',
-        iconFontSize: 24,
+        iconSize: 24,
         onClick
     },
     argTypes: {
@@ -44,133 +70,77 @@ export const Playground: StoryProps = {
 export const States: StoryProps = {
     parameters: {
         controls: {
-            include: ['textToCopy', 'iconSx']
+            include: ['textToCopy', 'iconColor']
         }
     },
     render: function States(props) {
         return (
             <>
-                <StorySection title="Default">
+                <CopyToClipboardSection sectionTitle="Default">
                     <CopyToClipboard {...props} />
-                </StorySection>
-                <StorySection
-                    title="Outlined"
-                    description="left: 'Copied' message hidden; right: 'Copied' message visible"
+                </CopyToClipboardSection>
+                <CopyToClipboardSection
+                    sectionTitle="Outlined"
+                    sectionDescription="left: 'Copied' message hidden; right: 'Copied' message visible"
                 >
+                    <CopyToClipboard {...props} isOutlined />
                     <Grid
-                        container
-                        flexDirection="row"
+                        item
+                        minWidth="100px"
+                        display="flex"
                         justifyContent="center"
-                        gap={1}
                     >
-                        <Grid item display="flex" justifyContent="center">
-                            <CopyToClipboard
-                                {...props}
-                                isOutlined
-                                showCopiedMsg={false}
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            minWidth="100px"
-                            display="flex"
-                            justifyContent="center"
-                        >
-                            <CopyToClipboard {...props} isOutlined />
-                        </Grid>
+                        <CopyToClipboard {...props} isOutlined showCopiedMsg />
                     </Grid>
-                </StorySection>
-                <StorySection title="Hide 'Copied' message">
-                    <CopyToClipboard {...props} showCopiedMsg={false} />
-                </StorySection>
-                <StorySection
-                    title="Custom Icon Size"
-                    description="Icon Font Size: 14, 16, 24 respectively (left to right)"
+                </CopyToClipboardSection>
+                <CopyToClipboardSection sectionTitle="Show 'Copied' message">
+                    <CopyToClipboard {...props} showCopiedMsg />
+                </CopyToClipboardSection>
+                <CopyToClipboardSection
+                    sectionTitle="Custom Icon Size"
+                    sectionDescription="Icon Font Size: 14, 16, 24 respectively (left to right)"
                 >
-                    <Grid
-                        container
-                        flexDirection="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        gap={1}
-                    >
-                        <CopyToClipboard
-                            {...props}
-                            iconFontSize={14}
-                            showCopiedMsg={false}
-                        />
-                        <CopyToClipboard
-                            {...props}
-                            iconFontSize={16}
-                            showCopiedMsg={false}
-                        />
-                        <CopyToClipboard
-                            {...props}
-                            iconFontSize={24}
-                            showCopiedMsg={false}
-                        />
-                    </Grid>
-                </StorySection>
-                <StorySection
-                    title="Custom Button Size"
-                    description="Button Size: small, medium, large respectively (left to right)"
+                    <CopyToClipboard {...props} iconSize={14} />
+                    <CopyToClipboard {...props} iconSize={16} />
+                    <CopyToClipboard {...props} iconSize={24} />
+                </CopyToClipboardSection>
+                <CopyToClipboardSection
+                    sectionTitle="Custom Button Size"
+                    sectionDescription="Button Size: small, medium, large respectively (left to right)"
                 >
-                    <Grid
-                        container
-                        flexDirection="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        gap={1}
-                    >
-                        <CopyToClipboard
-                            {...props}
-                            buttonSize={BUTTON_SIZE.small}
-                            showCopiedMsg={false}
-                        />
-                        <CopyToClipboard
-                            {...props}
-                            buttonSize={BUTTON_SIZE.medium}
-                            showCopiedMsg={false}
-                        />
-                        <CopyToClipboard
-                            {...props}
-                            buttonSize={BUTTON_SIZE.large}
-                            showCopiedMsg={false}
-                        />
-                    </Grid>
-                </StorySection>
-                <StorySection
-                    title="Custom Button Size (isOutlined)"
-                    description="Button Size: small, medium, large respectively (left to right)"
+                    <CopyToClipboard
+                        {...props}
+                        buttonSize={BUTTON_SIZE.small}
+                    />
+                    <CopyToClipboard
+                        {...props}
+                        buttonSize={BUTTON_SIZE.medium}
+                    />
+                    <CopyToClipboard
+                        {...props}
+                        buttonSize={BUTTON_SIZE.large}
+                    />
+                </CopyToClipboardSection>
+                <CopyToClipboardSection
+                    sectionTitle="Custom Button Size (Outlined )"
+                    sectionDescription="Button Size: small, medium, large respectively (left to right)"
                 >
-                    <Grid
-                        container
-                        width="100%"
-                        flexDirection="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        gap={1}
-                    >
-                        <CopyToClipboard
-                            {...props}
-                            buttonSize={BUTTON_SIZE.small}
-                            isOutlined
-                            showCopiedMsg={false}
-                        />
-                        <CopyToClipboard
-                            {...props}
-                            buttonSize={BUTTON_SIZE.medium}
-                            isOutlined
-                            showCopiedMsg={false}
-                        />
-                        <CopyToClipboard
-                            {...props}
-                            buttonSize={BUTTON_SIZE.large}
-                            isOutlined
-                            showCopiedMsg={false}
-                        />
-                    </Grid>
-                </StorySection>
+                    <CopyToClipboard
+                        {...props}
+                        buttonSize={BUTTON_SIZE.small}
+                        isOutlined
+                    />
+                    <CopyToClipboard
+                        {...props}
+                        buttonSize={BUTTON_SIZE.medium}
+                        isOutlined
+                    />
+                    <CopyToClipboard
+                        {...props}
+                        buttonSize={BUTTON_SIZE.large}
+                        isOutlined
+                    />
+                </CopyToClipboardSection>
             </>
         );
     }
