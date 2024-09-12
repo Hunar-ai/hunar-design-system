@@ -6,14 +6,6 @@ const config: StorybookConfig = {
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-actions',
-        {
-            name: '@storybook/addon-storysource',
-            options: {
-                loaderOptions: {
-                    prettierConfig: { printWidth: 80, singleQuote: false }
-                }
-            }
-        },
         '@chromatic-com/storybook',
         '@storybook/addon-interactions',
         '@storybook/addon-themes'
