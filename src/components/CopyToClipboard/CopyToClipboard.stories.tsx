@@ -54,16 +54,13 @@ export default meta;
 type StoryProps = StoryObj<typeof CopyToClipboard>;
 
 export const Playground: StoryProps = {
+    parameters: {
+        description:
+            'Change various props in the "Controls" panel to see how they change behavior of the component',
+        hasDefaultSection: true
+    },
     render: function Playground(props) {
-        return (
-            <StorySection
-                title=""
-                // eslint-disable-next-line max-len
-                description={`Change various props in the "Controls" panel to see how they change behavior of the component`}
-            >
-                <CopyToClipboard {...props} />
-            </StorySection>
-        );
+        return <CopyToClipboard {...props} />;
     }
 };
 

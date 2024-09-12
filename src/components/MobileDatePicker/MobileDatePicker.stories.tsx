@@ -199,13 +199,22 @@ export default meta;
 type StoryProps = StoryObj<typeof MobileDatePicker>;
 
 export const Playground: StoryProps = {
-    render: function Playground(props) {
+    parameters: {
+        description:
+            'Change various props in the "Controls" panel to see how they change behavior of the component',
+        hasDefaultSection: true
+    },
+    render: function Playground({ value, ...props }) {
+        const [selectedValue, setSelectedValue] = React.useState(value);
+
         return (
-            <MobileDatePickerSection
-                sectionTitle=""
-                // eslint-disable-next-line max-len
-                sectionDescription={`Change various props in the "Controls" panel to see how they change behavior of the component`}
+            <MobileDatePicker
                 {...props}
+                value={selectedValue}
+                onChange={modifiedValue => {
+                    onChange(modifiedValue);
+                    setSelectedValue(modifiedValue);
+                }}
             />
         );
     }

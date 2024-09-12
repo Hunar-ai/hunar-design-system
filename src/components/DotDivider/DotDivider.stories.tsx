@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { StorySection } from '@/components/storybook';
 import { DotDivider } from './DotDivider';
 import { Box } from '@mui/material';
 
@@ -26,25 +25,24 @@ export default meta;
 type StoryProps = StoryObj<typeof DotDivider>;
 
 export const Playground: StoryProps = {
+    parameters: {
+        description:
+            'Change various props in the "Controls" panel to see how they change behavior of the component',
+        hasDefaultSection: true
+    },
     render: function Playground(props) {
         return (
-            <StorySection
-                title=""
-                // eslint-disable-next-line max-len
-                description={`Change various props in the "Controls" panel to see how they change behavior of the component`}
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                columnGap={0.5}
             >
-                <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    width="100%"
-                    columnGap={0.5}
-                >
-                    Apple <DotDivider {...props} />
-                    Mango <DotDivider {...props} />
-                    Orange
-                </Box>
-            </StorySection>
+                Apple <DotDivider {...props} />
+                Mango <DotDivider {...props} />
+                Orange
+            </Box>
         );
     }
 };

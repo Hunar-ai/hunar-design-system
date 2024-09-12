@@ -22,6 +22,7 @@ export const StorySection = ({
             border={`1px solid ${grey[100]}`}
             borderRadius={1.5}
             bgcolor="#FFF"
+            id={`story-section-${title.toLowerCase()}`}
         >
             <Grid item xs={12}>
                 <Typography fontWeight={600}>{title}</Typography>
