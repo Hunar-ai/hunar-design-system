@@ -191,12 +191,15 @@ export default meta;
 type StoryProps = StoryObj<typeof CustomSelect>;
 
 export const Playground: StoryProps = {
-    parameters: {
-        description:
-            'Change various props in the "Controls" panel to see how they change behavior of the component',
-        hasDefaultSection: true
-    },
     args: { disabledOptions: [] },
+    decorators: Story => (
+        <StorySection
+            title=""
+            description='Change various props in the "Controls" panel to see how they change behavior of the component'
+        >
+            <Story />
+        </StorySection>
+    ),
     render: function Playground(props) {
         const [{ multiple }, updateArg] =
             useArgs<NonNullable<StoryProps['args']>>();

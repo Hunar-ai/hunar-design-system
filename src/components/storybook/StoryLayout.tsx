@@ -1,19 +1,16 @@
 import { Grid, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { StorySection } from './StorySection';
 
 interface StoryLayoutProps {
     title: string;
     children: React.ReactNode;
     description?: string;
-    hasDefaultSection?: boolean;
 }
 
 export const StoryLayout = ({
     title,
     children,
-    description,
-    hasDefaultSection = false
+    description
 }: StoryLayoutProps) => {
     return (
         <Grid
@@ -22,7 +19,6 @@ export const StoryLayout = ({
             gap={2}
             p={1}
             bgcolor={grey[50]}
-            id="story-layout"
         >
             <Grid>
                 <Typography variant="h5" fontWeight={700}>
@@ -34,11 +30,7 @@ export const StoryLayout = ({
                     </Typography>
                 )}
             </Grid>
-            {hasDefaultSection ? (
-                <StorySection title="">{children}</StorySection>
-            ) : (
-                <>{children}</>
-            )}
+            {children}
         </Grid>
     );
 };
