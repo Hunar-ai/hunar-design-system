@@ -3,15 +3,15 @@ import {
     WarningCircle as WarningCircleIcon
 } from '@phosphor-icons/react';
 
-interface CopyToClipboardIconProps {
+interface CopyToClipboardStatusIconProps {
     hasError: boolean;
     iconSize: number;
 }
 
-export const CopyToClipboardIcon = ({
+export const CopyToClipboardStatusIcon = ({
     hasError,
     iconSize
-}: CopyToClipboardIconProps) => {
+}: CopyToClipboardStatusIconProps) => {
     return (
         <>
             {hasError ? (

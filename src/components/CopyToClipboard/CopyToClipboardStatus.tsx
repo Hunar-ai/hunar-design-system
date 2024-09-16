@@ -1,7 +1,7 @@
 import { Alert, type SxProps } from '@mui/material';
 
 import { AppTooltip } from '@/components/AppTooltip';
-import { CopyToClipboardIcon } from './CopyToClipboardIcon';
+import { CopyToClipboardStatusIcon } from './CopyToClipboardStatusIcon';
 
 interface CopyToClipboardStatusProps {
     iconSize: number;
@@ -24,7 +24,7 @@ export const CopyToClipboardStatus = ({
                 sx={alertSx}
                 severity={hasError ? 'error' : 'success'}
                 icon={
-                    <CopyToClipboardIcon
+                    <CopyToClipboardStatusIcon
                         hasError={hasError}
                         iconSize={iconSize}
                     />
