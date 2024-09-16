@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { SearchBar } from './SearchBar';
 import { Box } from '@mui/material';
+
+import { SearchBar } from './SearchBar';
 
 const setSearchValue = action('setSearchValue');
 
