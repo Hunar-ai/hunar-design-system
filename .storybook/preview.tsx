@@ -58,11 +58,7 @@ const preview: Preview = {
             defaultTheme: 'light'
         }),
         (Story, { name, parameters }) => (
-            <StoryLayout
-                title={name}
-                description={parameters.description}
-                hasDefaultSection={parameters.hasDefaultSection}
-            >
+            <StoryLayout title={name} description={parameters.description}>
                 {Story()}
             </StoryLayout>
         )

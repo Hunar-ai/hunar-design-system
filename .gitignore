@@ -8,10 +8,8 @@
 # testing
 /coverage
 
-# build
+# production
 /dist
-package
-*.tgz
 
 # misc
 .DS_Store
