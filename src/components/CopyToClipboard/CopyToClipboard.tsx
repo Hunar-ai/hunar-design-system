@@ -1,20 +1,10 @@
 import React from 'react';
 
-import {
-    Alert,
-    alpha,
-    IconButton,
-    useTheme,
-    type SxProps
-} from '@mui/material';
+import { alpha, IconButton, useTheme, type SxProps } from '@mui/material';
 import { blue, grey } from '@mui/material/colors';
-import {
-    Check as CheckIcon,
-    Copy as CopyIcon,
-    WarningCircle as WarningCircleIcon
-} from '@phosphor-icons/react';
+import { Copy as CopyIcon } from '@phosphor-icons/react';
 
-import { AppTooltip } from '@/components/AppTooltip';
+import { CopyToClipboardStatus } from './CopyToClipboardStatus';
 
 import { BUTTON_SIZE } from '@/Enum';
 
@@ -26,7 +16,7 @@ const alertPaddingMap = {
 
 export interface CopyToClipboardProps {
     textToCopy: string;
-    showCopiedMsg?: boolean;
+    showStatusText?: boolean;
     isOutlined?: boolean;
     buttonSize?: BUTTON_SIZE;
     iconSize?: number;
@@ -38,7 +28,7 @@ export interface CopyToClipboardProps {
 
 export const CopyToClipboard = ({
     textToCopy,
-    showCopiedMsg = false,
+    showStatusText = false,
     isOutlined = false,
     buttonSize = BUTTON_SIZE.medium,
     iconSize = 24,
@@ -49,7 +39,7 @@ export const CopyToClipboard = ({
 }: CopyToClipboardProps) => {
     const theme = useTheme();
 
-    const [copyMessage, setCopyMessage] = React.useState('');
+    const [statusText, setStatusText] = React.useState('');
     const [hasError, setHasError] = React.useState(false);
 
     const alertSx: SxProps = React.useMemo(() => {
@@ -59,14 +49,14 @@ export const CopyToClipboard = ({
             height: 'fit-content',
             '& .MuiAlert-message': { py: 0, lineHeight: 1.2 },
             '& .MuiAlert-icon': {
-                mr: showCopiedMsg ? undefined : 0,
+                mr: showStatusText ? undefined : 0,
                 py: 0
             },
             p: alertPaddingMap[buttonSize],
             alignItems: 'center',
             border: isOutlined ? `1px solid ${grey[200]}` : undefined
         };
-    }, [isOutlined, showCopiedMsg, buttonSize]);
+    }, [isOutlined, showStatusText, buttonSize]);
 
     const buttonSx: SxProps = React.useMemo(() => {
         return {
@@ -86,44 +76,45 @@ export const CopyToClipboard = ({
         theme.palette.primary.main
     ]);
 
-    const copyToClipBoard = async (text: string) => {
-        try {
-            await navigator.clipboard.writeText(text);
-            setHasError(false);
-            setCopyMessage('Copied');
-            onCopySuccess();
-        } catch (err) {
-            setHasError(true);
-            setCopyMessage('Retry');
-            onCopyFail();
-        } finally {
-            setTimeout(() => {
-                setCopyMessage('');
+    const copyToClipBoard = React.useCallback(
+        async (text: string) => {
+            try {
+                await navigator.clipboard.writeText(text);
                 setHasError(false);
-            }, 1500);
-        }
-    };
+                setStatusText('Copied');
+                onCopySuccess();
+            } catch (err) {
+                setHasError(true);
+                setStatusText('Retry');
+                onCopyFail();
+            } finally {
+                setTimeout(() => {
+                    setStatusText('');
+                    setHasError(false);
+                }, 1500);
+            }
+        },
+        [onCopyFail, onCopySuccess]
+    );
 
-    const handleOnClick = (e: React.MouseEvent) => {
-        onClick?.(e);
-        copyToClipBoard(textToCopy);
-    };
+    const handleOnClick = React.useCallback(
+        (e: React.MouseEvent) => {
+            onClick?.(e);
+            copyToClipBoard(textToCopy);
+        },
+        [copyToClipBoard, onClick, textToCopy]
+    );
 
     return (
         <>
-            {copyMessage ? (
-                <AppTooltip title={copyMessage}>
-                    <Alert
-                        sx={alertSx}
-                        severity={hasError ? 'error' : 'success'}
-                        iconMapping={{
-                            error: <WarningCircleIcon size={iconSize} />,
-                            success: <CheckIcon size={iconSize} />
-                        }}
-                    >
-                        {showCopiedMsg && copyMessage}
-                    </Alert>
-                </AppTooltip>
+            {statusText ? (
+                <CopyToClipboardStatus
+                    iconSize={iconSize}
+                    statusText={statusText}
+                    showStatusText={showStatusText}
+                    alertSx={alertSx}
+                    hasError={hasError}
+                />
             ) : (
                 <IconButton
                     onClick={handleOnClick}

@@ -79,7 +79,7 @@ export const States: StoryProps = {
                 </CopyToClipboardSection>
                 <CopyToClipboardSection
                     sectionTitle="Outlined"
-                    sectionDescription="left: 'Copied' message hidden; right: 'Copied' message visible"
+                    sectionDescription="left: 'Copied' text hidden; right: 'Copied' text visible"
                 >
                     <CopyToClipboard {...props} isOutlined />
                     <Grid
@@ -88,11 +88,11 @@ export const States: StoryProps = {
                         display="flex"
                         justifyContent="center"
                     >
-                        <CopyToClipboard {...props} isOutlined showCopiedMsg />
+                        <CopyToClipboard {...props} isOutlined showStatusText />
                     </Grid>
                 </CopyToClipboardSection>
-                <CopyToClipboardSection sectionTitle="Show 'Copied' message">
-                    <CopyToClipboard {...props} showCopiedMsg />
+                <CopyToClipboardSection sectionTitle="Show 'Copied' text">
+                    <CopyToClipboard {...props} showStatusText />
                 </CopyToClipboardSection>
                 <CopyToClipboardSection
                     sectionTitle="Custom Icon Size"
