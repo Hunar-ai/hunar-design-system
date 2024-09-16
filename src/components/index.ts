@@ -21,3 +21,4 @@ export {
     type DatePickerConfigProps
 } from './MobileDatePicker';
 export { CopyToClipboard, type CopyToClipboardProps } from './CopyToClipboard';
+export { SearchBar, type SearchBarProps } from './SearchBar';
