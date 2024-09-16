@@ -55,7 +55,10 @@ export const Playground: StoryProps = {
 };
 
 export const States: StoryProps = {
-    parameters: { controls: { exclude: ['placeholder', 'showMobileSearch'] } },
+    parameters: {
+        controls: { exclude: ['placeholder', 'showMobileSearch'] },
+        viewport: { defaultViewport: 'mobile2' }
+    },
     render: function States(props) {
         return (
             <>
