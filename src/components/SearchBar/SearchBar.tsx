@@ -15,7 +15,7 @@ import { useIsMobile } from '@/hooks/useIsMobile';
 export interface SearchBarProps {
     placeholder?: string;
     showMobileSearch?: boolean;
-    mobileSearchWidth?: string;
+    xsWidth?: string;
     setSearchValue: (_: string) => void;
     onClearClick?: VoidFunction;
     onEnterPress?: VoidFunction;
@@ -24,7 +24,7 @@ export interface SearchBarProps {
 export const SearchBar = ({
     placeholder = 'Search',
     showMobileSearch = true,
-    mobileSearchWidth = 'calc(100vw - 32px)',
+    xsWidth = 'calc(100vw - 32px)',
     setSearchValue,
     onClearClick = () => undefined,
     onEnterPress = () => undefined,
@@ -79,7 +79,7 @@ export const SearchBar = ({
                             top={0}
                             bottom={0}
                             right={0}
-                            width={mobileSearchWidth}
+                            width={xsWidth}
                             bgcolor="white"
                             display="flex"
                             alignItems="center"
