@@ -9,13 +9,13 @@ import {
     type SxProps
 } from '@mui/material';
 
-interface CustomButtonProps extends ButtonProps {
+export interface CustomButtonProps extends ButtonProps {
     primaryColor: string;
 }
 
 export const CustomButton = ({
     primaryColor,
-    variant,
+    variant = 'contained',
     sx = {},
     ...restProps
 }: CustomButtonProps) => {
