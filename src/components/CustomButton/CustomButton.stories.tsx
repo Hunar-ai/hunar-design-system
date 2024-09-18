@@ -29,12 +29,20 @@ const meta = {
                     summary: '(_: React.MouseEvent<HTMLButtonElement>) => void'
                 }
             }
+        },
+        loading: {
+            table: {
+                defaultValue: {
+                    summary: 'false'
+                }
+            }
         }
     },
     args: {
         primaryColor: blue[700],
         children: 'Button',
         variant: 'contained',
+        loading: false,
         onClick
     }
 } satisfies Meta<typeof CustomButton>;

@@ -2,14 +2,10 @@ import React from 'react';
 
 import tinycolor from 'tinycolor2';
 
-import {
-    Button,
-    type ButtonProps,
-    useTheme,
-    type SxProps
-} from '@mui/material';
+import { useTheme, type SxProps } from '@mui/material';
+import LoadingButton, { type LoadingButtonProps } from '@mui/lab/LoadingButton';
 
-export interface CustomButtonProps extends ButtonProps {
+export interface CustomButtonProps extends LoadingButtonProps {
     primaryColor: string;
 }
 
@@ -72,7 +68,7 @@ export const CustomButton = ({
     }, [containedButtonSx, outlinedButtonSx, textButtonSx, variant]);
 
     return (
-        <Button
+        <LoadingButton
             {...restProps}
             variant={variant}
             sx={{ ...primaryColorSx, ...sx }}
