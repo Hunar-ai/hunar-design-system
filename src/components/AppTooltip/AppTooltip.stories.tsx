@@ -7,16 +7,19 @@ import { AppTooltip } from './AppTooltip';
 
 import { TOOLTIP_PLACEMENT } from '@/Enum';
 
-// TODO: fix type of placement prop
 const meta = {
     title: 'Components/AppTooltip',
     component: AppTooltip,
-    parameters: { controls: { expanded: true } },
+    parameters: {
+        controls: { expanded: true },
+        description: `All props of MUI's Tooltip component can to be passed to AppTooltip`
+    },
     argTypes: {
         placement: {
             control: 'select',
             options: Object.values(TOOLTIP_PLACEMENT),
             table: {
+                type: { summary: `TooltipProps['placement']` },
                 defaultValue: { summary: 'bottom' }
             }
         }

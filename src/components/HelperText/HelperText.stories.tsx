@@ -9,7 +9,7 @@ const meta = {
     title: 'Components/HelperText',
     component: HelperText,
     parameters: { controls: { expanded: true } },
-    args: { errorMsg: 'Error', msg: 'This is helper text' }
+    args: { errorMsg: 'Error', msg: 'This is helper text', hasError: true }
 } satisfies Meta<typeof HelperText>;
 
 export default meta;
