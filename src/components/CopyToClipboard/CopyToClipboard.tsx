@@ -40,6 +40,7 @@ export const CopyToClipboard = ({
     const theme = useTheme();
 
     const [statusText, setStatusText] = React.useState('');
+    const [showStatus, setShowStatus] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
 
     const alertSx: SxProps = React.useMemo(() => {
@@ -81,15 +82,18 @@ export const CopyToClipboard = ({
             try {
                 await navigator.clipboard.writeText(text);
                 setHasError(false);
+                setShowStatus(true);
                 setStatusText('Copied');
                 onCopySuccess();
             } catch (err) {
                 setHasError(true);
+                setShowStatus(true);
                 setStatusText('Retry');
                 onCopyFail();
             } finally {
                 setTimeout(() => {
                     setStatusText('');
+                    setShowStatus(false);
                     setHasError(false);
                 }, 1500);
             }
@@ -107,7 +111,7 @@ export const CopyToClipboard = ({
 
     return (
         <>
-            {statusText ? (
+            {showStatus ? (
                 <CopyToClipboardStatus
                     iconSize={iconSize}
                     statusText={statusText}
