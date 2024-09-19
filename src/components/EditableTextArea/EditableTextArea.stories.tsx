@@ -134,13 +134,25 @@ export default meta;
 type StoryProps = StoryObj<typeof EditableTextArea>;
 
 export const Playground: StoryProps = {
-    render: function Playground(props) {
+    decorators: Story => (
+        <StorySection
+            title=""
+            description='Change various props in the "Controls" panel to see how they change behavior of the component'
+        >
+            <Story />
+        </StorySection>
+    ),
+    render: function Playground({ value, ...props }) {
+        const [valueState, setValueState] = React.useState(value);
+
         return (
-            <EditableTextAreaSection
-                sectionTitle=""
-                // eslint-disable-next-line max-len
-                sectionDescription={`Change various props in the "Controls" panel to see how they change behavior of the component`}
+            <EditableTextArea
                 {...props}
+                value={valueState}
+                onSave={modifiedValue => {
+                    onSave(modifiedValue);
+                    setValueState(modifiedValue);
+                }}
             />
         );
     }
