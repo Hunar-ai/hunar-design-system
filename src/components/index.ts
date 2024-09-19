@@ -20,3 +20,4 @@ export {
     type MobileDatePickerProps,
     type DatePickerConfigProps
 } from './MobileDatePicker';
+export { CopyToClipboard, type CopyToClipboardProps } from './CopyToClipboard';
