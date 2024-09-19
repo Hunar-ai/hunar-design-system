@@ -1,6 +1,6 @@
 {
   "name": "@hunar.ai/hunar-design-system",
-  "version": "0.5.0-rc.1",
+  "version": "0.5.0",
   "description": "Hunar's Design System",
   "repository": {
     "type": "git",
