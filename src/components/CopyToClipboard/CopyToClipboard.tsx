@@ -39,7 +39,6 @@ export const CopyToClipboard = ({
 }: CopyToClipboardProps) => {
     const theme = useTheme();
 
-    const [statusText, setStatusText] = React.useState('');
     const [showStatus, setShowStatus] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
 
@@ -83,16 +82,13 @@ export const CopyToClipboard = ({
                 await navigator.clipboard.writeText(text);
                 setHasError(false);
                 setShowStatus(true);
-                setStatusText('Copied');
                 onCopySuccess();
             } catch (err) {
                 setHasError(true);
                 setShowStatus(true);
-                setStatusText('Retry');
                 onCopyFail();
             } finally {
                 setTimeout(() => {
-                    setStatusText('');
                     setShowStatus(false);
                     setHasError(false);
                 }, 1500);
@@ -114,7 +110,6 @@ export const CopyToClipboard = ({
             {showStatus ? (
                 <CopyToClipboardStatus
                     iconSize={iconSize}
-                    statusText={statusText}
                     showStatusText={showStatusText}
                     alertSx={alertSx}
                     hasError={hasError}

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Alert, type SxProps } from '@mui/material';
 
 import { AppTooltip } from '@/components/AppTooltip';
@@ -5,7 +7,6 @@ import { CopyToClipboardStatusIcon } from './CopyToClipboardStatusIcon';
 
 interface CopyToClipboardStatusProps {
     iconSize: number;
-    statusText: string;
     showStatusText: boolean;
     alertSx: SxProps;
     hasError: boolean;
@@ -13,11 +14,15 @@ interface CopyToClipboardStatusProps {
 
 export const CopyToClipboardStatus = ({
     iconSize,
-    statusText,
     showStatusText,
     alertSx,
     hasError
 }: CopyToClipboardStatusProps) => {
+    const statusText = React.useMemo(
+        () => (hasError ? 'Retry' : 'Copied'),
+        [hasError]
+    );
+
     return (
         <AppTooltip title={statusText}>
             <Alert
