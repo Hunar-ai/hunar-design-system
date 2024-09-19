@@ -192,6 +192,14 @@ type StoryProps = StoryObj<typeof CustomSelect>;
 
 export const Playground: StoryProps = {
     args: { disabledOptions: [] },
+    decorators: Story => (
+        <StorySection
+            title=""
+            description='Change various props in the "Controls" panel to see how they change behavior of the component'
+        >
+            <Story />
+        </StorySection>
+    ),
     render: function Playground(props) {
         const [{ multiple }, updateArg] =
             useArgs<NonNullable<StoryProps['args']>>();
@@ -213,17 +221,11 @@ export const Playground: StoryProps = {
         };
 
         return (
-            <StorySection
-                title=""
-                // eslint-disable-next-line max-len
-                description={`Change various props in the "Controls" panel to see how they change behavior of the component`}
-            >
-                <CustomSelect
-                    {...props}
-                    value={multiple ? multiSelectValue : singleSelectValue}
-                    onChange={onSelectChange}
-                />
-            </StorySection>
+            <CustomSelect
+                {...props}
+                value={multiple ? multiSelectValue : singleSelectValue}
+                onChange={onSelectChange}
+            />
         );
     }
 };

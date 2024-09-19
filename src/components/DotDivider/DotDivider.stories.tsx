@@ -26,25 +26,29 @@ export default meta;
 type StoryProps = StoryObj<typeof DotDivider>;
 
 export const Playground: StoryProps = {
+    decorators: Story => (
+        <StorySection
+            title=""
+            description='Change various props in the "Controls" panel to see how they change behavior of the component'
+        >
+            <Story />
+        </StorySection>
+    ),
     render: function Playground(props) {
         return (
-            <StorySection
-                title=""
-                // eslint-disable-next-line max-len
-                description={`Change various props in the "Controls" panel to see how they change behavior of the component`}
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                columnGap={0.5}
             >
-                <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    width="100%"
-                    columnGap={0.5}
-                >
-                    Apple <DotDivider {...props} />
-                    Mango <DotDivider {...props} />
-                    Orange
-                </Box>
-            </StorySection>
+                {`Apple `}
+                <DotDivider {...props} />
+                {`Mango `}
+                <DotDivider {...props} />
+                {`Orange`}
+            </Box>
         );
     }
 };
