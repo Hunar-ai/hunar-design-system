@@ -24,7 +24,7 @@ export interface SearchBarProps {
 export const SearchBar = ({
     placeholder = 'Search',
     showMobileSearch = true,
-    xsWidth = 'calc(100vw - 32px)',
+    xsWidth = 'calc(100vw - 16px)',
     setSearchValue,
     onClearClick = () => undefined,
     onEnterPress = () => undefined,
