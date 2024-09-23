@@ -22,3 +22,4 @@ export {
 } from './MobileDatePicker';
 export { CopyToClipboard, type CopyToClipboardProps } from './CopyToClipboard';
 export { SearchBar, type SearchBarProps } from './SearchBar';
+export { CustomButton, type CustomButtonProps } from './CustomButton';
