@@ -3,15 +3,14 @@ import React from 'react';
 import type { OptionProps, OptionsProps } from '@/interfaces';
 
 export const useHelper = () => {
-    const getValueToLabelMap = React.useCallback(
-        (options: OptionsProps): { [key: string]: string } => {
+    const getValueToOptionMap = React.useCallback(
+        (options: OptionsProps): Record<string, OptionProps> => {
             const optionsMap = options.reduce(
-                (acc: { [key: string]: string }, key: OptionProps) => {
-                    acc = {
-                        ...acc,
-                        [key.value]: key.label
+                (map: Record<string, OptionProps>, option: OptionProps) => {
+                    return {
+                        ...map,
+                        [option.value]: option
                     };
-                    return acc;
                 },
                 {}
             );
@@ -20,5 +19,5 @@ export const useHelper = () => {
         []
     );
 
-    return { getValueToLabelMap };
+    return { getValueToOptionMap };
 };

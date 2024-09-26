@@ -76,7 +76,7 @@ export const CustomSelect = ({
 }: CustomSelectProps) => {
     const isMobile = useIsMobile();
     const theme = useTheme();
-    const { getValueToLabelMap } = useHelper();
+    const { getValueToOptionMap } = useHelper();
 
     const initialSelectedValue = React.useMemo(() => {
         return Array.isArray(value)
@@ -97,9 +97,9 @@ export const CustomSelect = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialSelectedValue, isOpen]);
 
-    const valueToLabelMap = React.useMemo(() => {
-        return getValueToLabelMap(options);
-    }, [options, getValueToLabelMap]);
+    const valueToOptionMap = React.useMemo(() => {
+        return getValueToOptionMap(options);
+    }, [options, getValueToOptionMap]);
 
     const filteredOptions = React.useMemo(() => {
         let modifiedOptions;
@@ -198,21 +198,21 @@ export const CustomSelect = ({
         (selectValue: string | string[]) => {
             if (typeof selectValue === 'string') {
                 return (
-                    valueToLabelMap[selectValue] || (
+                    valueToOptionMap[selectValue]?.label || (
                         <PlaceholderPreview placeholderText={placeholder} />
                     )
                 );
             } else {
                 return (
                     selectValue
-                        .map(value => valueToLabelMap[value])
+                        .map(value => valueToOptionMap[value]?.label)
                         .join(', ') || (
                         <PlaceholderPreview placeholderText={placeholder} />
                     )
                 );
             }
         },
-        [valueToLabelMap, placeholder]
+        [valueToOptionMap, placeholder]
     );
 
     const isOptionDisabled = React.useCallback(
@@ -254,22 +254,18 @@ export const CustomSelect = ({
 
         if (typeof selectedValue === 'string') {
             modifiedSelectedOptions = selectedValue
-                ? {
-                      value: selectedValue,
-                      label: valueToLabelMap[selectedValue]
-                  }
+                ? valueToOptionMap[selectedValue]
                 : null;
         } else {
-            modifiedSelectedOptions = selectedValue.map(value => ({
-                value: value,
-                label: valueToLabelMap[value]
-            }));
+            modifiedSelectedOptions = selectedValue.map(
+                value => valueToOptionMap[value]
+            );
         }
 
         onChange(modifiedSelectedOptions);
         setIsOpen(false);
         setSearch('');
-    }, [onChange, selectedValue, valueToLabelMap]);
+    }, [onChange, selectedValue, valueToOptionMap]);
 
     const valueWithPlaceholder = React.useMemo(() => {
         if (Array.isArray(initialSelectedValue)) {

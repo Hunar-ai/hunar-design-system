@@ -16,18 +16,35 @@ const onChange = action('change');
 const options: OptionsProps = [
     {
         label: 'VeryLongOptionWithoutAnySpaceVeryLongOptionWithoutAnySpace',
-        value: 'VERY_LONG_OPTION_WITHOUT_ANY_SPACE'
+        value: 'VERY_LONG_OPTION_WITHOUT_ANY_SPACE',
+        meta: { review: 'GOOD' }
     },
-    { label: 'The Shawshank Redemption', value: 'THE_SHAWSHANK_REDEMPTION' },
-    { label: 'The Godfather', value: 'THE_GODFATHER' },
-    { label: 'The Godfather: Part II', value: 'THE_GODFATHER_PART_II' },
-    { label: 'The Dark Knight', value: 'THE_DARK_KNIGHT' },
-    { label: '12 Angry Men', value: '12_ANGRY_MEN' },
-    { label: 'Pulp Fiction', value: 'PULP_FICTION' },
-    { label: 'Fight Club', value: 'FIGHT_CLUB' },
-    { label: 'Forrest Gump', value: 'FORREST_GUMP' },
-    { label: 'Inception', value: 'INCEPTION' },
-    { label: 'The Matrix', value: 'THE_MATRIX' }
+    {
+        label: 'The Shawshank Redemption',
+        value: 'THE_SHAWSHANK_REDEMPTION',
+        meta: { review: 'GOOD' }
+    },
+    {
+        label: 'The Godfather',
+        value: 'THE_GODFATHER',
+        meta: { review: 'GOOD' }
+    },
+    {
+        label: 'The Godfather: Part II',
+        value: 'THE_GODFATHER_PART_II',
+        meta: { review: 'GOOD' }
+    },
+    {
+        label: 'The Dark Knight',
+        value: 'THE_DARK_KNIGHT',
+        meta: { review: 'GOOD' }
+    },
+    { label: '12 Angry Men', value: '12_ANGRY_MEN', meta: { review: 'GOOD' } },
+    { label: 'Pulp Fiction', value: 'PULP_FICTION', meta: { review: 'GOOD' } },
+    { label: 'Fight Club', value: 'FIGHT_CLUB', meta: { review: 'GOOD' } },
+    { label: 'Forrest Gump', value: 'FORREST_GUMP', meta: { review: 'GOOD' } },
+    { label: 'Inception', value: 'INCEPTION', meta: { review: 'GOOD' } },
+    { label: 'The Matrix', value: 'THE_MATRIX', meta: { review: 'GOOD' } }
 ];
 
 const disabledOptions: OptionsProps = [options[1], options[3], options[4]];
