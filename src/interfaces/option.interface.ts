@@ -3,7 +3,7 @@ export interface OptionProps {
     label: string;
     labelHelperText?: string;
     state?: string;
-    meta?: Record<string, unknown>;
+    meta?: Record<string, string>;
 }
 
 export type OptionsProps = OptionProps[];
