@@ -5,12 +5,14 @@ import tinycolor from 'tinycolor2';
 import { useTheme, type SxProps } from '@mui/material';
 import LoadingButton, { type LoadingButtonProps } from '@mui/lab/LoadingButton';
 
-export interface CustomButtonProps extends LoadingButtonProps {
+export interface CustomButtonProps extends Omit<LoadingButtonProps, 'loading'> {
     primaryColor: string;
+    isLoading: boolean;
 }
 
 export const CustomButton = ({
     primaryColor,
+    isLoading = false,
     variant = 'contained',
     sx = {},
     ...restProps
@@ -71,6 +73,7 @@ export const CustomButton = ({
         <LoadingButton
             {...restProps}
             variant={variant}
+            loading={isLoading}
             sx={{ ...primaryColorSx, ...sx }}
         />
     );
