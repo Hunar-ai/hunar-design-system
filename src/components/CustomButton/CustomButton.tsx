@@ -7,7 +7,7 @@ import LoadingButton, { type LoadingButtonProps } from '@mui/lab/LoadingButton';
 
 export interface CustomButtonProps extends Omit<LoadingButtonProps, 'loading'> {
     primaryColor: string;
-    isLoading: boolean;
+    isLoading?: boolean;
 }
 
 export const CustomButton = ({
