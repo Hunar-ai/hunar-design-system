@@ -13,3 +13,5 @@ export const AppTooltip = styled(({ className, ...props }: TooltipProps) => (
         backgroundColor: theme.palette.common.black
     }
 }));
+
+AppTooltip.displayName = 'AppTooltip';

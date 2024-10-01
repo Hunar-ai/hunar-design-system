@@ -9,7 +9,7 @@ import { InputAdornment, SxProps, TextField } from '@mui/material';
 
 import { FIELD_SIZE } from '@/Enum';
 
-interface CurrencyFieldProps {
+export interface CurrencyFieldProps {
     id: string;
     name: string;
     value: string | number | null;
