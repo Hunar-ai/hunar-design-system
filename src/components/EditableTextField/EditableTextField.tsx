@@ -120,6 +120,7 @@ export const EditableTextField = ({
                     previewText={formattedPreviewText}
                     fieldSize={fieldSize}
                     sx={previewSx}
+                    isDisabled={disabled}
                     onEditClick={() => setIsEditing(true)}
                 />
             )}
@@ -127,8 +128,8 @@ export const EditableTextField = ({
                 <EditableTextFieldCtaList
                     buttonSize={buttonSize}
                     primaryColor={selectedPrimaryColor}
-                    isCancelDisabled={!editedValue || hasErrors}
-                    isSaveDisabled={!editedValue || hasErrors}
+                    isCancelDisabled={!editedValue || hasErrors || disabled}
+                    isSaveDisabled={!editedValue || hasErrors || disabled}
                     onCancelClick={handleCancelClick}
                     onSaveClick={handleSaveClick}
                 />
