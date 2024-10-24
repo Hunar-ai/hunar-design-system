@@ -49,6 +49,8 @@ export interface CustomSelectProps {
     transformOrigin?: POPOVER_ORIGIN;
     menuMarginThreshold?: number;
     onChange: (_: OptionProps | OptionsProps | null) => void;
+    onMenuOpen?: () => void;
+    onMenuClose?: () => void;
 }
 
 export const CustomSelect = ({
@@ -72,7 +74,9 @@ export const CustomSelect = ({
     anchorOrigin = POPOVER_ORIGIN.BOTTOM_CENTER,
     transformOrigin = POPOVER_ORIGIN.TOP_CENTER,
     menuMarginThreshold = undefined,
-    onChange
+    onChange,
+    onMenuOpen = () => undefined,
+    onMenuClose = () => undefined
 }: CustomSelectProps) => {
     const isMobile = useIsMobile();
     const theme = useTheme();
@@ -115,11 +119,17 @@ export const CustomSelect = ({
         return modifiedOptions;
     }, [options, search]);
 
+    const onOpenClick = React.useCallback(() => {
+        onMenuOpen();
+        setIsOpen(true);
+    }, [onMenuOpen]);
+
     const onCloseClick = React.useCallback(() => {
+        onMenuClose();
         setIsOpen(false);
         setSelectedValue(initialSelectedValue);
         setSearch('');
-    }, [initialSelectedValue]);
+    }, [initialSelectedValue, onMenuClose]);
 
     const menuProps: Partial<MenuProps> = React.useMemo(
         () => ({
@@ -262,10 +272,11 @@ export const CustomSelect = ({
             );
         }
 
+        onMenuClose();
         onChange(modifiedSelectedOptions);
         setIsOpen(false);
         setSearch('');
-    }, [onChange, selectedValue, valueToOptionMap]);
+    }, [onChange, onMenuClose, selectedValue, valueToOptionMap]);
 
     const valueWithPlaceholder = React.useMemo(() => {
         if (Array.isArray(initialSelectedValue)) {
@@ -298,7 +309,7 @@ export const CustomSelect = ({
                 value={valueWithPlaceholder}
                 renderValue={getSelectValuePreview}
                 MenuProps={menuProps}
-                onOpen={() => setIsOpen(true)}
+                onOpen={onOpenClick}
             >
                 <CustomSelectHeader
                     title={optionsHeaderTitle || label}

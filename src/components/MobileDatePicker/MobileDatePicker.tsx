@@ -63,6 +63,8 @@ export interface MobileDatePickerProps {
     transformOrigin?: POPOVER_ORIGIN;
     menuMarginThreshold?: number;
     onChange: (_: Date) => void;
+    onMenuOpen?: () => void;
+    onMenuClose?: () => void;
     getValuePreview?: (_: Date | string) => string;
 }
 
@@ -88,6 +90,8 @@ export const MobileDatePicker = ({
     transformOrigin = POPOVER_ORIGIN.TOP_CENTER,
     menuMarginThreshold = undefined,
     onChange,
+    onMenuOpen = () => undefined,
+    onMenuClose = () => undefined,
     getValuePreview = undefined
 }: MobileDatePickerProps) => {
     const isMobile = useIsMobile();
@@ -102,10 +106,16 @@ export const MobileDatePicker = ({
         setSelectedValue(value || new Date());
     }, [value]);
 
+    const onOpenClick = React.useCallback(() => {
+        onMenuOpen();
+        setIsOpen(true);
+    }, [onMenuOpen]);
+
     const onCloseClick = React.useCallback(() => {
+        onMenuClose();
         setIsOpen(false);
         setSelectedValue(value || new Date());
-    }, [value]);
+    }, [value, onMenuClose]);
 
     const menuProps: Partial<MenuProps> = React.useMemo(
         () => ({
@@ -203,9 +213,10 @@ export const MobileDatePicker = ({
     );
 
     const onConfirmClick = React.useCallback(() => {
+        onMenuClose();
         onChange(selectedValue);
         setIsOpen(false);
-    }, [onChange, selectedValue]);
+    }, [onChange, onMenuClose, selectedValue]);
 
     return (
         <FormControl
@@ -228,7 +239,7 @@ export const MobileDatePicker = ({
                 sx={sx}
                 renderValue={getValuePreview ?? getDefaultValuePreview}
                 MenuProps={menuProps}
-                onOpen={() => setIsOpen(true)}
+                onOpen={onOpenClick}
             >
                 <MobileDatePickerHeader
                     title={pickerHeaderTitle || label}

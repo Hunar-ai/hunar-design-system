@@ -27,6 +27,8 @@ export interface EditableTextFieldProps {
     inputFieldSx?: SxProps;
     previewSx?: SxProps;
     onSave: (_: string) => void;
+    onEditStart?: () => void;
+    onEditEnd?: () => void;
     handleIsValidCheck?: (_: string) => boolean;
 }
 
@@ -48,6 +50,8 @@ export const EditableTextField = ({
     inputFieldSx = {},
     previewSx = {},
     onSave,
+    onEditStart = () => undefined,
+    onEditEnd = () => undefined,
     handleIsValidCheck = undefined
 }: EditableTextFieldProps) => {
     const theme = useTheme();
@@ -74,20 +78,31 @@ export const EditableTextField = ({
         setEditedValue(e.target.value);
     };
 
-    const onFocus = () => setIsEditing(true);
+    const onFocus = () => {
+        onEditStart();
+        setIsEditing(true);
+    };
 
     const onBlur = () => {
         if (!value && !editedValue) {
+            onEditEnd();
             setIsEditing(false);
         }
     };
 
+    const onEditClick = () => {
+        onEditStart();
+        setIsEditing(true);
+    };
+
     const handleCancelClick = () => {
+        onEditEnd();
         setEditedValue(value);
         setIsEditing(false);
     };
 
     const handleSaveClick = () => {
+        onEditEnd();
         onSave(editedValue);
         setIsEditing(false);
     };
@@ -121,7 +136,7 @@ export const EditableTextField = ({
                     fieldSize={fieldSize}
                     sx={previewSx}
                     isDisabled={disabled}
-                    onEditClick={() => setIsEditing(true)}
+                    onEditClick={onEditClick}
                 />
             )}
             {isEditing && (

@@ -2,7 +2,6 @@ import React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { useArgs } from '@storybook/preview-api';
 
 import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
@@ -12,6 +11,8 @@ import { FIELD_SIZE, POPOVER_ORIGIN } from '@/Enum';
 import { OptionsProps } from '@/interfaces';
 
 const onChange = action('change');
+const onMenuOpen = action('menuOpen');
+const onMenuClose = action('menuClose');
 
 const options: OptionsProps = [
     {
@@ -199,7 +200,9 @@ const meta = {
         name: 'movies',
         options,
         value: null,
-        onChange
+        onChange,
+        onMenuOpen,
+        onMenuClose
     }
 } satisfies Meta<typeof CustomSelect>;
 
@@ -218,9 +221,6 @@ export const Playground: StoryProps = {
         </StorySection>
     ),
     render: function Playground(props) {
-        const [{ multiple }, updateArg] =
-            useArgs<NonNullable<StoryProps['args']>>();
-
         const [singleSelectValue, setSingleSelectValue] =
             React.useState<CustomSelectProps['value']>(null);
         const [multiSelectValue, setMultiSelectValue] = React.useState<
@@ -229,7 +229,6 @@ export const Playground: StoryProps = {
 
         const onSelectChange: CustomSelectProps['onChange'] = updatedValue => {
             onChange(updatedValue);
-            updateArg({ value: updatedValue });
             if (Array.isArray(updatedValue)) {
                 setMultiSelectValue(updatedValue);
             } else {
@@ -240,7 +239,7 @@ export const Playground: StoryProps = {
         return (
             <CustomSelect
                 {...props}
-                value={multiple ? multiSelectValue : singleSelectValue}
+                value={props.multiple ? multiSelectValue : singleSelectValue}
                 onChange={onSelectChange}
             />
         );
