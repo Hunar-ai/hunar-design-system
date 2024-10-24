@@ -66,33 +66,30 @@ export const EditableTextArea = ({
         setEditedValue(e.target.value);
     };
 
-    const onFocus = () => {
+    const handleEditStart = () => {
         onEditStart();
         setIsEditing(true);
+    };
+
+    const handleEditEnd = () => {
+        onEditEnd();
+        setIsEditing(false);
     };
 
     const onBlur = () => {
         if (!value && !editedValue) {
-            onEditEnd();
-            setIsEditing(false);
+            handleEditEnd();
         }
     };
 
-    const onEditClick = () => {
-        onEditStart();
-        setIsEditing(true);
-    };
-
     const handleCancelClick = () => {
-        onEditEnd();
+        handleEditEnd();
         setEditedValue(value);
-        setIsEditing(false);
     };
 
     const handleSaveClick = () => {
-        onEditEnd();
+        handleEditEnd();
         onSave(editedValue);
-        setIsEditing(false);
     };
 
     return (
@@ -110,7 +107,7 @@ export const EditableTextArea = ({
                     error={hasErrors}
                     sx={inputFieldSx}
                     onChange={onFieldChange}
-                    onFocus={onFocus}
+                    onFocus={handleEditStart}
                     onBlur={onBlur}
                     helperText={
                         <HelperText
@@ -126,7 +123,7 @@ export const EditableTextArea = ({
                     fieldSize={fieldSize}
                     isDisabled={disabled}
                     sx={previewSx}
-                    onEditClick={onEditClick}
+                    onEditClick={handleEditStart}
                 />
             )}
             {isEditing && (

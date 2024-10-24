@@ -78,33 +78,30 @@ export const EditableTextField = ({
         setEditedValue(e.target.value);
     };
 
-    const onFocus = () => {
+    const handleEditStart = () => {
         onEditStart();
         setIsEditing(true);
+    };
+
+    const handleEditEnd = () => {
+        onEditEnd();
+        setIsEditing(false);
     };
 
     const onBlur = () => {
         if (!value && !editedValue) {
-            onEditEnd();
-            setIsEditing(false);
+            handleEditEnd();
         }
     };
 
-    const onEditClick = () => {
-        onEditStart();
-        setIsEditing(true);
-    };
-
     const handleCancelClick = () => {
-        onEditEnd();
+        handleEditEnd();
         setEditedValue(value);
-        setIsEditing(false);
     };
 
     const handleSaveClick = () => {
-        onEditEnd();
+        handleEditEnd();
         onSave(editedValue);
-        setIsEditing(false);
     };
 
     return (
@@ -127,7 +124,7 @@ export const EditableTextField = ({
                     textFieldType={textFieldType}
                     inputFieldSx={inputFieldSx}
                     onFieldChange={onFieldChange}
-                    onFocus={onFocus}
+                    onFocus={handleEditStart}
                     onBlur={onBlur}
                 />
             ) : (
@@ -136,7 +133,7 @@ export const EditableTextField = ({
                     fieldSize={fieldSize}
                     sx={previewSx}
                     isDisabled={disabled}
-                    onEditClick={onEditClick}
+                    onEditClick={handleEditStart}
                 />
             )}
             {isEditing && (
