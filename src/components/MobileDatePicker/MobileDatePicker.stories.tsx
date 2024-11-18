@@ -14,6 +14,8 @@ import {
 import { FIELD_SIZE, POPOVER_ORIGIN } from '@/Enum';
 
 const onChange = action('change');
+const onMenuOpen = action('menuOpen');
+const onMenuClose = action('menuClose');
 
 const customDateConfig: DatePickerConfigProps[] = [
     { type: 'year', format: 'YYYY', caption: 'Year', step: 1 },
@@ -190,7 +192,9 @@ const meta = {
         label: 'Date',
         name: 'date',
         value: null,
-        onChange
+        onChange,
+        onMenuOpen,
+        onMenuClose
     }
 } satisfies Meta<typeof MobileDatePicker>;
 

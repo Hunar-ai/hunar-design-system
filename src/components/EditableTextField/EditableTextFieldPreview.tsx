@@ -1,4 +1,4 @@
-import { Grid, IconButton, SxProps, Typography } from '@mui/material';
+import { Grid, IconButton, SxProps, Typography, useTheme } from '@mui/material';
 import { EditOutlined as EditOutlinedIcon } from '@mui/icons-material';
 import { grey } from '@mui/material/colors';
 
@@ -7,6 +7,7 @@ import { FIELD_SIZE } from '@/Enum';
 interface EditableTextFieldPreviewProps {
     previewText: string;
     fieldSize: FIELD_SIZE;
+    isDisabled: boolean;
     sx?: SxProps;
     onEditClick: VoidFunction;
 }
@@ -14,9 +15,11 @@ interface EditableTextFieldPreviewProps {
 export const EditableTextFieldPreview = ({
     previewText,
     fieldSize,
+    isDisabled,
     sx = {},
     onEditClick
 }: EditableTextFieldPreviewProps) => {
+    const theme = useTheme();
     return (
         <Grid
             item
@@ -28,6 +31,7 @@ export const EditableTextFieldPreview = ({
             px={1.75}
             py={fieldSize === FIELD_SIZE.small ? 0 : 1}
             maxWidth="100%"
+            color={isDisabled ? theme.palette.action.disabled : undefined}
         >
             <Typography
                 whiteSpace="nowrap"
@@ -36,7 +40,11 @@ export const EditableTextFieldPreview = ({
             >
                 {previewText}
             </Typography>
-            <IconButton sx={{ p: 1.25, mr: -1.25 }} onClick={onEditClick}>
+            <IconButton
+                sx={{ p: 1.25, mr: -1.25 }}
+                onClick={onEditClick}
+                disabled={isDisabled}
+            >
                 <EditOutlinedIcon fontSize="small" />
             </IconButton>
         </Grid>

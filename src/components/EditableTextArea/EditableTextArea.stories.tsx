@@ -9,6 +9,8 @@ import { EditableTextArea, EditableTextAreaProps } from './EditableTextArea';
 import { BUTTON_SIZE, FIELD_SIZE } from '@/Enum';
 
 const onSave = action('save');
+const onEditStart = action('editStart');
+const onEditEnd = action('editEnd');
 
 const ControlledEditableTextArea = ({
     value,
@@ -126,7 +128,7 @@ const meta = {
             options: [BUTTON_SIZE.small, BUTTON_SIZE.medium, BUTTON_SIZE.large]
         }
     },
-    args: { value: '', onSave }
+    args: { value: '', onSave, onEditStart, onEditEnd }
 } satisfies Meta<typeof EditableTextArea>;
 
 export default meta;

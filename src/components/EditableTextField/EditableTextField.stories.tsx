@@ -9,6 +9,8 @@ import { EditableTextField, EditableTextFieldProps } from './EditableTextField';
 import { BUTTON_SIZE, TEXT_INPUT_VARIANT, FIELD_SIZE } from '@/Enum';
 
 const onSave = action('save');
+const onEditStart = action('editStart');
+const onEditEnd = action('editEnd');
 
 const ControlledEditableTextField = ({
     value,
@@ -140,7 +142,7 @@ const meta = {
             control: 'text'
         }
     },
-    args: { value: '', onSave }
+    args: { value: '', onSave, onEditStart, onEditEnd }
 } satisfies Meta<typeof EditableTextField>;
 
 export default meta;

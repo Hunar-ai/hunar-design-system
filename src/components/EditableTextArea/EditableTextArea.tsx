@@ -24,6 +24,8 @@ export interface EditableTextAreaProps {
     inputFieldSx?: SxProps;
     previewSx?: SxProps;
     onSave: (_: string) => void;
+    onEditStart?: () => void;
+    onEditEnd?: () => void;
     handleIsValidCheck?: (_: string) => boolean;
 }
 
@@ -42,6 +44,8 @@ export const EditableTextArea = ({
     inputFieldSx = {},
     previewSx = {},
     onSave,
+    onEditStart = () => undefined,
+    onEditEnd = () => undefined,
     handleIsValidCheck = undefined
 }: EditableTextAreaProps) => {
     const theme = useTheme();
@@ -62,22 +66,30 @@ export const EditableTextArea = ({
         setEditedValue(e.target.value);
     };
 
-    const onFocus = () => setIsEditing(true);
+    const handleEditStart = () => {
+        onEditStart();
+        setIsEditing(true);
+    };
+
+    const handleEditEnd = () => {
+        onEditEnd();
+        setIsEditing(false);
+    };
 
     const onBlur = () => {
         if (!value && !editedValue) {
-            setIsEditing(false);
+            handleEditEnd();
         }
     };
 
     const handleCancelClick = () => {
+        handleEditEnd();
         setEditedValue(value);
-        setIsEditing(false);
     };
 
     const handleSaveClick = () => {
+        handleEditEnd();
         onSave(editedValue);
-        setIsEditing(false);
     };
 
     return (
@@ -95,7 +107,7 @@ export const EditableTextArea = ({
                     error={hasErrors}
                     sx={inputFieldSx}
                     onChange={onFieldChange}
-                    onFocus={onFocus}
+                    onFocus={handleEditStart}
                     onBlur={onBlur}
                     helperText={
                         <HelperText
@@ -109,16 +121,17 @@ export const EditableTextArea = ({
                 <EditableTextFieldPreview
                     previewText={value}
                     fieldSize={fieldSize}
+                    isDisabled={disabled}
                     sx={previewSx}
-                    onEditClick={() => setIsEditing(true)}
+                    onEditClick={handleEditStart}
                 />
             )}
             {isEditing && (
                 <EditableTextFieldCtaList
                     buttonSize={buttonSize}
                     primaryColor={selectedPrimaryColor}
-                    isCancelDisabled={!editedValue || hasErrors}
-                    isSaveDisabled={!editedValue || hasErrors}
+                    isCancelDisabled={!editedValue || hasErrors || disabled}
+                    isSaveDisabled={!editedValue || hasErrors || disabled}
                     onCancelClick={handleCancelClick}
                     onSaveClick={handleSaveClick}
                 />
