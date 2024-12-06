@@ -25,3 +25,4 @@ export { SearchBar, type SearchBarProps } from './SearchBar';
 export { CustomButton, type CustomButtonProps } from './CustomButton';
 export { CurrencyField, type CurrencyFieldProps } from './CurrencyField';
 export { TextArea, type TextAreaProps } from './TextArea';
+export { Select, type SelectProps } from './Select';
