@@ -21,6 +21,7 @@ export interface AdaptiveSelectProps {
     textInputPlaceHolder?: string;
     isRequired?: boolean;
     isDisabled?: boolean;
+    isClearDisabled?: boolean;
     size?: FIELD_SIZE;
     limitTags?: number;
     sx?: SxProps;
@@ -46,6 +47,7 @@ export const AdaptiveSelect = ({
     textInputPlaceHolder = '',
     isRequired = false,
     isDisabled = false,
+    isClearDisabled = false,
     size = FIELD_SIZE.medium,
     limitTags = undefined,
     sx = {},
@@ -80,6 +82,7 @@ export const AdaptiveSelect = ({
                     size={size}
                     limitTags={limitTags}
                     isDisabled={isDisabled}
+                    isClearDisabled={isClearDisabled}
                     options={options}
                     value={getSelectedOption({
                         options,
