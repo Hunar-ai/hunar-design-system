@@ -26,3 +26,4 @@ export { CustomButton, type CustomButtonProps } from './CustomButton';
 export { CurrencyField, type CurrencyFieldProps } from './CurrencyField';
 export { TextArea, type TextAreaProps } from './TextArea';
 export { Select, type SelectProps } from './Select';
+export { AdaptiveSelect, type AdaptiveSelectProps } from './AdaptiveSelect';
