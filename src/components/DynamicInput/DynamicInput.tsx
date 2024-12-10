@@ -11,7 +11,7 @@ import { useFormUtils } from '@/hooks/useFormUtils';
 import { FIELD_SIZE } from '@/Enum';
 import type { OptionProps, OptionsProps } from '@/interfaces';
 
-export interface AdaptiveSelectProps {
+export interface DynamicInputProps {
     label: string;
     name: string;
     id: string;
@@ -37,7 +37,7 @@ export interface AdaptiveSelectProps {
     onTextInputClick?: (_: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-export const AdaptiveSelect = ({
+export const DynamicInput = ({
     label,
     name,
     id,
@@ -57,7 +57,7 @@ export const AdaptiveSelect = ({
     onTextInputChange,
     onSelectOpen,
     onTextInputClick
-}: AdaptiveSelectProps) => {
+}: DynamicInputProps) => {
     const { getSelectedOption } = useFormUtils();
 
     const handleSelectChange = (

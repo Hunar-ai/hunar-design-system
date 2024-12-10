@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
-import { AdaptiveSelect, type AdaptiveSelectProps } from './AdaptiveSelect';
+import { DynamicInput, type DynamicInputProps } from './DynamicInput';
 import { options } from '@/components/Select/Select.stories';
 
 import { FIELD_SIZE } from '@/Enum';
@@ -13,91 +13,90 @@ import { FIELD_SIZE } from '@/Enum';
 const onSelectChange = action('selectChange');
 const onTextInputChange = action('textChange');
 
-const ControlledAdaptiveSelect = ({
+const ControlledDynamicInput = ({
     value,
     onSelectChange,
     onTextInputChange,
     ...props
-}: AdaptiveSelectProps) => {
-    const [adaptiveSelectValue, setAdaptiveSelectValue] =
-        React.useState<AdaptiveSelectProps['value']>(value);
+}: DynamicInputProps) => {
+    const [dynamicInputValue, setDynamicInputValue] =
+        React.useState<DynamicInputProps['value']>(value);
 
-    const onAdaptiveSelectChange: AdaptiveSelectProps['onSelectChange'] = (
+    const handleSelectChange: DynamicInputProps['onSelectChange'] = (
         e,
         updatedValue,
         reason
     ) => {
         onSelectChange(e, updatedValue, reason);
-        setAdaptiveSelectValue(updatedValue?.value ?? '');
+        setDynamicInputValue(updatedValue?.value ?? '');
     };
 
-    const onAdaptiveSelectTextChange: AdaptiveSelectProps['onTextInputChange'] =
-        e => {
-            onTextInputChange(e);
-            setAdaptiveSelectValue(e.target.value);
-        };
+    const handleTextChange: DynamicInputProps['onTextInputChange'] = e => {
+        onTextInputChange(e);
+        setDynamicInputValue(e.target.value);
+    };
 
     return (
-        <AdaptiveSelect
+        <DynamicInput
             {...props}
-            value={adaptiveSelectValue}
-            onSelectChange={onAdaptiveSelectChange}
-            onTextInputChange={onAdaptiveSelectTextChange}
+            value={dynamicInputValue}
+            onSelectChange={handleSelectChange}
+            onTextInputChange={handleTextChange}
         />
     );
 };
 
-interface AdaptiveSelectSectionProps extends AdaptiveSelectProps {
+interface DynamicInputSectionProps extends DynamicInputProps {
     sectionTitle: string;
     sectionDescription?: string;
 }
 
-const AdaptiveSelectSection = ({
+const DynamicInputSection = ({
     sectionTitle,
     sectionDescription,
     ...props
-}: AdaptiveSelectSectionProps) => {
+}: DynamicInputSectionProps) => {
     return (
         <StorySection title={sectionTitle} description={sectionDescription}>
-            <ControlledAdaptiveSelect {...props} />
+            <ControlledDynamicInput {...props} />
         </StorySection>
     );
 };
 
-const AdaptiveSelectStates = (props: AdaptiveSelectProps) => {
+const DynamicInputStates = (props: DynamicInputProps) => {
     return (
         <>
-            <AdaptiveSelectSection
+            <DynamicInputSection
                 sectionTitle="Default"
                 {...props}
                 name="default"
             />
-            <AdaptiveSelectSection
+            <DynamicInputSection
                 sectionTitle="Disabled"
                 {...props}
                 name="disabled"
                 isDisabled
             />
-            <AdaptiveSelectSection
+            <DynamicInputSection
                 sectionTitle="Placeholder"
                 selectPlaceHolder="Choose Option"
                 textInputPlaceHolder="Enter Value"
                 {...props}
                 name="placeholder"
             />
-            <AdaptiveSelectSection
+            <DynamicInputSection
                 sectionTitle="Required"
                 {...props}
                 name="required"
                 isRequired
             />
-            <AdaptiveSelectSection
+            <DynamicInputSection
                 sectionTitle="Helper Text"
                 {...props}
                 name="helper-text"
                 helperText={<HelperText msg="I have helper text" />}
             />
-            <AdaptiveSelectSection
+            <DynamicInputSection
                 sectionTitle="Error"
                 {...props}
                 name="error"
@@ -109,8 +108,8 @@ const AdaptiveSelectStates = (props: AdaptiveSelectProps) => {
 };
 
 const meta = {
-    title: 'Components/AdaptiveSelect',
-    component: AdaptiveSelect,
+    title: 'Components/DynamicInput',
+    component: DynamicInput,
     parameters: { controls: { expanded: true } },
     argTypes: {
         value: {
@@ -131,11 +130,11 @@ const meta = {
         onSelectChange,
         onTextInputChange
     }
-} satisfies Meta<typeof AdaptiveSelect>;
+} satisfies Meta<typeof DynamicInput>;
 
 export default meta;
 
-type StoryProps = StoryObj<typeof AdaptiveSelect>;
+type StoryProps = StoryObj<typeof DynamicInput>;
 
 export const Playground: StoryProps = {
     decorators: Story => (
@@ -147,29 +146,28 @@ export const Playground: StoryProps = {
         </StorySection>
     ),
     render: function Playground(props) {
-        const [adaptiveSelectValue, setAdaptiveSelectValue] =
-            React.useState<AdaptiveSelectProps['value']>('');
+        const [dynamicInputValue, setDynamicInputValue] =
+            React.useState<DynamicInputProps['value']>('');
 
-        const onAdaptiveSelectChange: AdaptiveSelectProps['onSelectChange'] = (
+        const handleSelectChange: DynamicInputProps['onSelectChange'] = (
             e,
             updatedValue
         ) => {
             onSelectChange(e, updatedValue);
-            setAdaptiveSelectValue(updatedValue?.value ?? '');
+            setDynamicInputValue(updatedValue?.value ?? '');
         };
 
-        const onAdaptiveSelectTextChange: AdaptiveSelectProps['onTextInputChange'] =
-            e => {
-                onTextInputChange(e);
-                setAdaptiveSelectValue(e.target.value);
-            };
+        const handleTextChange: DynamicInputProps['onTextInputChange'] = e => {
+            onTextInputChange(e);
+            setDynamicInputValue(e.target.value);
+        };
 
         return (
-            <AdaptiveSelect
+            <DynamicInput
                 {...props}
-                value={adaptiveSelectValue}
-                onSelectChange={onAdaptiveSelectChange}
-                onTextInputChange={onAdaptiveSelectTextChange}
+                value={dynamicInputValue}
+                onSelectChange={handleSelectChange}
+                onTextInputChange={handleTextChange}
             />
         );
     }
@@ -183,7 +181,7 @@ export const SelectInput: StoryProps = {
             include: allowedControls
         }
     },
-    render: props => <AdaptiveSelectStates {...props} />
+    render: props => <DynamicInputStates {...props} />
 };
 
 export const TextInput: StoryProps = {
@@ -193,5 +191,5 @@ export const TextInput: StoryProps = {
         }
     },
     args: { options: [] },
-    render: props => <AdaptiveSelectStates {...props} />
+    render: props => <DynamicInputStates {...props} />
 };
