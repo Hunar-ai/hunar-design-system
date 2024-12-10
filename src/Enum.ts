@@ -51,3 +51,13 @@ export enum TEXT_INPUT_VARIANT {
     TEXT_FIELD = 'TEXT_FIELD',
     CURRENCY = 'CURRENCY'
 }
+
+export enum SELECT_OPTION_TYPE {
+    TEXTFIELD = 'TEXTFIELD',
+    CHECKBOX = 'CHECKBOX'
+}
+
+export enum COMMON_CONSTANT {
+    NA = 'NA',
+    NEW = 'NEW'
+}
