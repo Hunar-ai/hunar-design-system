@@ -57,7 +57,7 @@ export enum SELECT_OPTION_TYPE {
     CHECKBOX = 'CHECKBOX'
 }
 
-export enum COMMON_VALUE {
+export enum COMMON_CONSTANT {
     NA = 'NA',
     NEW = 'NEW'
 }

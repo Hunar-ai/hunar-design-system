@@ -7,7 +7,7 @@ import { grey } from '@mui/material/colors';
 import { Plus } from '@phosphor-icons/react';
 
 import type { OptionProps } from '@/interfaces';
-import { COMMON_VALUE, SELECT_OPTION_TYPE } from '@/Enum';
+import { COMMON_CONSTANT, SELECT_OPTION_TYPE } from '@/Enum';
 
 interface SelectOptionProps {
     liProps: React.HTMLAttributes<HTMLLIElement>;
@@ -32,7 +32,7 @@ export const SelectOption = ({
 
     return (
         <React.Fragment>
-            {option.value === COMMON_VALUE.NEW ? (
+            {option.value === COMMON_CONSTANT.NEW ? (
                 <Button
                     fullWidth
                     variant="text"

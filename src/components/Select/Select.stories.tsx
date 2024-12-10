@@ -7,7 +7,7 @@ import { StorySection } from '@/components/storybook';
 import { HelperText } from '@/components/HelperText';
 import { Select, type SelectProps } from './Select';
 
-import { COMMON_VALUE, FIELD_SIZE } from '@/Enum';
+import { COMMON_CONSTANT, FIELD_SIZE } from '@/Enum';
 import { OptionsProps } from '@/interfaces';
 
 const onChange = action('change');
@@ -103,7 +103,7 @@ const SelectStates = (props: SelectProps) => {
                 {...props}
                 name="disabledOptions "
                 options={[
-                    { value: COMMON_VALUE.NEW, label: 'Add New Option' },
+                    { value: COMMON_CONSTANT.NEW, label: 'Add New Option' },
                     ...options
                 ]}
             />
