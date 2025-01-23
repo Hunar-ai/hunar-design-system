@@ -18,9 +18,7 @@ export const TimeUtils = {
     },
     to24Hour: (time12h: string) => {
         const [time, modifier] = time12h.split(' ');
-
         const [hours, minutes] = time.split(':');
-
         let formattedHours = hours;
 
         if (formattedHours === '12') {
@@ -37,19 +35,14 @@ export const TimeUtils = {
         if (!dateString) {
             return '';
         }
+
         return moment(dateString);
     },
     getDate: (dateString: string) => {
-        if (!dateString) {
-            return '';
-        }
-        return moment(dateString, 'YYYY-MM-DD').toDate();
+        return dateString ? moment(dateString, 'YYYY-MM-DD').toDate() : '';
     },
     getDateByFormat: (dateString: string, format: string) => {
-        if (!dateString) {
-            return '';
-        }
-        return moment(dateString, format).toDate();
+        return dateString ? moment(dateString, format).toDate() : '';
     },
     getDateFromUtcISOString: (date: string) => {
         return moment.utc(date).toDate();
@@ -89,9 +82,12 @@ export const TimeUtils = {
         const diffSeconds = startTime.diff(endTime, 'seconds');
         const minutes = Math.floor(diffSeconds / 60);
         const seconds = diffSeconds - minutes * 60;
-        if (minutes > 0)
+
+        if (minutes > 0) {
             return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-        else return '00:' + (seconds < 10 ? '0' : '') + seconds;
+        }
+
+        return '00:' + (seconds < 10 ? '0' : '') + seconds;
     },
     getDiff: (startTime: Moment, endTime: Moment) => {
         const seconds = startTime.diff(endTime, 'seconds');
