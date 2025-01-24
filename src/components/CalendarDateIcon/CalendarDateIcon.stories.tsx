@@ -1,18 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { StorySection } from '@/components/storybook';
-import { DateCapsule } from './DateCapsule';
+import { CalendarDateIcon } from './CalendarDateIcon';
 
 const meta = {
-    title: 'Components/DateCapsule',
-    component: DateCapsule,
+    title: 'Components/CalendarDateIcon',
+    component: CalendarDateIcon,
     parameters: { controls: { expanded: true } },
-    args: { date: new Date('2024-03-17') }
-} satisfies Meta<typeof DateCapsule>;
+    args: {
+        month: 'Mar',
+        day: '17'
+    }
+} satisfies Meta<typeof CalendarDateIcon>;
 
 export default meta;
 
-type StoryProps = StoryObj<typeof DateCapsule>;
+type StoryProps = StoryObj<typeof CalendarDateIcon>;
 
 export const Playground: StoryProps = {
     decorators: Story => (
@@ -24,6 +27,6 @@ export const Playground: StoryProps = {
         </StorySection>
     ),
     render: function Playground(props) {
-        return <DateCapsule {...props} />;
+        return <CalendarDateIcon {...props} />;
     }
 };

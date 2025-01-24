@@ -27,4 +27,7 @@ export { CurrencyField, type CurrencyFieldProps } from './CurrencyField';
 export { TextArea, type TextAreaProps } from './TextArea';
 export { Select, type SelectProps } from './Select';
 export { DynamicInput, type DynamicInputProps } from './DynamicInput';
-export { DateCapsule, type DateCapsuleProps } from './DateCapsule';
+export {
+    CalendarDateIcon,
+    type CalendarDateIconProps
+} from './CalendarDateIcon';

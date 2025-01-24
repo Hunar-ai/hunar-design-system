@@ -1,34 +1,19 @@
-import React from 'react';
-
 import { Grid, Typography } from '@mui/material';
 import { blue, grey } from '@mui/material/colors';
 
-import { DateTimeFormat, TimeUtils } from '@/utils';
-
-export interface DateCapsuleProps {
-    date: Date;
+export interface CalendarDateIconProps {
+    month: string;
+    day: string;
     width?: number;
     height?: number;
 }
 
-export const DateCapsule = ({
-    date,
+export const CalendarDateIcon = ({
+    month,
+    day,
     width = 36,
     height = 20
-}: DateCapsuleProps) => {
-    const { month, day } = React.useMemo(() => {
-        if (!TimeUtils.isValidDate(date)) {
-            return { month: '', day: '' };
-        }
-
-        const formattedMonth = TimeUtils.format(
-            date,
-            DateTimeFormat.MONTH_FORMAT
-        );
-        const formattedDay = TimeUtils.format(date, DateTimeFormat.DATE_FORMAT);
-        return { month: formattedMonth, day: formattedDay };
-    }, [date]);
-
+}: CalendarDateIconProps) => {
     return (
         <Grid
             display="flex"
