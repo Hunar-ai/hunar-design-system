@@ -2,15 +2,15 @@ import { Grid, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 interface StorySectionProps {
-    title: string;
     children: React.ReactNode;
+    title?: string;
     description?: string;
 }
 
 export const StorySection = ({
-    title,
     children,
-    description
+    title = '',
+    description = ''
 }: StorySectionProps) => {
     return (
         <Grid
