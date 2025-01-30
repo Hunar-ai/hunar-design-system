@@ -1,6 +1,6 @@
 {
   "name": "@hunar.ai/hunar-design-system",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Hunar's Design System",
   "repository": {
     "type": "git",
@@ -58,6 +58,7 @@
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "^5.8.7",
     "lodash": "^4.17.21",
+    "moment": "^2.29.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-mobile-datepicker-ts": "^1.0.6",
