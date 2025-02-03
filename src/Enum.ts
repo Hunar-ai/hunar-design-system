@@ -61,3 +61,12 @@ export enum COMMON_CONSTANT {
     NA = 'NA',
     NEW = 'NEW'
 }
+
+export enum ALLOWED_EXTENSION {
+    PNG = '.png',
+    JPEG = '.jpeg',
+    JPG = '.jpg',
+    PDF = '.pdf',
+    DOC = '.doc',
+    DOCX = '.docx'
+}
