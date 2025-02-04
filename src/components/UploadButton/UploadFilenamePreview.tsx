@@ -72,7 +72,7 @@ export const UploadFilenamePreview = ({
         }
 
         return {
-            color: grey[600],
+            color: 'black',
             borderColor: grey[300]
         };
     }, [
@@ -89,8 +89,7 @@ export const UploadFilenamePreview = ({
             display="flex"
             alignItems="center"
             justifyContent="center"
-            border="1px solid"
-            borderColor={borderColor}
+            border={`1px solid ${borderColor}`}
             px={SIZE_TO_STYLE_MAP[size].px}
             py={SIZE_TO_STYLE_MAP[size].py}
             borderRadius={1}
