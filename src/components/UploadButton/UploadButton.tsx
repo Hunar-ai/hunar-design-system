@@ -4,7 +4,7 @@ import { type SxProps, useTheme } from '@mui/material';
 import { FilePlus } from '@phosphor-icons/react';
 
 import { CustomButton } from '@/components/CustomButton';
-import { UploadFilenamePreview } from './UploadFilenamePreview';
+import { UploadFileNamePreview } from './UploadFileNamePreview';
 
 import { ALLOWED_EXTENSION, BUTTON_SIZE } from '@/Enum';
 
@@ -12,38 +12,38 @@ const SUCCESS_ICON_VISIBLE_DURATION = 750;
 
 export interface UploadButtonProps {
     name: string;
-    value: string;
+    fileName: string;
     title: string;
     acceptFileType: Array<ALLOWED_EXTENSION>;
     primaryColor?: string;
     size?: BUTTON_SIZE;
-    filenameMaxLength?: number;
+    fileNameMaxLength?: number;
     isLoading?: boolean;
     isDisabled?: boolean;
     isFullWidth?: boolean;
     isStartIconVisible?: boolean;
     hasError?: boolean;
     buttonSx?: SxProps;
-    filenamePreviewSx?: SxProps;
+    fileNamePreviewSx?: SxProps;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onRemove: (_: string) => void;
 }
 
 export const UploadButton = ({
     name,
-    value,
+    fileName,
     title,
     acceptFileType,
     primaryColor,
     size = BUTTON_SIZE.medium,
-    filenameMaxLength = 28,
+    fileNameMaxLength = 28,
     isLoading = false,
     isDisabled = false,
     isFullWidth = false,
     isStartIconVisible = true,
     hasError = false,
     buttonSx = {},
-    filenamePreviewSx = {},
+    fileNamePreviewSx = {},
     onChange,
     onRemove
 }: UploadButtonProps) => {
@@ -55,7 +55,7 @@ export const UploadButton = ({
     React.useEffect(() => {
         let successTimeout: NodeJS.Timeout;
 
-        if (!isLoading && value) {
+        if (!isLoading && fileName) {
             setIsSuccessIconVisible(true);
             successTimeout = setTimeout(() => {
                 setIsSuccessIconVisible(false);
@@ -65,37 +65,40 @@ export const UploadButton = ({
         return () => {
             clearTimeout(successTimeout);
         };
-    }, [isLoading, value]);
+    }, [isLoading, fileName]);
 
     const selectedPrimaryColor = React.useMemo(() => {
         return primaryColor ?? theme.palette.primary.main;
     }, [primaryColor, theme.palette.primary.main]);
 
-    const formattedFilename = React.useMemo(() => {
-        if (value.length <= filenameMaxLength) return value;
+    const formattedFileName = React.useMemo(() => {
+        if (fileName.length <= fileNameMaxLength) return fileName;
 
-        const extension = value.slice(value.lastIndexOf('.'), value.length);
-        const shortenedFilename = value.slice(
-            value.lastIndexOf('/') + 1,
-            value.lastIndexOf('/') + filenameMaxLength - extension.length - 1
+        const extension = fileName.slice(
+            fileName.lastIndexOf('.'),
+            fileName.length
         );
-        const formattedFilename = `${shortenedFilename}...${extension}`;
-        return formattedFilename;
-    }, [value, filenameMaxLength]);
+        const shortenedFileName = fileName.slice(
+            fileName.lastIndexOf('/') + 1,
+            fileName.lastIndexOf('/') + fileNameMaxLength - extension.length - 1
+        );
+        const formattedFileName = `${shortenedFileName}...${extension}`;
+        return formattedFileName;
+    }, [fileName, fileNameMaxLength]);
 
     return (
         <>
-            {value ? (
-                <UploadFilenamePreview
+            {fileName ? (
+                <UploadFileNamePreview
                     size={size}
                     isStartIconVisible={isStartIconVisible}
-                    filename={formattedFilename}
+                    fileName={formattedFileName}
                     isLoading={isLoading}
                     isDisabled={isDisabled}
                     hasError={hasError}
                     isSuccessIconVisible={isSuccessIconVisible}
                     onRemove={() => onRemove(name)}
-                    sx={filenamePreviewSx}
+                    sx={fileNamePreviewSx}
                 />
             ) : (
                 <CustomButton

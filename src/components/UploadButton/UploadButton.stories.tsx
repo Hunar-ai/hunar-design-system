@@ -22,23 +22,23 @@ const ALLOWED_EXTENSIONS = [
     ALLOWED_EXTENSION.PNG
 ];
 
-const ControlledUploadButton = ({ value, ...props }: UploadButtonProps) => {
-    const [valueState, setValueState] = React.useState(value);
+const ControlledUploadButton = ({ fileName, ...props }: UploadButtonProps) => {
+    const [modifiedFileName, setModifiedFileName] = React.useState(fileName);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(e);
-        setValueState(e.target.value);
+        setModifiedFileName(e.target.value);
     };
 
     const handleRemove = (name: string) => {
         onRemove(name);
-        setValueState('');
+        setModifiedFileName('');
     };
 
     return (
         <UploadButton
             {...props}
-            value={valueState}
+            fileName={modifiedFileName}
             onChange={handleChange}
             onRemove={handleRemove}
         />
@@ -74,12 +74,12 @@ const UploadButtonStates = (props: UploadButtonProps) => {
                 sectionTitle="With File"
                 sectionDescription="Click on Upload button to select a file"
                 {...props}
-                value="sample.pdf"
+                fileName="sample.pdf"
             />
             <UploadButtonSection
                 sectionTitle="Loading"
                 {...props}
-                value="sample.pdf"
+                fileName="sample.pdf"
                 isLoading
             />
             <UploadButtonSection
@@ -111,8 +111,8 @@ const UploadButtonStates = (props: UploadButtonProps) => {
                 sectionTitle="Custom File Name Length"
                 sectionDescription="Max length of file name is set to 15 characters"
                 {...props}
-                value="very_long_file_name.pdf"
-                filenameMaxLength={15}
+                fileName="very_long_file_name.pdf"
+                fileNameMaxLength={15}
             />
         </>
     );
@@ -131,7 +131,7 @@ const meta = {
     args: {
         name: 'uploadButton',
         title: 'UPLOAD',
-        value: '',
+        fileName: '',
         acceptFileType: ALLOWED_EXTENSIONS,
         primaryColor: blue[700],
         onChange,
@@ -152,8 +152,8 @@ export const Playground: StoryProps = {
             <Story />
         </StorySection>
     ),
-    render: function Playground({ value, ...props }) {
-        return <ControlledUploadButton {...props} value={value} />;
+    render: function Playground(props) {
+        return <ControlledUploadButton {...props} />;
     }
 };
 
