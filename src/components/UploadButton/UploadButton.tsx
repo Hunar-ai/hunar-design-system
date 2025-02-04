@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { type SxProps } from '@mui/material';
+import { type SxProps, useTheme } from '@mui/material';
 import { FilePlus } from '@phosphor-icons/react';
 
 import { CustomButton } from '@/components/CustomButton';
@@ -15,7 +15,7 @@ export interface UploadButtonProps {
     value: string;
     title: string;
     acceptFileType: Array<ALLOWED_EXTENSION>;
-    primaryColor: string;
+    primaryColor?: string;
     size?: BUTTON_SIZE;
     filenameMaxLength?: number;
     isLoading?: boolean;
@@ -47,6 +47,8 @@ export const UploadButton = ({
     onChange,
     onRemove
 }: UploadButtonProps) => {
+    const theme = useTheme();
+
     const [isSuccessIconVisible, setIsSuccessIconVisible] =
         React.useState(false);
 
@@ -64,6 +66,10 @@ export const UploadButton = ({
             clearTimeout(successTimeout);
         };
     }, [isLoading, value]);
+
+    const selectedPrimaryColor = React.useMemo(() => {
+        return primaryColor ?? theme.palette.primary.main;
+    }, [primaryColor, theme.palette.primary.main]);
 
     const formattedFilename = React.useMemo(() => {
         if (value.length <= filenameMaxLength) return value;
@@ -100,7 +106,7 @@ export const UploadButton = ({
                     isFullWidth={isFullWidth}
                     hasError={hasError}
                     sx={buttonSx}
-                    primaryColor={primaryColor}
+                    primaryColor={selectedPrimaryColor}
                     startIcon={isStartIconVisible ? <FilePlus /> : null}
                 >
                     {title}
