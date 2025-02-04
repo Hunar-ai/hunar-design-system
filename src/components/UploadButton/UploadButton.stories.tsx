@@ -134,7 +134,6 @@ const meta = {
         value: '',
         acceptFileType: ALLOWED_EXTENSIONS,
         primaryColor: blue[700],
-        isFullWidth: true,
         onChange,
         onRemove
     }
