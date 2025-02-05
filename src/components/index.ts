@@ -31,3 +31,4 @@ export {
     CalendarDateIcon,
     type CalendarDateIconProps
 } from './CalendarDateIcon';
+export { UploadButton, type UploadButtonProps } from './UploadButton';

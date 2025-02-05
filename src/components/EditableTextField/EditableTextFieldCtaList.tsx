@@ -28,7 +28,7 @@ export const EditableTextFieldCtaList = ({
                 size={buttonSize}
                 primaryColor={primaryColor}
                 onClick={onCancelClick}
-                disabled={isCancelDisabled}
+                isDisabled={isCancelDisabled}
             >
                 CANCEL
             </CustomButton>
@@ -37,7 +37,7 @@ export const EditableTextFieldCtaList = ({
                 size={buttonSize}
                 primaryColor={primaryColor}
                 onClick={onSaveClick}
-                disabled={isSaveDisabled}
+                isDisabled={isSaveDisabled}
             >
                 SAVE
             </CustomButton>

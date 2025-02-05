@@ -5,56 +5,65 @@ import tinycolor from 'tinycolor2';
 import { useTheme, type SxProps } from '@mui/material';
 import LoadingButton, { type LoadingButtonProps } from '@mui/lab/LoadingButton';
 
-export interface CustomButtonProps extends Omit<LoadingButtonProps, 'loading'> {
+export interface CustomButtonProps
+    extends Omit<LoadingButtonProps, 'loading' | 'disabled' | 'fullWidth'> {
     primaryColor: string;
+    hasError?: boolean;
     isLoading?: boolean;
+    isDisabled?: boolean;
+    isFullWidth?: boolean;
+    component?: React.ElementType;
 }
 
 export const CustomButton = ({
     primaryColor,
-    isLoading = false,
     variant = 'contained',
     sx = {},
+    hasError = false,
+    isLoading = false,
+    isDisabled = false,
+    isFullWidth = false,
     ...restProps
 }: CustomButtonProps) => {
     const theme = useTheme();
 
     const textButtonSx: SxProps = React.useMemo(() => {
-        const hoverBGColor = tinycolor(primaryColor).setAlpha(0.04).toString();
+        const color = hasError ? theme.palette.error.main : primaryColor;
+        const hoverBGColor = tinycolor(color).setAlpha(0.04).toString();
         return {
-            color: primaryColor,
+            color,
             '&:hover': {
                 backgroundColor: hoverBGColor
             }
         };
-    }, [primaryColor]);
+    }, [primaryColor, hasError, theme.palette.error.main]);
 
     const outlinedButtonSx: SxProps = React.useMemo(() => {
-        const hoverBGColor = tinycolor(primaryColor).setAlpha(0.04).toString();
-        const borderColor = tinycolor(primaryColor).setAlpha(0.5).toString();
+        const color = hasError ? theme.palette.error.main : primaryColor;
+        const hoverBGColor = tinycolor(color).setAlpha(0.04).toString();
+        const borderColor = tinycolor(color).setAlpha(0.5).toString();
 
         return {
-            color: primaryColor,
+            color,
             border: `1px solid ${borderColor}`,
             '&:hover': {
                 backgroundColor: hoverBGColor,
-                border: `1px solid ${primaryColor}`
+                border: `1px solid ${color}`
             }
         };
-    }, [primaryColor]);
+    }, [primaryColor, hasError, theme.palette.error.main]);
 
     const containedButtonSx: SxProps = React.useMemo(() => {
-        const hoverBGColor = tinycolor
-            ? tinycolor(primaryColor).darken(4).toString()
-            : primaryColor;
+        const color = hasError ? theme.palette.error.main : primaryColor;
+        const hoverBGColor = tinycolor(color).darken(4).toString();
         return {
-            color: theme.palette.getContrastText(primaryColor),
-            backgroundColor: primaryColor,
+            color: theme.palette.getContrastText(color),
+            backgroundColor: color,
             '&:hover': {
                 backgroundColor: hoverBGColor
             }
         };
-    }, [primaryColor, theme.palette]);
+    }, [primaryColor, hasError, theme.palette]);
 
     const primaryColorSx: SxProps = React.useMemo(() => {
         switch (variant) {
@@ -74,6 +83,8 @@ export const CustomButton = ({
             {...restProps}
             variant={variant}
             loading={isLoading}
+            disabled={isDisabled}
+            fullWidth={isFullWidth}
             sx={{ ...primaryColorSx, ...sx }}
         />
     );
