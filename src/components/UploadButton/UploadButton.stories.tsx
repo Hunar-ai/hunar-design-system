@@ -145,10 +145,8 @@ type StoryProps = StoryObj<typeof UploadButton>;
 
 export const Playground: StoryProps = {
     decorators: Story => (
-        <StorySection
-            title=""
-            description='Change various props in the "Controls" panel to see how they change behavior of the component'
-        >
+        // eslint-disable-next-line max-len
+        <StorySection description='Change various props in the "Controls" panel to see how they change behavior of the component'>
             <Story />
         </StorySection>
     ),
